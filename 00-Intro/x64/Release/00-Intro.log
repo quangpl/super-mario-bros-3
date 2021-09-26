@@ -1,0 +1,18 @@
+﻿  main.cpp
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(109,21): error C2664: 'void OutputDebugStringA(LPCSTR)': cannot convert argument 1 from 'wchar_t [4096]' to 'LPCSTR'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(109,20): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\debugapi.h(55,1): message : see declaration of 'OutputDebugStringA'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(116,23): error C2664: 'BOOL SetWindowTextA(HWND,LPCSTR)': cannot convert argument 2 from 'wchar_t [1024]' to 'LPCSTR'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(116,22): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(8904,1): message : see declaration of 'SetWindowTextA'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(238,15): error C2664: 'HRESULT D3DX10CreateTextureFromFileA(ID3D10Device *,LPCSTR,D3DX10_IMAGE_LOAD_INFO *,ID3DX10ThreadPump *,ID3D10Resource **,HRESULT *)': cannot convert argument 2 from 'const wchar_t [10]' to 'LPCSTR'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(239,3): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\include\d3dx10tex.h(464,5): message : see declaration of 'D3DX10CreateTextureFromFileA'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(383,92): error C2664: 'HANDLE LoadImageA(HINSTANCE,LPCSTR,UINT,int,int,UINT)': cannot convert argument 2 from 'const wchar_t [10]' to 'LPCSTR'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(383,41): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(10814,1): message : see declaration of 'LoadImageA'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(387,38): error C2440: '=': cannot convert from 'const wchar_t [13]' to 'LPCSTR'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(387,21): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(393,1): error C2664: 'HWND CreateWindowExA(DWORD,LPCSTR,LPCSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)': cannot convert argument 2 from 'const wchar_t [13]' to 'LPCSTR'
+C:\Users\quangpl\work\learning\Game\gamedev-intro-tutorials\00-Intro\main.cpp(393,1): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(4416,1): message : see declaration of 'CreateWindowExA'
