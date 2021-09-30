@@ -1,6 +1,6 @@
 /* =============================================================
 	INTRODUCTION TO GAME PROGRAMMING SE102
-	
+
 	SAMPLE 02 - SPRITE AND ANIMATION
 
 	This sample illustrates how to:
@@ -24,7 +24,7 @@
 #include "Animation.h"
 #include "Animations.h"
 
-
+#include <fstream>
 #include "Mario.h"
 
 
@@ -33,25 +33,51 @@
 #define WINDOW_ICON_PATH L"mario.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255,0.0f)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 700 //320 
+#define SCREEN_HEIGHT 800 //240
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
 
+#define ID_TEX_MAP_1 1
+
+
 #define TEXTURES_DIR L"textures"
+
+
 #define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario.png"
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc.png"
 #define TEXTURE_PATH_ENEMIES TEXTURES_DIR "\\enemies.png"
 
-CMario *mario;
+
+
+#define MAPS_DIR L"maps"
+#define TEXTURE_PATH_MAP_1 MAPS_DIR "\\map1.png"
+
+
+CMario* mario;
 #define MARIO_START_X 10.0f
 #define MARIO_START_Y 130.0f
 #define MARIO_START_VX 0.1f
 
-CBrick *brick;
+CBrick* brick;
 
+LPCWSTR MapDataPath = MAPS_DIR "\\map1.txt";
+LPCWSTR MapImagePath = MAPS_DIR "\\map1.png";
+
+#define NUMBER_OF_ROWS_MAP_1 27
+#define NUMBER_OF_COLS_MAP_1 210
+
+#define NUMBER_OF_ROWS_SOURCE_MAP_1 9
+#define NUMBER_OF_COLS_SOURCE_MAP_1 11
+
+int tilemaps[300][300];
+#define ID_MAP_1 100000
+
+#define TILE_MAP_SIZE 16
+
+#define BASE_TILEMAP_ID 100000
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -64,22 +90,70 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
+void LoadMap() {
+	CTextures* textures = CTextures::GetInstance();
+	textures->Add(ID_TEX_MAP_1, TEXTURE_PATH_MAP_1);
+	CSprites* sprites = CSprites::GetInstance();
+	LPTEXTURE texMap = textures->Get(ID_TEX_MAP_1);
 
+	int spriteId = 1;
+	for (UINT i = 0; i < NUMBER_OF_ROWS_SOURCE_MAP_1; i++)
+	{
+		for (UINT j = 0; j < NUMBER_OF_COLS_SOURCE_MAP_1; j++)
+		{
+			sprites->Add(spriteId + BASE_TILEMAP_ID, TILE_MAP_SIZE * j, TILE_MAP_SIZE * i, TILE_MAP_SIZE * (j + 1) - 1, TILE_MAP_SIZE * (i + 1) - 1, texMap);
+			spriteId = spriteId + 1;
+		}
+	}
+
+	ifstream f;
+	f.open(MapDataPath);
+	if (f.fail())
+	{
+		f.close();
+		return;
+	}
+	for (int i = 0; i < NUMBER_OF_ROWS_MAP_1; i++)
+	{
+		for (int j = 0; j < NUMBER_OF_COLS_MAP_1; j++)
+			f >> tilemaps[i][j];
+	}
+
+	f.close();
+}
+
+void DrawMap() {
+	int firstCol = 0;
+	int lastCol = firstCol + (SCREEN_WIDTH / TILE_MAP_SIZE);
+	CSprites* sprites = CSprites::GetInstance();
+	for (int i = 0; i < NUMBER_OF_ROWS_MAP_1; i++)
+	{
+		for (int j = firstCol; j <= lastCol; j++)
+		{
+			float x = (int)TILE_MAP_SIZE * (j - firstCol);
+			float y = (int)TILE_MAP_SIZE * i;
+
+			sprites->Get(tilemaps[i][j] + BASE_TILEMAP_ID)->Draw(x, y);
+		}
+	}
+}
 /*
-	Load all game resources 
+	Load all game resources
 	In this example: load textures, sprites, animations and mario object
 */
 void LoadResources()
 {
-	CTextures * textures = CTextures::GetInstance();
+	LoadMap();
+	CTextures* textures = CTextures::GetInstance();
 
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	//textures->Add(ID_ENEMY_TEXTURE, TEXTURE_PATH_ENEMIES, D3DCOLOR_XRGB(156, 219, 239));
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 
 
-	CSprites * sprites = CSprites::GetInstance();
-	
+
+	CSprites* sprites = CSprites::GetInstance();
+
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 
 	// readline => id, left, top, right 
@@ -97,9 +171,9 @@ void LoadResources()
 	sprites->Add(20002, 318, 117, 334, 133, texMisc);
 	sprites->Add(20003, 336, 117, 352, 133, texMisc);
 	sprites->Add(20004, 354, 117, 370, 133, texMisc);
-	
 
-	CAnimations * animations = CAnimations::GetInstance();
+
+	CAnimations* animations = CAnimations::GetInstance();
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -114,15 +188,14 @@ void LoadResources()
 	ani->Add(10013);
 	animations->Add(501, ani);
 
-	
+
 	ani = new CAnimation(100);
-	ani->Add(20001,1000);
+	ani->Add(20001, 1000);
 	ani->Add(20002);
 	ani->Add(20003);
 	ani->Add(20004);
 	animations->Add(510, ani);
-	
-	
+
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
 	brick = new CBrick(100.0f, 100.0f);
 }
@@ -155,8 +228,7 @@ void Render()
 		// Use Alpha blending for transparent sprites
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
-
-		brick->Render();
+		DrawMap();
 		mario->Render();
 
 		// Uncomment this line to see how to draw a porttion of a texture  
@@ -261,7 +333,7 @@ int WINAPI WinMain(
 ) {
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	CGame *game = CGame::GetInstance();
+	CGame* game = CGame::GetInstance();
 	game->Init(hWnd);
 
 	LoadResources();
