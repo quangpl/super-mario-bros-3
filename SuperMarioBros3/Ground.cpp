@@ -14,7 +14,6 @@ void CGround::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(10000)->Render(x, y);
-	DebugOut(L"x: %d \n", x);
 	RenderBoundingBox();
 }
 

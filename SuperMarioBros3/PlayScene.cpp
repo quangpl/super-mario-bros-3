@@ -200,10 +200,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	// General object setup
 	obj->SetPosition(x, y);
-	if (object_type == 2) {
-		DebugOut(L"Ground x: %f, Ground y: %f", x, y);
-	}
-
 
 	objects.push_back(obj);
 }
