@@ -13,5 +13,6 @@
 
 enum Type
 {
-	GROUND = 02,
+	GROUND = 2,
+	BRICK = 3,
 };

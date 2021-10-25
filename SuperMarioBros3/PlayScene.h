@@ -7,6 +7,7 @@
 #include "Mario.h"
 #include "TileMap.h"
 #include "Goomba.h"
+#include "Animations.h"
 #include "Ground.h"
 
 
@@ -18,9 +19,9 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 
+	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
-
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
 	void _ParseSection_TILE_MAP(string line);

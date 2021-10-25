@@ -1,18 +1,26 @@
-#pragma once
-
 #include "GameObject.h"
-#include "Animation.h"
-#include "Animations.h"
+#include "Constants.h"
 
-#define ID_ANI_BRICK 10000
-#define BRICK_WIDTH 16
-#define BRICK_BBOX_WIDTH 16
-#define BRICK_BBOX_HEIGHT 16
 
-class CBrick : public CGameObject {
+#define BRICK_ANI_NORMAL		702
+#define BRICK_ANI_BROKEN		703
+
+#define BRICK_STATE_NORMAL		1
+#define BRICK_STATE_BROKEN		2
+
+
+class CBrick : public CGameObject
+{
+
 public:
-	CBrick(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	int brickType;
+	int item;
+
+public:
+	CBrick(float x, float y, int brickType);
+	~CBrick();
+	virtual void Render();
+	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
+	virtual void Update(ULONGLONG dt, vector<LPGAMEOBJECT>* colliable_objects);
+	void SetState(int state);
 };

@@ -12,9 +12,9 @@ CGround::CGround(int w, int h, bool i)
 
 void CGround::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(10000)->Render(x, y);
-	RenderBoundingBox();
+	//CAnimations* animations = CAnimations::GetInstance();
+	//animations->Get(702)->Render(x, y);
+	//RenderBoundingBox();
 }
 
 void CGround::GetBoundingBox(float& l, float& t, float& r, float& b)
