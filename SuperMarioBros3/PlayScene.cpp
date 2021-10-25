@@ -157,10 +157,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int w = atoi(tokens[4].c_str());
 		int h = atoi(tokens[5].c_str());
 		int i = atoi(tokens[6].c_str());
-		int top = atoi(tokens[7].c_str());
-		int bot = atoi(tokens[8].c_str());
-		int left = atoi(tokens[9].c_str());
-		int right = atoi(tokens[10].c_str());
 		obj = new CGround(w, h, i);
 		break;
 	}
@@ -284,7 +280,7 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
