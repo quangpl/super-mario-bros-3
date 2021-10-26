@@ -9,6 +9,7 @@
 #include "Goomba.h"
 #include "Animations.h"
 #include "Ground.h"
+#include "Pipe.h"
 
 
 class CPlayScene: public CScene

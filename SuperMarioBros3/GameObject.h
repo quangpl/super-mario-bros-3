@@ -27,7 +27,7 @@ protected:
 	int nx;	 
 
 	int state;
-
+	int ani;
 	bool isDeleted; 
 
 public:

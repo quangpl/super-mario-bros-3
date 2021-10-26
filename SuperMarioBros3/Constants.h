@@ -15,4 +15,5 @@ enum Type
 {
 	GROUND = 2,
 	BRICK = 3,
+	PIPE = 4,
 };

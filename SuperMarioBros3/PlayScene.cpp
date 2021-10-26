@@ -49,7 +49,9 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	int r = atoi(tokens[3].c_str());
 	int b = atoi(tokens[4].c_str());
 	int texID = atoi(tokens[5].c_str());
-
+	if (ID == 2001) {
+		cout << "";
+	}
 	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
 	if (tex == NULL)
 	{
@@ -125,6 +127,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
+
 	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
@@ -213,10 +216,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float b = (float)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
+		break;
 	}
-	break;
-
-
+	case OBJECT_TYPE_PIPE:
+	{
+		int pipe_type = atoi(tokens[4].c_str());
+		int direction = atoi(tokens[8].c_str());
+		obj = new CPipe(pipe_type, direction);
+		break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
