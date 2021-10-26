@@ -3,7 +3,6 @@
 mario.txt
 brick.txt
 coin.txt
-goomba.txt
 cloud.txt
 #
 # id	left	top	right	bottom	texture_id
@@ -29,6 +28,29 @@ cloud.txt
 2002	201	415	233	447	21
 #black short pipe
 2003	433	223	465	255	21
+#================GOOMBA=====================
+#NORMAL
+601	5	14	21	29	10
+602	25	14	41	29	10
+#die
+603	45	14	61	29	10
+#die by attack
+604	299	341	315	357	54
+
+#RED PARA GOOMBA					
+#wing walk
+605	140	35	160	59	52
+606	116	35	136	59	52
+#wing fly
+607	90	35	110	59	52
+608	66	35	86	59	52
+#no wing walk
+609	121	62	141	86	52
+610	100	62	120	86	52
+#no wing die
+611	141	62	161	86	52
+#wing die
+612	200	274	220	298	54
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -43,14 +65,35 @@ cloud.txt
 # black short pipe
 1003	2003	100
 
+# ====== GOOMBA  =========
+# walk	
+601	601	100	602	100
+# die
+602	603	100
+# die by attack
+603	604	100
+
+#==RED PARA GOOMBA ==
+#wing walk
+611	605	100	606	100
+#wing fly low
+612	607	100	606	100	608	100	605	100
+#wing fly high
+613	607	75	606	75	608	75	605	75
+#no wing walk 
+614	609	100	610	100
+#no wing die #die by crush
+615	611	100
+#die fly # die by attack
+616	612	100
 
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
+#Ground
 2	0	416	11	39	1	0	4	5	0	5
 2	624	400	11	29	1	0	4	5	4	9
-2	624	416	11	29	1	0	4	5	4	9
 2	1152	416	11	22	1	0	4	5	9	12
 2	1536	416	11	5	1	0	4	5	12	13
 2	1664	416	11	36	1	0	4	5	13	18
@@ -77,8 +120,8 @@ cloud.txt
 2	3184	304	11	3	8	0	3	5	24	26
 2	3232	240	11	8	12	0	2	5	25	27
 2	3008	240	11	12	1	0	2	3	23	25
-2	240	368	11	3	3	1	3	5	1	3
-2	272	336	11	3	5	1	3	5	2	3
+2	240	368	11	3	1	1	3	5	1	3
+2	272	336	11	3	1	1	3	5	2	3
 2	400	368	11	5	3	1	3	5	3	4
 2	464	336	11	4	5	1	3	5	3	5
 2	512	384	11	6	2	1	4	5	4	5
@@ -128,6 +171,8 @@ cloud.txt
 3	2976	240	14	2	0	0	0	1	2	3	23	24
 # MARIO
 0	300	30
-
+#Goomba
+11	336	400	51	1	4	5	2	3
+11	608	380	51	1	3	5	4	5
 [TILEMAP]
 100	maps\map1.png	maps\map1.txt	27	210	9	11	16	16	0	2832	2832	3360

@@ -14,7 +14,7 @@ void CGround::Render()
 {
 	//CAnimations* animations = CAnimations::GetInstance();
 	//animations->Get(702)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CGround::GetBoundingBox(float& l, float& t, float& r, float& b)
