@@ -8,6 +8,11 @@
 #define BRICK_STATE_NORMAL		1
 #define BRICK_STATE_BROKEN		2
 
+enum BrickType
+{
+	Question = 2,
+	Bronze = 4,
+};
 
 class CBrick : public CGameObject
 {

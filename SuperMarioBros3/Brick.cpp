@@ -6,7 +6,12 @@ CBrick::CBrick(float x, float y, int brickType)
 	this->type = Type::BRICK;
 	this->x = x;
 	this->y = y;
-	this->state = BRICK_STATE_NORMAL;
+	if (brickType == BrickType::Question) {
+		state = BRICK_STATE_NORMAL;
+	}
+	else {
+		state = BRICK_ANI_BROKEN;
+	}
 }
 
 CBrick::~CBrick()
