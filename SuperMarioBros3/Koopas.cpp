@@ -47,6 +47,6 @@ void CKoopas::GetBoundingBox(float& left, float& top, float& right, float& botto
 {
 	left = x - KOOPAS_BBOX_WIDTH / 2;
 	top = y - KOOPAS_BBOX_HEIGHT / 2;
-	right = x + KOOPAS_BBOX_WIDTH;
-	bottom = y + KOOPAS_BBOX_HEIGHT;
+	right = left + KOOPAS_BBOX_WIDTH;
+	bottom = top + KOOPAS_BBOX_HEIGHT;
 }
