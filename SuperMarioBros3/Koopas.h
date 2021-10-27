@@ -16,6 +16,7 @@
 #define KOOPAS_STATE_IDLE			200
 #define KOOPAS_STATE_DIE_MOVE		300
 #define KOOPAS_STATE_WALKING_DOWN	400
+#define KOOPAS_STATE_DESTROY		999
 
 #define KOOPAS_ANI_WALKING_LEFT		501
 #define KOOPAS_ANI_WALKING_RIGHT	502
@@ -26,8 +27,8 @@
 #define KOOPAS_ANI_DIE_MOVE			507
 #define KOOPAS_ANI_DIE_MOVE_SUPINE	508
 
-#define PARA_KOOPAS_ANI_LEFT		8
-#define PARA_KOOPAS_ANI_RIGHT		9
+#define PARA_KOOPAS_ANI_LEFT		511
+#define PARA_KOOPAS_ANI_RIGHT		512
 
 
 #define KOOPAS_TIME_IDLE			8000
@@ -40,11 +41,14 @@ class CKoopas : public CGameObject
 	float start_x;
 	float start_y;
 public:
-	CKoopas();
 	CKoopas(int koopas_type, float x, float y);
-	virtual void SetState(int state);
-
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(ULONGLONG dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
+
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
+	virtual void OnNoCollision(DWORD dt);
+	virtual void SetState(int state);
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 };
