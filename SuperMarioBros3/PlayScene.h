@@ -10,6 +10,7 @@
 #include "Animations.h"
 #include "Ground.h"
 #include "Pipe.h"
+#include "Koopas.h"
 
 
 class CPlayScene: public CScene

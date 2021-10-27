@@ -16,4 +16,5 @@ enum Type
 	GROUND = 2,
 	BRICK = 3,
 	PIPE = 4,
+	KOOPAS = 7,
 };

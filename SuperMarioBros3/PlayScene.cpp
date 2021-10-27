@@ -191,6 +191,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CGround(w, h, i);
 		break;
 	}
+	case OBJECT_TYPE_KOOPAS:
+	{
+		int koopas_type = atoi(tokens[4].c_str());
+		obj = new CKoopas(koopas_type, x, y);
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 
