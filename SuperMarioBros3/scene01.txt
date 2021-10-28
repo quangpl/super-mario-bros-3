@@ -234,7 +234,15 @@ cloud.txt
 572	312	219	328	247	30
 573	295	219	311	247	30
 574	278	219	294	247	30
-
+#========== MushRoom ==========
+#super mushroom
+301	156	121	172	137	20
+#super leaf
+302	180	121	196	137	20
+#FIRE FLOWER
+303	309	121	325	137	20
+#up mushroom
+306	286	121	302	137	20
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ==== MARIO =========
@@ -393,7 +401,11 @@ cloud.txt
 #RED
 523	563	100	561	100	564	100	562	100
 524	573	100	571	100	574	100	572	100
-
+#========== MushRoom ==========
+#super mushroom
+301	301	100
+#up mushroom
+306	306	100
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas

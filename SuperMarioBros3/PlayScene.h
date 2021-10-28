@@ -11,6 +11,7 @@
 #include "Ground.h"
 #include "Pipe.h"
 #include "Koopas.h"
+#include "MushRoom.h"
 
 
 class CPlayScene: public CScene

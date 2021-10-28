@@ -8,7 +8,7 @@ CKoopas::CKoopas(int koopas_type, float x, float y)
 	koopas_type = koopas_type;
 	this->start_x = x;
 	this->start_y = y;
-	this->vx = KOOPAS_WALKING_SPEED;
+	/*this->vx = KOOPAS_WALKING_SPEED;*/
 	this->vy = RED_KOOPAS_SPEED_Y;
 }
 
