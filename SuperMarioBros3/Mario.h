@@ -103,6 +103,8 @@
 
 class CMario : public CGameObject
 {
+	static CMario* __instance;
+
 	BOOLEAN isSitting;
 	float maxVx;
 	float ax;				// acceleration on x 
@@ -122,7 +124,8 @@ class CMario : public CGameObject
 	int GetAniIdSmall();
 
 public:
-	CMario(float x, float y) : CGameObject(x, y)
+
+	CMario() : CGameObject()
 	{
 		isSitting = false;
 		maxVx = 0.0f;
@@ -153,4 +156,5 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	static CMario* GetInstance();
 };
