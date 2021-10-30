@@ -178,7 +178,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK: {
 		int ani_set_id = atoi(tokens[3].c_str());
 		int brickType = atoi(tokens[4].c_str());
-		obj = new CBrick(x, y, brickType);
+		int item = atoi(tokens[5].c_str());
+		obj = new CBrick(x, y, brickType, item);
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
@@ -343,7 +344,6 @@ void CPlayScene::Load()
 	}
 
 	f.close();
-
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
@@ -351,7 +351,17 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		if (dynamic_cast<CBrick*>(objects[i])) {
+			if (dynamic_cast<CBrick*>(objects[i])->GetChildItemId() == BrickChildItem::MushRoom && dynamic_cast<CBrick*>(objects[i])->GetChildItem() == NULL) {
+				CMushroom* mushroom = new CMushroom(1);
+				mushroom->SetPosition(objects[i]->GetPositionX(), objects[i]->GetPositionY() - 30);
+				dynamic_cast<CBrick*>(objects[i])->SetChildItem(mushroom);
+				objects.push_back(mushroom);
+			}
+		}
+	}
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 0; i < objects.size(); i++)
 	{

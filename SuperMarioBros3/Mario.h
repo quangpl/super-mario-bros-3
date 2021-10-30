@@ -1,9 +1,9 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Brick.h"
 #include "Animation.h"
 #include "Animations.h"
-
+#include "MushRoom.h"
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
@@ -119,6 +119,7 @@ class CMario : public CGameObject
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();

@@ -1,11 +1,12 @@
 #include "Brick.h"
 
-CBrick::CBrick(float x, float y, int brickType)
+CBrick::CBrick(float x, float y, int brickType, int _child_item_id)
 {
 	this->brickType = brickType;
 	this->type = Type::BRICK;
 	this->x = x;
 	this->y = y;
+	this->child_item_id = _child_item_id;
 	if (brickType == BrickType::Question) {
 		state = BRICK_STATE_NORMAL;
 	}

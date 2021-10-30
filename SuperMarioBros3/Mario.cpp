@@ -54,6 +54,22 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
+}
+
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+
+	if (e->ny > 0)
+	{
+		if (brick->GetChildItemId() == BrickChildItem::MushRoom)
+		{
+			CMushroom* mushroom = dynamic_cast<CMushroom*>(brick->GetChildItem());
+			mushroom->SetPosition(mushroom->GetPositionX(), mushroom->GetPositionY() - 40);
+		}
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
