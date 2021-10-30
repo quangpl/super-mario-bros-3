@@ -14,7 +14,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	DebugOut(L"Mario x: %f y: %f \n", x, y);
+	//DebugOut(L"Mario x: %f y: %f \n", x, y);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -68,6 +68,8 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 
 			if (goomba->GetLevel() == GoombaLevel::RedWing) {
 				goomba->SetLevel(GoombaLevel::Red);
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 			else {
 				goomba->SetState(GOOMBA_STATE_DIE);

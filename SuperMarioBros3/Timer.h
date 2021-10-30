@@ -14,11 +14,11 @@ public:
 	}
 
 	void Start() {
-		is_running - true;
+		is_running = true;
 		start = GetTickCount64();
 	}
 	void Stop() {
-		is_running - false;
+		is_running = false;
 		start = 0;
 	}
 	bool IsTimeUp() { return GetTickCount64() - start > duration; }

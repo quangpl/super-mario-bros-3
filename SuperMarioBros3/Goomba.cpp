@@ -89,20 +89,20 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (timer->IsRunning() && !timer->IsTimeUp()) {
 		return;
 	}
+	DebugOut(L"Jump step : %d\n", jump_step);
 	if (is_on_ground && jump_step !=0) {
 		switch (jump_step)
 		{
 		case 1:
 			nx = mario->GetPositionX() < x ? -1 : 1;
 			vx = nx * abs(vx);
-			jump_step = 2;
 			SetState(GOOMBA_STATE_WALKING);
 			timer->SetDuration(TIME_GOOMBA_WAIT_TO_JUMP_LOW);
 			timer->Start();
+			jump_step = 2;
 			break;
 		case 2:
 			timer->Stop();
-			vy = -GOOMBA_JUMP_LOW_SPEED;
 			SetState(GOOMBA_STATE_JUMP_LOW);
 			timer->SetDuration(TIME_GOOMBA_WAIT_TO_JUMP_HIGH);
 			timer->Start();
@@ -110,11 +110,24 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		case 3:
 			timer->Stop();
-			vy = -GOOMBA_JUMP_HIGH_SPEED;
-			SetState(GOOMBA_STATE_JUMP_HIGH);
+			SetState(GOOMBA_STATE_JUMP_LOW);
+			timer->SetDuration(TIME_GOOMBA_WAIT_TO_JUMP_HIGH);
+			timer->Start();
 			jump_step = 4;
 			break;
 		case 4:
+			timer->Stop();
+			SetState(GOOMBA_STATE_JUMP_LOW);
+			timer->SetDuration(TIME_GOOMBA_WAIT_TO_JUMP_HIGH);
+			timer->Start();
+			jump_step = 5;
+			break;
+		case 5:
+			timer->Stop();
+			SetState(GOOMBA_STATE_JUMP_HIGH);
+			jump_step = 6;
+			break;
+		case 6:
 			jump_step = 1;
 			break;
 		default:
@@ -170,7 +183,7 @@ void CGoomba::Render()
 		}
 	}
 	CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGoomba::SetState(int state)
@@ -180,7 +193,6 @@ void CGoomba::SetState(int state)
 	{
 	case GOOMBA_STATE_DIE:
 		die_start = GetTickCount64();
-		y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
 		vx = 0;
 		vy = 0;
 		ay = 0;
@@ -191,12 +203,13 @@ void CGoomba::SetState(int state)
 		break;
 	case GOOMBA_STATE_JUMP_LOW:
 		is_on_ground = false;
-		vx = -GOOMBA_WALKING_SPEED;
+		vx = nx * GOOMBA_WALKING_SPEED;
 		vy = -GOOMBA_JUMP_LOW_SPEED;
 		break;
 	case GOOMBA_STATE_JUMP_HIGH:
 		is_on_ground = false;
-		vy = -2 * GOOMBA_JUMP_HIGH_SPEED;
+		vx = nx * GOOMBA_WALKING_SPEED;
+		vy = -2 * GOOMBA_JUMP_LOW_SPEED;
 		break;
 	}
 }
