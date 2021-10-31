@@ -75,6 +75,6 @@ public:
 	virtual int IsBlocking() { return 1; }
 
 	~CGameObject();
-
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 };

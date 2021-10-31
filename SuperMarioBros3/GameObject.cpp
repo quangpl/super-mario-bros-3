@@ -43,3 +43,8 @@ CGameObject::~CGameObject()
 {
 
 }
+
+bool CGameObject::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy)
+{
+	return false;
+}
