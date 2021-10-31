@@ -1,25 +1,11 @@
-#include "MushRoom.h"
+#include "Mushroom.h"
 
-CMushroom::CMushroom(int t) {
+CMushroom::CMushroom(int level) :CGameObject(x, y)
+{
 	this->type = Type::MUSHROOM;
-	vx = MUSHROOM_SPEED_Y;
-	vy = MUSHROOM_SPEED_Y;
-}
-CMushroom::~CMushroom()
-{
-
-}
-
-void CMushroom::Render()
-{
-	CAnimations::GetInstance()->Get(UP_MUSHROOM_ANI)->Render(x, y);
-	RenderBoundingBox();
-}
-
-void CMushroom::Update(ULONGLONG dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	CGameObject::Update(dt, coObjects);
-	vy += (MUSHROOM_GRAVITY * dt);
+	this->vy = 0;
+	this->vx = 0;
+	this->gravity = 0;
 }
 
 void CMushroom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -28,6 +14,38 @@ void CMushroom::GetBoundingBox(float& left, float& top, float& right, float& bot
 	top = y - MUSHROOM_BBOX_HEIGHT / 2;
 	right = left + MUSHROOM_BBOX_WIDTH;
 	bottom = top + MUSHROOM_BBOX_HEIGHT;
+}
+
+void CMushroom::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+};
+
+void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsBlocking()) return;
+	if (e->nx != 0)
+	{
+		vx = -vx;
+	}
+}
+void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - y) >= BRICK_BBOX_HEIGHT) {
+		SetState(UP_MUSHROOM_STATE_RUN);
+	}
+	vy += (this->gravity * dt);
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+
+void CMushroom::Render()
+{
+	CAnimations::GetInstance()->Get(UP_MUSHROOM_ANI)->Render(x, y);
+	//RenderBoundingBox();
+ 
 }
 
 void CMushroom::SetState(int state)
@@ -40,22 +58,15 @@ void CMushroom::SetState(int state)
 		vy = 0;
 		break;
 	case UP_MUSHROOM_STATE_UP:
+		vx = 0;
 		vy = -MUSHROOM_SPEED_Y;
 		break;
 	case UP_MUSHROOM_STATE_RUN:
-		vx = nx * MUSHROOM_SPEED_Y;
-		vy = MUSHROOM_SPEED_Y;
+		vx = nx * MUSHROOM_SPEED_X;
+		this->gravity = MUSHROOM_GRAVITY;
+		break;
+	default:
 		break;
 	}
 }
 
-void CMushroom::OnNoCollision(DWORD dt)
-{
-	x += vx * dt;
-	y += vy * dt;
-};
-
-void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
-{
-	if (!e->obj->IsBlocking()) return;
-}

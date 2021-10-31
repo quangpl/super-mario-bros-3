@@ -24,6 +24,8 @@ protected:
 	float vx;
 	float vy;
 
+	float gravity;
+
 	int nx;	 
 
 	int state;
@@ -38,6 +40,8 @@ public:
 	float GetPositionX() { return this->x; }
 	float GetPositionY() { return this->y; }
 
+	float GetGravity() { return this->gravity; }
+	void SetGravity(float _gravity) { this->gravity = _gravity; }
 
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 

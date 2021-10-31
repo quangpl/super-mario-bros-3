@@ -67,7 +67,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 		if (brick->GetChildItemId() == BrickChildItem::MushRoom)
 		{
 			CMushroom* mushroom = dynamic_cast<CMushroom*>(brick->GetChildItem());
-			mushroom->SetPosition(mushroom->GetPositionX(), mushroom->GetPositionY() - 40);
+			mushroom->SetState(UP_MUSHROOM_STATE_UP);
 		}
 	}
 }

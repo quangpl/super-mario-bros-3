@@ -89,7 +89,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (timer->IsRunning() && !timer->IsTimeUp()) {
 		return;
 	}
-	DebugOut(L"Jump step : %d\n", jump_step);
 	if (is_on_ground && jump_step !=0) {
 		switch (jump_step)
 		{
