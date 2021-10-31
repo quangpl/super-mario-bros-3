@@ -164,15 +164,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
+		// TODO: Should pass from data later
+		CMario::GetInstance()->SetLevel(MARIO_LEVEL_SMALL);
 		obj = CMario::GetInstance();
 		player = (CMario*)obj;
-
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: {
 		int level = atoi(tokens[4].c_str());
 		obj = new CGoomba(level);
-		break;
 		break;
 	}
 	case OBJECT_TYPE_BRICK: {

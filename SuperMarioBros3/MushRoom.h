@@ -18,11 +18,13 @@
 #define UP_MUSHROOM_STATE_IDLE 10
 #define UP_MUSHROOM_STATE_UP 20
 #define UP_MUSHROOM_STATE_RUN 30
+#define UP_MUSHROOM_STATE_DIE 40
 
+#define UP_MUSHROOM_EATABLE_DISTANCE 10
 class CMushroom : public CGameObject
 {
 	float start_y;
-
+	bool eatable = false;
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -36,6 +38,8 @@ protected:
 public:
 	CMushroom(int goombaType);
 	virtual void SetState(int state);
+	bool GetEatable() { return this->eatable; }
+	void SetEatable(bool _eatable) {  this->eatable = _eatable; }
 
 	void SetStartY(float _start_y) { this->start_y = _start_y; }
 };

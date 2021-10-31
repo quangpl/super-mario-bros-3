@@ -56,18 +56,32 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 		OnCollisionWithBrick(e);
+	else if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
+}
+
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	if (level != MARIO_LEVEL_BIG && mushroom->GetEatable()) {
+		SetLevel(MARIO_LEVEL_BIG);
+		mushroom->SetState(UP_MUSHROOM_STATE_DIE);
+	}
 }
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
 	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-
+	if (brick->GetState() == BRICK_STATE_BROKEN) {
+		return;
+	}
 	if (e->ny > 0)
 	{
 		if (brick->GetChildItemId() == BrickChildItem::MushRoom)
 		{
 			CMushroom* mushroom = dynamic_cast<CMushroom*>(brick->GetChildItem());
 			mushroom->SetState(UP_MUSHROOM_STATE_UP);
+			brick->SetState(BRICK_STATE_BROKEN);
 		}
 	}
 }
@@ -378,6 +392,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CMario::SetLevel(int l)
 {
+	// TODO : Must fix "hard" behavior to make sure everything right.
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{

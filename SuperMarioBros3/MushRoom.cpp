@@ -35,6 +35,9 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - y) >= BRICK_BBOX_HEIGHT) {
 		SetState(UP_MUSHROOM_STATE_RUN);
 	}
+	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - y) >= UP_MUSHROOM_EATABLE_DISTANCE) {
+		eatable = true;
+	}
 	vy += (this->gravity * dt);
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -64,6 +67,11 @@ void CMushroom::SetState(int state)
 	case UP_MUSHROOM_STATE_RUN:
 		vx = nx * MUSHROOM_SPEED_X;
 		this->gravity = MUSHROOM_GRAVITY;
+		break;
+	case UP_MUSHROOM_STATE_DIE:
+		vx = 0;
+		vy = 0;
+		isDeleted = true;
 		break;
 	default:
 		break;
