@@ -12,6 +12,7 @@
 #include "Pipe.h"
 #include "Koopas.h"
 #include "MushRoom.h"
+#include "ActivationPoint.h"
 
 
 class CPlayScene: public CScene

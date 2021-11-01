@@ -17,5 +17,6 @@ enum Type
 	BRICK = 3,
 	PIPE = 4,
 	KOOPAS = 7,
-	MUSHROOM = 10
+	MUSHROOM = 10,
+	ActivationPoint = 11
 };

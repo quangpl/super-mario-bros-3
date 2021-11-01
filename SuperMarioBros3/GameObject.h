@@ -36,6 +36,8 @@ public:
 	int type;
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void SetVelocityX(float _vx) { this->vx = _vx; }
+	void SetVelocityY(float _vy) { this->vy = _vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	float GetPositionX() { return this->x; }
 	float GetPositionY() { return this->y; }

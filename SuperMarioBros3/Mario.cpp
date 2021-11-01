@@ -14,7 +14,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	//DebugOut(L"Mario x: %f y: %f \n", x, y);
+	DebugOut(L"Mario x: %f y: %f \n", x, y);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -58,6 +58,22 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBrick(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CKoopas*>(e->obj))
+		OnCollisionWithKoopas(e);
+}
+
+void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
+{
+	CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
+	if (e->obj->GetState() == KOOPAS_STATE_DIE_BY_ATTACK) {
+		koopas->SetVelocityX(KOOPAS_SHELL_RUN_SPEED);
+		return;
+	}
+	if (e->ny < 0) {
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		koopas->SetState(KOOPAS_STATE_DIE_BY_ATTACK);
+	
+	}
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)

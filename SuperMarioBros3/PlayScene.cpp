@@ -235,6 +235,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 		break;
 	}
+	case OBJECT_TYPE_ACTIVATION_POINT:
+	{
+		int width = atoi(tokens[3].c_str());
+		int height = atoi(tokens[4].c_str());
+		int command = atoi(tokens[5].c_str());
+		obj = new CActivationPoint(width, height, command);
+		break;
+	}
 	case OBJECT_TYPE_PIPE:
 	{
 		int pipe_type = atoi(tokens[4].c_str());
