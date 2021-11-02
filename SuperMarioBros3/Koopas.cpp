@@ -43,9 +43,8 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
+	if (dynamic_cast<CActivationPoint*>(e->obj)) {
+		OnCollisionWithActivationPoint(e);
 	}
 }
 

@@ -74,6 +74,21 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 		koopas->SetState(KOOPAS_STATE_DIE_BY_ATTACK);
 
 	}
+	else {
+		if (untouchable == 0)
+		{
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
+	}
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
