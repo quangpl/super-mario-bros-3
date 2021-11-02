@@ -45,11 +45,13 @@ public:
 	float GetGravity() { return this->gravity; }
 	void SetGravity(float _gravity) { this->gravity = _gravity; }
 
+	int GetNx() { return this->nx; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
+
 
 	void RenderBoundingBox();
 
@@ -79,4 +81,5 @@ public:
 	~CGameObject();
 	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
+
 };

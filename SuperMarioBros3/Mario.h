@@ -24,15 +24,15 @@
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
 #define MARIO_STATE_WALKING_LEFT	200
-
 #define MARIO_STATE_JUMP			300
 #define MARIO_STATE_RELEASE_JUMP    301
-
 #define MARIO_STATE_RUNNING_RIGHT	400
 #define MARIO_STATE_RUNNING_LEFT	500
-
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
+#define MARIO_STATE_HOLDING	700
+#define MARIO_STATE_RELEASE_HOLDING	701
+
 
 
 #pragma region ANIMATION_ID
@@ -58,6 +58,14 @@
 #define ID_ANI_MARIO_BRACE_RIGHT 6
 #define ID_ANI_MARIO_BRACE_LEFT 26
 
+#define ID_ANI_MARIO_IDLE_HOLD_SHELL_RIGHT 7
+#define ID_ANI_MARIO_WALK_HOLD_SHELL_RIGHT 8
+#define ID_ANI_MARIO_JUMP_HOLD_SHELL_RIGHT 9
+
+#define ID_ANI_MARIO_IDLE_HOLD_SHELL_LEFT 27
+#define ID_ANI_MARIO_WALK_HOLD_SHELL_LEFT 28
+#define ID_ANI_MARIO_JUMP_HOLD_SHELL_LEFT 29
+
 #define ID_ANI_MARIO_DIE 999
 
 // SMALL MARIO
@@ -78,6 +86,14 @@
 
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 42
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 62
+
+#define ID_ANI_MARIO_SMALL_IDLE_HOLD_SHELL_RIGHT 45
+#define ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_RIGHT 46
+#define ID_ANI_MARIO_SMALL_JUMP_HOLD_SHELL_RIGHT 47
+
+#define ID_ANI_MARIO_SMALL_IDLE_HOLD_SHELL_LEFT 65
+#define ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_LEFT 66
+#define ID_ANI_MARIO_SMALL_JUMP_HOLD_SHELL_LEFT 67
 
 #pragma endregion
 
@@ -126,7 +142,8 @@ class CMario : public CGameObject
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
-
+	LPGAMEOBJECT holder = NULL;
+	bool holding;
 public:
 
 	CMario() : CGameObject()
@@ -164,4 +181,11 @@ public:
 	void SetLevel(int _level);
 	int GetLevel() { return this->level; }
 
+	void SetHolder(LPGAMEOBJECT _holder) { this->holder = _holder; }
+	LPGAMEOBJECT GetHolder() { return this->holder; }
+
+	void SetHolding(bool _holding) { this->holding = _holding; }
+	bool GetHolding() { return this->holding; }
+
+	int GetWidth() { return MARIO_BIG_BBOX_WIDTH; }
 };

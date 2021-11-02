@@ -222,8 +222,7 @@ void CGoomba::SetState(int state)
 		vy = -2 * GOOMBA_JUMP_LOW_SPEED;
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
-		vy = -MARIO_JUMP_SPEED_Y;
-	
+		vy = -GOOMBA_HIT_SPEED;
 		if (nx > 0)
 		{
 			vx = MARIO_WALKING_SPEED;

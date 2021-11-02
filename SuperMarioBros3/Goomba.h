@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "Koopas.h"
 #define GOOMBA_GRAVITY 0.0018f
-
+#define GOOMBA_HIT_SPEED 0.3f
 #define GOOMBA_BBOX_WIDTH			16
 #define GOOMBA_BBOX_HEIGHT			15
 #define GOOMBA_BBOX_HEIGHT_DIE		9

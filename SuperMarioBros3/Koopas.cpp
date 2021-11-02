@@ -43,9 +43,13 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 	}
-	if (dynamic_cast<CActivationPoint*>(e->obj)) {
-		OnCollisionWithActivationPoint(e);
+	else if (e->nx != 0)
+	{
+		vx = -vx;
 	}
+	/*if (dynamic_cast<CActivationPoint*>(e->obj)) {
+		OnCollisionWithActivationPoint(e);
+	}*/
 }
 
 void CKoopas::OnCollisionWithActivationPoint(LPCOLLISIONEVENT e)
@@ -59,9 +63,18 @@ void CKoopas::OnCollisionWithActivationPoint(LPCOLLISIONEVENT e)
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += (KOOPAS_GRAVITY * dt);
+	// Switch case for each owner type
+	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner) && dynamic_cast<CMario*>(this->owner)->GetHolding() == true) {
+		CMario* mario = dynamic_cast<CMario*>(this->owner);
+		x = this->owner->GetPositionX() + mario->GetNx() * mario->GetWidth();
+		y = this->owner->GetPositionY();
+	}
+	else {
+		vy += (KOOPAS_GRAVITY * dt);
+	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	DebugOut(L"vx: %f", vx);
 }
 
 

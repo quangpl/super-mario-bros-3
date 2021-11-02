@@ -2,12 +2,12 @@
 #include "GameObject.h"
 #include "ActivationPoint.h"
 #include "Constants.h"
+#include "Mario.h"
 #define KOOPAS_WALKING_SPEED	0.03f
 #define KOOPAS_GRAVITY	0.0018f
 #define RED_KOOPAS_SPEED_Y		0.06f
-#define KOOPAS_DIE_MOVE_SPEED	0.03f
 #define KOOPAS_SHELL_RUN_SPEED 0.15f
-#define KOOPAS_LIMIT_Y		100.0f
+
 
 #define KOOPAS_BBOX_WIDTH 16
 #define KOOPAS_BBOX_HEIGHT 26
@@ -56,6 +56,7 @@ enum KoopaType
 class CKoopas : public CGameObject
 {
 	int koopas_type;
+	LPGAMEOBJECT owner = NULL;
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -70,5 +71,8 @@ protected:
 public:
 	CKoopas(int koopas_type, float x, float y);
 	virtual void SetState(int state);
+
+	void SetOwner(LPGAMEOBJECT _owner) { this->owner = _owner; }
+	LPGAMEOBJECT GetOwner() { return this->owner; }
 
 };
