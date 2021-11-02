@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "debug.h"
 #include "Timer.h"
+#include "Koopas.h"
 #define GOOMBA_GRAVITY 0.0018f
 
 #define GOOMBA_BBOX_WIDTH			16
@@ -22,6 +23,8 @@
 #define GOOMBA_STATE_WALKING	20
 #define GOOMBA_STATE_JUMP_LOW	30
 #define GOOMBA_STATE_JUMP_HIGH	40
+#define GOOMBA_STATE_DIE_BY_ATTACK	59
+
 
 
 #define GOOMBA_ANI_WALKING 601
@@ -52,8 +55,6 @@ enum GoombaLevel
 class CGoomba : public CGameObject
 {
 protected:
-	float ax;
-	float ay;
 	int level;
 	ULONGLONG die_start;
 	ULONGLONG waiting_time;
@@ -64,12 +65,12 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable();
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-
+	virtual void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
 public:
 	CGoomba(int goombaType);
 	virtual void SetState(int state);

@@ -15,7 +15,7 @@ void CActivationPoint::Render()
 }
 
 bool CActivationPoint::CanThrough(CGameObject* sourceObject, float collisionNx, float collisionNy) {
-	if (dynamic_cast<CKoopas*>(sourceObject) && sourceObject->GetState() != KOOPAS_STATE_DIE_BY_ATTACK) {
+	if (dynamic_cast<CKoopas*>(sourceObject) && sourceObject->GetState() != KOOPAS_STATE_DIE_BY_ATTACK && sourceObject->GetState() != KOOPAS_STATE_DIE_MOVE) {
 		return false;
 	}
 	return true;

@@ -390,8 +390,8 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
-
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	// TODO: Need load first position camera from game data
+	CGame::GetInstance()->SetCamPos(cx, 220);
 
 	PurgeDeletedObjects();
 }

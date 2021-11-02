@@ -3,8 +3,7 @@
 CGoomba::CGoomba(int level) :CGameObject(x, y)
 {
 	this->level = level;
-	this->ax = 0;
-	this->ay = GOOMBA_GRAVITY;
+	this->gravity = GOOMBA_GRAVITY;
 	timer = new CTimer(0);
 	die_start = -1;
 	if (level == GoombaLevel::Nomal) {
@@ -55,8 +54,6 @@ void CGoomba::OnNoCollision(DWORD dt)
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (e->ny != 0)
 	{
 		vy = 0;
@@ -66,14 +63,23 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	if (dynamic_cast<CKoopas*>(e->obj))
+		OnCollisionWithKoopas(e);
+}
+
+void CGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
+{
+	if (e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
+		SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+		DebugOut(L"vx: %f, vy: %f", vx, vy);
+	}
 }
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-
-	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	vy += (this->gravity * dt);
+	if ((state == GOOMBA_STATE_DIE && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
@@ -83,7 +89,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	CMario* mario = CMario::GetInstance();
 	if (level != GoombaLevel::RedWing) {
-		vy = 0;
 		return;
 	}
 	if (timer->IsRunning() && !timer->IsTimeUp()) {
@@ -132,10 +137,14 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		default:
 			break;
 		}
-	
 	}
 }
-
+int CGoomba::IsCollidable() {
+	if (state == GOOMBA_STATE_DIE_BY_ATTACK) {
+		return 0;
+	}
+	return 1;
+}
 
 void CGoomba::Render()
 {
@@ -147,6 +156,9 @@ void CGoomba::Render()
 			break;
 		case GOOMBA_STATE_DIE:
 			ani = GOOMBA_ANI_DIE;
+			break;
+		case GOOMBA_STATE_DIE_BY_ATTACK:
+			ani = GOOMBA_ANI_DIE_BY_ATTACK;
 			break;
 		default:
 			break;
@@ -194,7 +206,6 @@ void CGoomba::SetState(int state)
 		die_start = GetTickCount64();
 		vx = 0;
 		vy = 0;
-		ay = 0;
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
@@ -209,6 +220,20 @@ void CGoomba::SetState(int state)
 		is_on_ground = false;
 		vx = nx * GOOMBA_WALKING_SPEED;
 		vy = -2 * GOOMBA_JUMP_LOW_SPEED;
+		break;
+	case GOOMBA_STATE_DIE_BY_ATTACK:
+		vy = -MARIO_JUMP_SPEED_Y;
+	
+		if (nx > 0)
+		{
+			vx = MARIO_WALKING_SPEED;
+		}
+		else
+		{
+			vx = -MARIO_WALKING_SPEED;
+		}
+		break;
+	default:
 		break;
 	}
 }

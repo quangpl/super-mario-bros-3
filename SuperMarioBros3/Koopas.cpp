@@ -18,8 +18,6 @@ void CKoopas::GetBoundingBox(float& left, float& top, float& right, float& botto
 	{
 	case KOOPAS_STATE_IDLE:
 	case KOOPAS_STATE_DIE_MOVE:
-		top = y + KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
-		break;
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		left = x - KOOPAS_BBOX_WIDTH / 2;
 		top = y - KOOPAS_BBOX_HEIGHT_DIE / 2;
@@ -77,7 +75,7 @@ void CKoopas::Render()
 		ani = PARA_KOOPAS_ANI_DIE;
 		break;
 	case KOOPAS_STATE_DIE_MOVE:
-		ani = KOOPAS_ANI_DIE_MOVE_SUPINE;
+		ani = PARA_KOOPAS_ANI_DIE_SPIN;
 		break;
 	case KOOPAS_STATE_IDLE:
 		ani = KOOPAS_ANI_DIE;
@@ -123,6 +121,11 @@ void CKoopas::SetState(int state)
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
 		this->vx = 0;
+		break;
+	case KOOPAS_STATE_DIE_MOVE:
+		y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
+		this->SetVelocityX(KOOPAS_SHELL_RUN_SPEED);
+		break;
 	default:
 		break;
 	}

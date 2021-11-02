@@ -66,13 +66,13 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 {
 	CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 	if (e->obj->GetState() == KOOPAS_STATE_DIE_BY_ATTACK) {
-		koopas->SetVelocityX(KOOPAS_SHELL_RUN_SPEED);
+		koopas->SetState(KOOPAS_STATE_DIE_MOVE);
 		return;
 	}
 	if (e->ny < 0) {
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		koopas->SetState(KOOPAS_STATE_DIE_BY_ATTACK);
-	
+
 	}
 }
 
