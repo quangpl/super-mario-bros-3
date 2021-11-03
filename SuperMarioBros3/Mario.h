@@ -7,6 +7,7 @@
 #include "Koopas.h"
 #include "debug.h"
 
+#define MARIO_TRANSFORMATION_TIME 20000
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f
 
@@ -32,6 +33,9 @@
 #define MARIO_STATE_SIT_RELEASE		601
 #define MARIO_STATE_HOLDING	700
 #define MARIO_STATE_RELEASE_HOLDING	701
+
+#define MARIO_STATE_TRANSFORM_SMALL_TO_BIG	800
+
 
 
 
@@ -95,7 +99,8 @@
 #define ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_LEFT 66
 #define ID_ANI_MARIO_SMALL_JUMP_HOLD_SHELL_LEFT 67
 
-#pragma endregion
+#define ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT 70
+#define ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_RIGHT 71
 
 #define GROUND_Y 160.0f
 
@@ -130,8 +135,10 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
+	ULONGLONG transformation_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
+	int backup_state;
 	
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -142,6 +149,7 @@ class CMario : public CGameObject
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
+
 	LPGAMEOBJECT holder = NULL;
 	bool holding;
 public:

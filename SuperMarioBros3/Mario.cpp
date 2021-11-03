@@ -14,7 +14,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	DebugOut(L"Mario x: %f y: %f \n", x, y);
+	//DebugOut(L"Mario x: %f y: %f \n", x, y);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -106,6 +106,7 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 	if (level != MARIO_LEVEL_BIG && mushroom->GetEatable()) {
+		SetState(MARIO_STATE_TRANSFORM_SMALL_TO_BIG);
 		SetLevel(MARIO_LEVEL_BIG);
 		mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 	}
@@ -354,9 +355,21 @@ int CMario::GetAniIdBig()
 
 void CMario::Render()
 {
+	// TODO: Need improve with Effect
+
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
-
+	if (state == MARIO_STATE_TRANSFORM_SMALL_TO_BIG) {
+		if (nx > 0) {
+			aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_RIGHT;
+		}
+		else {
+			aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT;
+		}
+		animations->Get(aniId)->Render(x, y);
+		DebugOut(L"Mario ani: %d\n", aniId);
+		return;
+	}
 	if (state == MARIO_STATE_DIE)
 		aniId = ID_ANI_MARIO_DIE;
 	else if (level == MARIO_LEVEL_BIG)
@@ -369,10 +382,12 @@ void CMario::Render()
 	//RenderBoundingBox();
 
 	DebugOutTitle(L"Coins: %d", coin);
+	DebugOut(L"Mario ani: %d\n", aniId);
 }
 
 void CMario::SetState(int state)
 {
+	backup_state = this->state;
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return;
 
@@ -463,6 +478,11 @@ void CMario::SetState(int state)
 			}
 			this->holder = NULL;
 		}
+		break;
+	case MARIO_STATE_TRANSFORM_SMALL_TO_BIG:
+		transformation_start = GetTickCount64();
+		vx = 0;
+		vy = 0;
 		break;
 	}
 	CGameObject::SetState(state);

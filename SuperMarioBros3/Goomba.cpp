@@ -206,6 +206,7 @@ void CGoomba::SetState(int state)
 		die_start = GetTickCount64();
 		vx = 0;
 		vy = 0;
+		this->gravity = 0;
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;

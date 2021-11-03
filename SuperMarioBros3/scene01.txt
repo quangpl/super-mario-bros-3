@@ -324,6 +324,11 @@ cloud.txt
 # on air hold shell right
 67	69	100
 
+# transfrom from small to big left
+70	61	100	21	100	61	100	21	100	61	100	21	100
+# transfrom from small to big right
+71	41	100	1	100	41	100	1	100	41	100	1	100
+
 #die
 999	999	100
 #==============QUESTION BRICK=============
