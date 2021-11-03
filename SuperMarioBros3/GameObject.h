@@ -46,6 +46,8 @@ public:
 	void SetGravity(float _gravity) { this->gravity = _gravity; }
 
 	int GetNx() { return this->nx; }
+	void SetNx(int _nx) {  this->nx = _nx; }
+
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }

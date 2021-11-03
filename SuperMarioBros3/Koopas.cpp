@@ -33,6 +33,7 @@ void CKoopas::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+	DebugOut(L"Vx: %f", vx);
 };
 
 void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -47,24 +48,12 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
-	/*if (dynamic_cast<CActivationPoint*>(e->obj)) {
-		OnCollisionWithActivationPoint(e);
-	}*/
-}
-
-void CKoopas::OnCollisionWithActivationPoint(LPCOLLISIONEVENT e)
-{
-	CActivationPoint* activation_point = dynamic_cast<CActivationPoint*>(e->obj);
-	int command = activation_point->GetCommand();
-	if (command == ActivationCommand::TurnKoopasAround) {
-		vx = -vx;
-	}
 }
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Switch case for each owner type
-	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner) && dynamic_cast<CMario*>(this->owner)->GetHolding() == true) {
+	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
 		CMario* mario = dynamic_cast<CMario*>(this->owner);
 		x = this->owner->GetPositionX() + mario->GetNx() * mario->GetWidth();
 		y = this->owner->GetPositionY();
@@ -136,7 +125,7 @@ void CKoopas::SetState(int state)
 		break;
 	case KOOPAS_STATE_DIE_MOVE:
 		y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
-		this->SetVelocityX(KOOPAS_SHELL_RUN_SPEED);
+		this->SetVelocityX(nx * KOOPAS_SHELL_RUN_SPEED);
 		break;
 	default:
 		break;

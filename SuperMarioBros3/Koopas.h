@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "ActivationPoint.h"
 #include "Constants.h"
 #include "Mario.h"
 #define KOOPAS_WALKING_SPEED	0.03f
@@ -67,7 +66,6 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnCollisionWithActivationPoint(LPCOLLISIONEVENT e);
 public:
 	CKoopas(int koopas_type, float x, float y);
 	virtual void SetState(int state);

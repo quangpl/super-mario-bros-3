@@ -69,6 +69,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	{
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		if (this->holding) {
+			this->holder = koopas;
 			this->SetState(MARIO_STATE_HOLDING);
 			koopas->SetOwner(this);
 			return;
@@ -454,15 +455,14 @@ void CMario::SetState(int state)
 		if (this->holder != NULL) {
 			if (dynamic_cast<CKoopas*>(this->holder)) {
 				CKoopas* koopas = dynamic_cast<CKoopas*>(this->holder);
-				koopas->SetVelocityX(0.5f);
 				koopas->SetOwner(NULL);
+				koopas->SetNx(this->nx);
+				koopas->SetState(KOOPAS_STATE_DIE_MOVE);
 			}
 			this->holder = NULL;
 		}
 		break;
 	}
-	
-
 	CGameObject::SetState(state);
 }
 
