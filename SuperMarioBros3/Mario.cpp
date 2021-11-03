@@ -135,7 +135,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (goomba->GetState() != GOOMBA_STATE_DIE)
+		if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 		{
 
 			if (goomba->GetLevel() == GoombaLevel::RedWing) {
@@ -153,7 +153,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -188,6 +188,7 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
+	bool has_holding = this->holder != NULL;
 	if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
@@ -197,7 +198,7 @@ int CMario::GetAniIdSmall()
 			else
 				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT;
 		}
-		else if (holding)
+		else if (has_holding)
 		{
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_SMALL_JUMP_HOLD_SHELL_RIGHT;
@@ -229,7 +230,7 @@ int CMario::GetAniIdSmall()
 				else {
 					aniId = ID_ANI_MARIO_SMALL_IDLE_LEFT;
 				}
-				if (holding) {
+				if (has_holding) {
 					if (nx > 0) {
 						aniId = ID_ANI_MARIO_SMALL_IDLE_HOLD_SHELL_RIGHT;
 					}
@@ -246,7 +247,7 @@ int CMario::GetAniIdSmall()
 					aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
 				else if (ax == MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
-				if (holding) {
+				if (has_holding) {
 					aniId = ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_RIGHT;
 				}
 			}
@@ -258,7 +259,7 @@ int CMario::GetAniIdSmall()
 					aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
-				if (holding) {
+				if (has_holding) {
 					aniId = ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_LEFT;
 				}
 			}
@@ -275,6 +276,7 @@ int CMario::GetAniIdSmall()
 int CMario::GetAniIdBig()
 {
 	int aniId = -1;
+	bool has_holding = this->holder != NULL;
 	if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
@@ -284,7 +286,7 @@ int CMario::GetAniIdBig()
 			else
 				aniId = ID_ANI_MARIO_JUMP_RUN_LEFT;
 		}
-		else if (holding) {
+		else if (has_holding) {
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_JUMP_HOLD_SHELL_RIGHT;
 			else
@@ -315,7 +317,7 @@ int CMario::GetAniIdBig()
 				else {
 					aniId = ID_ANI_MARIO_IDLE_LEFT;
 				}
-				if (holding) {
+				if (has_holding) {
 					aniId = ID_ANI_MARIO_IDLE_HOLD_SHELL_RIGHT;
 				}
 
@@ -328,7 +330,7 @@ int CMario::GetAniIdBig()
 					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
 				else if (ax == MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_WALKING_RIGHT;
-				if (holding) {
+				if (has_holding) {
 					aniId = ID_ANI_MARIO_WALK_HOLD_SHELL_RIGHT;
 				}
 			}
@@ -340,7 +342,7 @@ int CMario::GetAniIdBig()
 					aniId = ID_ANI_MARIO_RUNNING_LEFT;
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_WALKING_LEFT;
-				if (holding) {
+				if (has_holding) {
 					aniId = ID_ANI_MARIO_WALK_HOLD_SHELL_LEFT;
 				}
 			}
