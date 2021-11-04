@@ -3,9 +3,11 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "debug.h"
+
 #define MUSHROOM_GRAVITY			0.0003f
 #define MUSHROOM_SPEED_Y	0.05f
 #define MUSHROOM_SPEED_X	0.05f
+
 
 #define MUSHROOM_TIME_WAIT_TO_RUN 2000
 

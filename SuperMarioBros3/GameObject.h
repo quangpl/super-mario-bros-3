@@ -42,6 +42,9 @@ public:
 	float GetPositionX() { return this->x; }
 	float GetPositionY() { return this->y; }
 
+	void SetPositionX(float _x) { this->x = _x; }
+	void SetPositionY(float _y) { this->y = _y; }
+
 	float GetGravity() { return this->gravity; }
 	void SetGravity(float _gravity) { this->gravity = _gravity; }
 

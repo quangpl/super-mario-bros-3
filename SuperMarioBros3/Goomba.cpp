@@ -6,6 +6,9 @@ CGoomba::CGoomba(int level) :CGameObject(x, y)
 	this->gravity = GOOMBA_GRAVITY;
 	timer = new CTimer(0);
 	die_start = -1;
+	if (nx > 0) {
+		nx *= -1;
+	}
 	if (level == GoombaLevel::Nomal) {
 		SetState(GOOMBA_STATE_WALKING);
 	}

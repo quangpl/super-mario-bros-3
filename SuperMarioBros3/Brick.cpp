@@ -34,14 +34,29 @@ void CBrick::Render()
 
 }
 
-void CBrick::Update(ULONGLONG dt, vector<LPGAMEOBJECT>* objects)
+void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
 	CGameObject::Update(dt);
+	//if (state == BRICK_STATE_BROKEN && GetTickCount64() - start_shipping > BRICK_REVERT_POSITION_TIME) {
+	//	y = y + BRICK_SHIP_DISTANCE;
+	//}
 }
 
 void CBrick::SetState(int state)
 {
 	CGameObject::SetState(state);
+	switch (state)
+	{
+	case BRICK_STATE_BROKEN:
+		start_shipping = GetTickCount64();
+		if (dynamic_cast<CMushroom*>(this->child_item)) {
+			CMushroom* mushroom = dynamic_cast<CMushroom*>(this->child_item);
+			mushroom->SetState(UP_MUSHROOM_STATE_UP);
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 

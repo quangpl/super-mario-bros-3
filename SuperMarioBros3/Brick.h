@@ -2,13 +2,18 @@
 
 #include "GameObject.h"
 #include "Constants.h"
-
+#include "debug.h"
+#include "MushRoom.h"
 
 #define BRICK_ANI_NORMAL		702
 #define BRICK_ANI_BROKEN		703
 
 #define BRICK_STATE_NORMAL		1
 #define BRICK_STATE_BROKEN		2
+
+// TODO: need improve with Effect
+#define BRICK_SHIP_DISTANCE 4
+#define BRICK_REVERT_POSITION_TIME 2000
 
 enum BrickType
 {
@@ -21,7 +26,8 @@ enum BrickChildItem {
 };
 class CBrick : public CGameObject
 {
-
+	int start_shipping;
+	float start_y;
 public:
 	int brickType;
 	int child_item_id = BrickChildItem::Empty;
@@ -32,7 +38,7 @@ public:
 	~CBrick();
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	virtual void Update(ULONGLONG dt, vector<LPGAMEOBJECT>* colliable_objects);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;
 	void SetState(int state);
 
 	int GetChildItemId() { return this->child_item_id; }

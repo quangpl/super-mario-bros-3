@@ -65,6 +65,12 @@ void CMushroom::SetState(int state)
 		vy = -MUSHROOM_SPEED_Y;
 		break;
 	case UP_MUSHROOM_STATE_RUN:
+		if (CMario::GetInstance()->GetPositionX() > x) {
+			nx = -1;
+		}
+		else {
+			nx = 1;
+		}
 		vx = nx * MUSHROOM_SPEED_X;
 		this->gravity = MUSHROOM_GRAVITY;
 		break;
