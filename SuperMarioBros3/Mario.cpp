@@ -12,9 +12,13 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	// TODO: Need improve after implement Camera completely
+	if (x <= 0) {
+		x = 0;
+	}
 	vy += ay * dt;
 	vx += ax * dt;
-	//DebugOut(L"Mario x: %f y: %f \n", x, y);
+	DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -242,9 +246,9 @@ int CMario::GetAniIdSmall()
 			{
 				if (ax < 0)
 					aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
+				else if (vx >= MARIO_RUNNING_SPEED)
 					aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
+				else
 					aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
 				if (has_holding) {
 					aniId = ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_RIGHT;
@@ -254,9 +258,9 @@ int CMario::GetAniIdSmall()
 			{
 				if (ax > 0)
 					aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
+				else if (vx <= -MARIO_RUNNING_SPEED)
 					aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
+				else
 					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
 				if (has_holding) {
 					aniId = ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_LEFT;
@@ -325,10 +329,11 @@ int CMario::GetAniIdBig()
 			{
 				if (ax < 0)
 					aniId = ID_ANI_MARIO_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
+				else if (vx >= MARIO_RUNNING_SPEED)
 					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
+				else {
 					aniId = ID_ANI_MARIO_WALKING_RIGHT;
+				}
 				if (has_holding) {
 					aniId = ID_ANI_MARIO_WALK_HOLD_SHELL_RIGHT;
 				}
@@ -337,9 +342,9 @@ int CMario::GetAniIdBig()
 			{
 				if (ax > 0)
 					aniId = ID_ANI_MARIO_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
+				else if (vx <= -MARIO_RUNNING_SPEED)
 					aniId = ID_ANI_MARIO_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
+				else
 					aniId = ID_ANI_MARIO_WALKING_LEFT;
 				if (has_holding) {
 					aniId = ID_ANI_MARIO_WALK_HOLD_SHELL_LEFT;
@@ -380,7 +385,7 @@ void CMario::Render()
 	//RenderBoundingBox();
 
 	DebugOutTitle(L"Coins: %d", coin);
-	DebugOut(L"Mario ani: %d\n", aniId);
+	DebugOut(L"Mario ani: %d \n", aniId);
 }
 
 void CMario::SetState(int state)
@@ -391,6 +396,9 @@ void CMario::SetState(int state)
 
 	switch (state)
 	{
+	case MARIO_STATE_RELEASE_RUNNING:
+		ax = 0;
+		break;
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
 		maxVx = MARIO_RUNNING_SPEED;

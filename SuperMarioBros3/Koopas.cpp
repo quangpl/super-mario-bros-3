@@ -33,7 +33,7 @@ void CKoopas::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
-	DebugOut(L"Vx: %f", vx);
+	//DebugOut(L"Vx: %f", vx);
 };
 
 void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -63,7 +63,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	DebugOut(L"vx: %f", vx);
+	//DebugOut(L"vx: %f", vx);
 }
 
 
