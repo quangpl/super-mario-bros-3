@@ -9,6 +9,7 @@
 #include "Goomba.h"
 #include "Animations.h"
 #include "Ground.h"
+#include "Coin.h"
 #include "Pipe.h"
 #include "Koopas.h"
 #include "MushRoom.h"

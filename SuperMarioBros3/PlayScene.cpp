@@ -188,10 +188,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			dynamic_cast<CBrick*>(obj)->SetChildItem(mushroom);
 			objects.push_back(mushroom);
 		}
+		/*else if (item == BrickChildItem::Coin) {
+			CCoin* coin = new CCoin();
+			coin->SetPosition(x, y);
+			dynamic_cast<CBrick*>(obj)->SetChildItem(coin);
+			objects.push_back(coin);
+		}*/
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
-		obj = new CCoin(x, y);
+		obj = new CCoin();
 		break;
 	}
 	case OBJECT_TYPE_GROUND:
@@ -365,7 +371,7 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
-	
+
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;

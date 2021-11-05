@@ -75,7 +75,7 @@ void CGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 {
 	if (e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
 		SetState(GOOMBA_STATE_DIE_BY_ATTACK);
-		DebugOut(L"vx: %f, vy: %f", vx, vy);
+		//DebugOut(L"vx: %f, vy: %f", vx, vy);
 	}
 }
 

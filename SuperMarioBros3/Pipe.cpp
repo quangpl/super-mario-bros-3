@@ -19,7 +19,7 @@ void CPipe::Render()
 			ani = PIPE_ANI_SHORT;
 	}
 	CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CPipe::GetBoundingBox(float& l, float& t, float& r, float& b)

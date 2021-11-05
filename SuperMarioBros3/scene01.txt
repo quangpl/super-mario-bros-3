@@ -243,6 +243,13 @@ cloud.txt
 303	309	121	325	137	20
 #up mushroom
 306	286	121	302	137	20
+#=================COIN======================
+351	228	7	242	23	21
+352	245	7	257	23	21
+353	258	7	268	23	21
+354	271	7	283	23	21
+
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ==== MARIO =========
@@ -411,6 +418,13 @@ cloud.txt
 301	301	100
 #up mushroom
 306	306	100
+
+#=====COIN=======
+# idle coin
+351	351	100
+# rotating coin	
+352	351	100	352	100	353	100	354	100
+
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
@@ -493,7 +507,7 @@ cloud.txt
 3	3200	224	14	2	1	2320	354	1	2	3	25	26
 3	2976	240	14	2	0	0	0	1	2	3	23	24
 # MARIO
-0	450	30
+0	50	30
 #Goomba
 11	336	400	51	1	4	5	2	3
 11	608	380	51	1	3	5	4	5

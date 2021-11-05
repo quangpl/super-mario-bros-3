@@ -18,7 +18,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vy += ay * dt;
 	vx += ax * dt;
-	DebugOut(L"Mario vx: %f \n", vx);
+	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -71,6 +71,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 	switch (koopas->GetState())
 	{
+	// TODO: Improve collision framework to make it easier
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		if (this->holding) {
 			this->holder = koopas;
@@ -109,6 +110,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	// TODO: Improve collision framework to do better
 	if (level != MARIO_LEVEL_BIG && mushroom->GetEatable()) {
 		SetState(MARIO_STATE_TRANSFORM_SMALL_TO_BIG);
 		SetLevel(MARIO_LEVEL_BIG);
@@ -119,15 +121,15 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
 	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-	if (brick->GetState() == BRICK_STATE_BROKEN) {
+	if (brick->GetState() != BRICK_STATE_NORMAL) {
 		return;
 	}
 	if (e->ny > 0)
 	{
-		if (brick->GetChildItemId() == BrickChildItem::MushRoom)
-		{
-			brick->SetState(BRICK_STATE_BROKEN);
-		}
+		if (dynamic_cast<CCoin*>(e->obj)) {
+			coin++;
+	}
+		brick->SetState(BRICK_STATE_MOVE_UP);
 	}
 }
 
@@ -370,7 +372,7 @@ void CMario::Render()
 			aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT;
 		}
 		animations->Get(aniId)->Render(x, y);
-		DebugOut(L"Mario ani: %d\n", aniId);
+		//DebugOut(L"Mario ani: %d\n", aniId);
 		return;
 	}
 	if (state == MARIO_STATE_DIE)
@@ -385,7 +387,7 @@ void CMario::Render()
 	//RenderBoundingBox();
 
 	DebugOutTitle(L"Coins: %d", coin);
-	DebugOut(L"Mario ani: %d \n", aniId);
+	//DebugOut(L"Mario ani: %d \n", aniId);
 }
 
 void CMario::SetState(int state)
@@ -524,7 +526,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CMario::SetLevel(int l)
 {
-	// TODO : Must fix "hard" behavior to make sure everything right.
+	// TODO : Improve collision framework to remove "hard" behavior to make sure everything right.
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{

@@ -4,12 +4,18 @@
 #include "Constants.h"
 #include "debug.h"
 #include "MushRoom.h"
+#include "Coin.h"
 
+#define BRICK_RETURN_DISTANCE 5
 #define BRICK_ANI_NORMAL		702
 #define BRICK_ANI_BROKEN		703
 
+#define BRICK_SPEED 0.1f
+
 #define BRICK_STATE_NORMAL		1
 #define BRICK_STATE_BROKEN		2
+#define BRICK_STATE_MOVE_UP		3
+#define BRICK_STATE_MOVE_DOWN	4
 
 // TODO: need improve with Effect
 #define BRICK_SHIP_DISTANCE 4
@@ -22,18 +28,17 @@ enum BrickType
 };
 enum BrickChildItem {
 	MushRoom = 4,
-	Empty = 0
+	Empty = 0,
+	Coin = 2
 };
 class CBrick : public CGameObject
 {
-	int start_shipping;
 	float start_y;
 public:
 	int brickType;
 	int child_item_id = BrickChildItem::Empty;
 	LPGAMEOBJECT child_item = NULL;
-
-public:
+	void OnNoCollision(DWORD dt);
 	CBrick(float x, float y, int brickType, int child_item_id);
 	~CBrick();
 	virtual void Render();

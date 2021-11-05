@@ -11,7 +11,7 @@ CActivationPoint::CActivationPoint(int w, int h, int command)
 
 void CActivationPoint::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 bool CActivationPoint::CanThrough(CGameObject* sourceObject, float collisionNx, float collisionNy) {

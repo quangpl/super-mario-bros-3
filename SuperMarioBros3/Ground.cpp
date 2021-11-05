@@ -12,7 +12,7 @@ CGround::CGround(int w, int h, bool i)
 
 void CGround::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 bool CGround::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy) {
 	if (collisionNy > 0) {

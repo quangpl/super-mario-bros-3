@@ -108,7 +108,7 @@ void CKoopas::Render()
 
 	CAnimations::GetInstance()->Get(ani)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CKoopas::SetState(int state)
@@ -125,6 +125,7 @@ void CKoopas::SetState(int state)
 		break;
 	case KOOPAS_STATE_DIE_MOVE:
 		y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
+		nx = CMario::GetInstance()->GetNx();
 		this->SetVelocityX(nx * KOOPAS_SHELL_RUN_SPEED);
 		break;
 	default:
