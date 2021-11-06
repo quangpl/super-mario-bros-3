@@ -323,7 +323,12 @@ int CMario::GetAniIdBig()
 					aniId = ID_ANI_MARIO_IDLE_LEFT;
 				}
 				if (has_holding) {
-					aniId = ID_ANI_MARIO_IDLE_HOLD_SHELL_RIGHT;
+					if (nx > 0) {
+						aniId = ID_ANI_MARIO_IDLE_HOLD_SHELL_RIGHT;
+					}
+					else {
+						aniId = ID_ANI_MARIO_IDLE_HOLD_SHELL_LEFT;
+					}
 				}
 
 			}
