@@ -214,15 +214,16 @@ void CGoomba::SetState(int state)
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
 		is_on_ground = true;
+		y = y - (RED_PARA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT)/2;
 		break;
 	case GOOMBA_STATE_JUMP_LOW:
 		is_on_ground = false;
-		vx = nx * GOOMBA_WALKING_SPEED;
+		//vx = nx * GOOMBA_WALKING_SPEED;
 		vy = -GOOMBA_JUMP_LOW_SPEED;
 		break;
 	case GOOMBA_STATE_JUMP_HIGH:
 		is_on_ground = false;
-		vx = nx * GOOMBA_WALKING_SPEED;
+		//vx = nx * GOOMBA_WALKING_SPEED;
 		vy = -2 * GOOMBA_JUMP_LOW_SPEED;
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
