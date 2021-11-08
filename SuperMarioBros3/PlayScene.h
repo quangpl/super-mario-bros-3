@@ -14,7 +14,7 @@
 #include "Koopas.h"
 #include "MushRoom.h"
 #include "ActivationPoint.h"
-
+#include "EffectManager.h";
 
 class CPlayScene: public CScene
 {

@@ -1,7 +1,8 @@
+#pragma once
 #include <unordered_map>
 #include "Effect.h"
 #include "debug.h"
-
+using namespace std;
 class CEffectManager
 {
 	static CEffectManager* __instance;

@@ -384,7 +384,11 @@ void CPlayScene::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
-
+	for (auto x : CEffectManager::GetInstance()->GetAll())
+	{
+		LPEFFECT effect = x.second;
+		effect->Update(dt);
+	}
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -408,6 +412,12 @@ void CPlayScene::Render()
 	map->Draw();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+
+	for (auto x : CEffectManager::GetInstance()->GetAll())
+	{
+		LPEFFECT effect = x.second;
+		effect->Render();
+	}
 }
 
 /*

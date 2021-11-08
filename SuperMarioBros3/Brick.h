@@ -5,6 +5,8 @@
 #include "debug.h"
 #include "MushRoom.h"
 #include "Coin.h"
+#include "EffectManager.h"
+#include "BrickEffect.h"
 
 #define BRICK_RETURN_DISTANCE 5
 #define BRICK_ANI_NORMAL		702
@@ -16,6 +18,7 @@
 #define BRICK_STATE_BROKEN		2
 #define BRICK_STATE_MOVE_UP		3
 #define BRICK_STATE_MOVE_DOWN	4
+#define BRICK_STATE_HIT		5
 
 // TODO: need improve with Effect
 #define BRICK_SHIP_DISTANCE 4

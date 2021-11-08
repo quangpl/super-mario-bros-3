@@ -1,5 +1,8 @@
+#pragma once
 #include "Effect.h"
 #include "Animations.h"
+#include <functional>
+
 #define BRICK_RETURN_DISTANCE 5
 #define BRICK_ANI_NORMAL		702
 #define BRICK_ANI_BROKEN		703
@@ -17,16 +20,19 @@
 #define BRICK_REVERT_POSITION_TIME 2000
 
 #define BRICK_ANI_BROKEN    703
+
 class CBrickEffect :
     public CEffect
 {
+    int state;
     float start_y;
 public:
+    function<void()> callback;
     CBrickEffect(float x, float y);
 
     virtual void Update(DWORD dt);
     virtual void Render();
-    virtual void SetState(int state);
-    //virtual void Start(function<void()> callback = 0);
+    void SetState(int state);
+    void Start(function<void()> _callback = 0);
 };
 

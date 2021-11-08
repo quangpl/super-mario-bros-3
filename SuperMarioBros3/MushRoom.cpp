@@ -21,6 +21,15 @@ void CMushroom::OnNoCollision(DWORD dt)
 	x += vx * dt;
 	y += vy * dt;
 };
+bool CMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy)
+{
+	if (dynamic_cast<CGoomba*>(gameObject)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+};
 
 void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {

@@ -13,12 +13,12 @@ void CBrickEffect::Render()
 void CBrickEffect::Start(function<void()> _callback)
 {
 	SetState(BRICK_STATE_MOVE_UP);
-	//this->callback = _callback;
+	this->callback = _callback;
 }
 
 void CBrickEffect::SetState(int state)
 {
-	CEffect::SetState(state);
+	this->state = state;
 	switch (state)
 	{
 	case BRICK_STATE_MOVE_UP:
@@ -34,7 +34,6 @@ void CBrickEffect::SetState(int state)
 
 void CBrickEffect::Update(DWORD dt)
 {
-	CEffect::Update(dt);
 	x += vx * dt;
 	y += vy * dt;
 	//DebugOut(L"start_y: %f, y:%f \n", start_y, y);
@@ -49,8 +48,8 @@ void CBrickEffect::Update(DWORD dt)
 		if (y >= start_y) {
 			y = start_y;
 			vy = 0;
+			this->callback();
 		}
-		//this->callback();
 		break;
 	default:
 		break;

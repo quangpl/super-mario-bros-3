@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "debug.h"
+#include "Goomba.h"
 
 #define MUSHROOM_GRAVITY			0.0003f
 #define MUSHROOM_SPEED_Y	0.05f
@@ -36,6 +37,7 @@ protected:
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual bool CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy);
 
 public:
 	CMushroom(int goombaType);

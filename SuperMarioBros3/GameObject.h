@@ -31,6 +31,7 @@ protected:
 	int state;
 	int ani;
 	bool isDeleted; 
+	bool is_show = true;
 
 public:
 	int type;

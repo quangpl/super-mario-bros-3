@@ -1,3 +1,6 @@
+#pragma once
+#include <windows.h>
+
 class CEffect
 {
 public:
@@ -8,18 +11,10 @@ public:
 	float vx = 0;
 	float vy = 0;
 
-	int state = 0;
-	//function<void()> callback;
 	CEffect(float x, float y);
 
 	virtual void Render() = 0;
 	virtual void Update(DWORD dt) = 0;
-	/*virtual void Start(function<void()> _callback) {
-		this->callback = _callback;
-	};*/
-	virtual void SetState(int _state) {
-		this->state = _state;
-	}
 	void SetPositionX(float _x) {
 		this->x = _x;
 	}

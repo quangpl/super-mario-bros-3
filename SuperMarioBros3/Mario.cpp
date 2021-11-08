@@ -129,7 +129,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 		if (dynamic_cast<CCoin*>(e->obj)) {
 			coin++;
 		}
-		brick->SetState(BRICK_STATE_MOVE_UP);
+		brick->SetState(BRICK_STATE_HIT);
 	}
 }
 
