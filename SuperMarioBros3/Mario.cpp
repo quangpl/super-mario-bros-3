@@ -71,7 +71,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 	switch (koopas->GetState())
 	{
-	// TODO: Improve collision framework to make it easier
+		// TODO: Improve collision framework to make it easier
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		if (this->holding) {
 			this->holder = koopas;
@@ -128,7 +128,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 	{
 		if (dynamic_cast<CCoin*>(e->obj)) {
 			coin++;
-	}
+		}
 		brick->SetState(BRICK_STATE_MOVE_UP);
 	}
 }
@@ -468,8 +468,21 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_IDLE:
-		ax = 0.0f;
-		vx = 0.0f;
+		ax = 0;
+		if (vx > 0) {
+			vx = vx - MARIO_DECREASE_SPEED;
+			if (vx < 0)
+			{
+				vx = 0;
+			}
+		}
+		else if (vx < 0) {
+			vx = vx + MARIO_DECREASE_SPEED;
+			if (vx > 0)
+			{
+				vx = 0;
+			}
+		}
 		break;
 
 	case MARIO_STATE_DIE:
