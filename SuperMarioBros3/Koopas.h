@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "Mario.h"
+#include "Brick.h"
 #define KOOPAS_WALKING_SPEED	0.03f
 #define KOOPAS_GRAVITY	0.0018f
 #define RED_KOOPAS_SPEED_Y		0.06f
@@ -66,6 +67,8 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual void OnCollisionWithBrick(LPCOLLISIONEVENT e);
+
 public:
 	CKoopas(int koopas_type, float x, float y);
 	virtual void SetState(int state);

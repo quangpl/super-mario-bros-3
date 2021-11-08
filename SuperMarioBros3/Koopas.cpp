@@ -48,6 +48,15 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	if (dynamic_cast<CBrick*>(e->obj)) {
+		OnCollisionWithBrick(e);
+	}
+}
+
+void CKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	e->obj->SetState(BRICK_STATE_BROKEN);
 }
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
