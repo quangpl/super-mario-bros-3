@@ -7,7 +7,6 @@
 #include "Textures.h"
 #include "Sprites.h"
 #include "Portal.h"
-#include "Coin.h"
 #include "Platform.h"
 
 #include "SampleKeyEventHandler.h"
@@ -197,7 +196,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
-		obj = new CCoin();
+		/*obj = new CCoin();*/
 		break;
 	}
 	case OBJECT_TYPE_GROUND:

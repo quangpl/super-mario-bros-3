@@ -54,8 +54,9 @@ void CBrick::SetState(int state)
 	case BRICK_STATE_HIT:
 	{
 		is_show = false;
+		CEffectManager* effect_manager = CEffectManager::GetInstance();
 		CBrickEffect* hit_effect = new CBrickEffect(x, y);
-		int hit_effect_id = CEffectManager::GetInstance()->Add(hit_effect);
+		int hit_effect_id = effect_manager->Add(hit_effect);
 		hit_effect->Start([this, hit_effect_id]() {
 			is_show = true;
 			CEffectManager::GetInstance()->Delete(hit_effect_id);
@@ -64,9 +65,12 @@ void CBrick::SetState(int state)
 			CMushroom* mushroom = dynamic_cast<CMushroom*>(this->child_item);
 			mushroom->SetState(UP_MUSHROOM_STATE_UP);
 		}
-		else if (dynamic_cast<CCoin*>(this->child_item)) {
-			CCoin* coin = dynamic_cast<CCoin*>(this->child_item);
-			coin->SetState(COIN_STATE_MOVE_UP);
+		else if (this->child_item_id == BrickChildItem::Coin) {
+			CCoindEffect* coin_effect = new CCoindEffect(x, y);
+			int coin_effect_id = effect_manager->Add(coin_effect);
+			coin_effect->Start([this, coin_effect_id]() {
+				CEffectManager::GetInstance()->Delete(coin_effect_id);
+			});
 		}
 		break;
 	}

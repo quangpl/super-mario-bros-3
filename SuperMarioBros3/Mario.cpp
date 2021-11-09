@@ -5,7 +5,6 @@
 #include "Game.h"
 
 #include "Goomba.h"
-#include "Coin.h"
 #include "Portal.h"
 
 #include "Collision.h"
@@ -54,8 +53,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
-	else if (dynamic_cast<CCoin*>(e->obj))
-		OnCollisionWithCoin(e);
+	//else if (dynamic_cast<CCoin*>(e->obj))
+	//	OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
@@ -126,9 +125,9 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 	}
 	if (e->ny > 0)
 	{
-		if (dynamic_cast<CCoin*>(e->obj)) {
+		/*if (dynamic_cast<CCoin*>(e->obj)) {
 			coin++;
-		}
+		}*/
 		brick->SetState(BRICK_STATE_HIT);
 	}
 }

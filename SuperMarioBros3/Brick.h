@@ -4,7 +4,7 @@
 #include "Constants.h"
 #include "debug.h"
 #include "MushRoom.h"
-#include "Coin.h"
+#include "CoinEffect.h"
 #include "EffectManager.h"
 #include "BrickEffect.h"
 
