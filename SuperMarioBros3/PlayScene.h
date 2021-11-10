@@ -5,9 +5,15 @@
 #include "GameObject.h"
 #include "Brick.h"
 #include "Mario.h"
+#include "TileMap.h"
 #include "Goomba.h"
-//#include "Koopas.h"
-
+#include "Animations.h"
+#include "Ground.h"
+#include "Pipe.h"
+#include "Koopas.h"
+#include "MushRoom.h"
+#include "ActivationPoint.h"
+#include "EffectManager.h";
 
 class CPlayScene: public CScene
 {
@@ -17,15 +23,16 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 
+	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
-
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
-
+	void _ParseSection_TILE_MAP(string line);
 	void LoadAssets(LPCWSTR assetFile);
 	
 public: 
+	CTileMap* map = nullptr;
 	CPlayScene(int id, LPCWSTR filePath);
 
 	virtual void Load();

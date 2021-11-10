@@ -15,6 +15,7 @@ using namespace std;
 
 class CGameObject
 {
+
 protected:
 
 	float x; 
@@ -23,21 +24,40 @@ protected:
 	float vx;
 	float vy;
 
+	float gravity;
+
 	int nx;	 
 
 	int state;
-
+	int ani;
 	bool isDeleted; 
+	bool is_show = true;
 
-public: 
+public:
+	int type;
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void SetVelocityX(float _vx) { this->vx = _vx; }
+	void SetVelocityY(float _vy) { this->vy = _vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
+	float GetPositionX() { return this->x; }
+	float GetPositionY() { return this->y; }
+
+	void SetPositionX(float _x) { this->x = _x; }
+	void SetPositionY(float _y) { this->y = _y; }
+
+	float GetGravity() { return this->gravity; }
+	void SetGravity(float _gravity) { this->gravity = _gravity; }
+
+	int GetNx() { return this->nx; }
+	void SetNx(int _nx) {  this->nx = _nx; }
+
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
+
 
 	void RenderBoundingBox();
 
@@ -65,6 +85,7 @@ public:
 	virtual int IsBlocking() { return 1; }
 
 	~CGameObject();
-
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
+
 };

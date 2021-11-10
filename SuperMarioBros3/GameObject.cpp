@@ -12,7 +12,7 @@ CGameObject::CGameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
-	nx = 1;	
+	nx = 1;
 	state = -1;
 	isDeleted = false;
 }
@@ -24,7 +24,7 @@ void CGameObject::RenderBoundingBox()
 
 	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
 
-	float l,t,r,b; 
+	float l, t, r, b;
 
 	GetBoundingBox(l, t, r, b);
 	rect.left = 0;
@@ -32,13 +32,19 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	float cx, cy; 
+	float cx, cy;
 	CGame::GetInstance()->GetCamPos(cx, cy);
 
-	CGame::GetInstance()->Draw(x - cx, y - cy, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.25f);
+	CGame::GetInstance()->Draw((r + l )/ 2 - cx,(t + b )/ 2 - cy, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.45f);
+
 }
 
 CGameObject::~CGameObject()
 {
 
+}
+
+bool CGameObject::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy)
+{
+	return false;
 }

@@ -192,6 +192,9 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
+		if (c->obj->CanThrough(objSrc, coEvents[i]->nx, coEvents[i]->ny) == true) {
+			continue;
+		}
 		if (c->isDeleted) continue;
 		if (c->obj->IsDeleted()) continue; 
 
