@@ -28,11 +28,9 @@ protected:
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
-	void _ParseSection_TILE_MAP(string line);
 	void LoadAssets(LPCWSTR assetFile);
 	
 public: 
-	CTileMap* map = nullptr;
 	CPlayScene(int id, LPCWSTR filePath);
 
 	virtual void Load();
