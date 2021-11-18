@@ -8,7 +8,7 @@ Camera::Camera()
 
 Camera::Camera(Vec2 size)
 {
-	this->position = Vec2(0,700);
+	this->position = Vec2(0, 850);
 	this->size = size;
 }
 

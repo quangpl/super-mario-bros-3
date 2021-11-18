@@ -8,7 +8,6 @@ CGameMap::CGameMap()
 	this->width = this->height = this->tile_height = this->tile_width = 0;
 }
 
-
 void CGameMap::AddLayer(shared_ptr<CLayer> layer)
 {
 	this->layers.push_back(layer);
