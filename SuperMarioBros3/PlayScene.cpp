@@ -85,7 +85,30 @@ void CPlayScene::_ParseSection_ASSETS(string line)
 	LoadAssets(path.c_str());
 }
 
+void CPlayScene::LoadMap() {
+	TiXmlDocument doc(this->xml_path.c_str());
 
+	if (!doc.LoadFile()) {
+		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(this->xml_path));
+		return;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+
+	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
+	this->camera = make_shared<Camera>(camSize);
+	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
+	//this->camera->SetTracking(mario);
+
+	this->gameMap = CGameMap::FromTMX(mapPath);
+	this->gameMap->SetCamera(camera);
+
+	//Vec2 mapBound = gameMap->GetBound();
+	//this->mario->MovingBound = RectF(0, -mapBound.y, mapBound.x, mapBound.y);
+
+	doc.Clear();
+
+}
 void CPlayScene::_ParseSection_ANIMATIONS(string line)
 {
 	vector<string> tokens = split(line);
@@ -273,7 +296,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
-
+	LoadMap();
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -339,6 +362,7 @@ void CPlayScene::Load()
 void CPlayScene::Update(DWORD dt)
 {
 
+	
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;
@@ -376,6 +400,9 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	if (this->gameMap) {
+		this->gameMap->Render();
+	}
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 

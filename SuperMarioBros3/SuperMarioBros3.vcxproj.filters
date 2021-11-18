@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{1be1e9dd-a0da-4330-89fd-e2aefdbbea6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{a05dadb7-1fa6-4609-8dbd-b0815e5e37d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{68653754-1247-4657-abfa-dddc0ce7a435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataReader">
+      <UniqueIdentifier>{f3da81a4-3d39-475b-a1a7-f5bd7095e36b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +113,45 @@
     </ClCompile>
     <ClCompile Include="BrickEffect.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Direction.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="RectBox.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraRegion.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapData.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="DataReader.cpp">
+      <Filter>DataReader</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +259,39 @@
     </ClInclude>
     <ClInclude Include="BrickEffect.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="RectBox.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraRegion.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapData.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="DataReader.h">
+      <Filter>DataReader</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

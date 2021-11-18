@@ -9,8 +9,16 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include "tinyXML/tinystr.h"
+#include "tinyXML/tinyxml.h"
+#ifndef VECTOR_0
+#define VECTOR_0 Vec2(0, 0)
+#endif // !VEC0
+#include <D3DX10math.h>
 
+static DWORD __id = 0;
 
+typedef D3DXVECTOR2 Vec2;
 using namespace std;
 
 vector<string> split(string line, string delimeter = "\t");
