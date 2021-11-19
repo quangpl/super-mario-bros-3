@@ -5,7 +5,6 @@
 #include "GameObject.h"
 #include "Brick.h"
 #include "Mario.h"
-#include "TileMap.h"
 #include "Goomba.h"
 #include "Animations.h"
 #include "Ground.h"
@@ -32,7 +31,7 @@ protected:
 	vector<LPGAMEOBJECT> objects;
 	
 public: 
-	CPlayScene(int id, LPCWSTR filePath);
+	CPlayScene();
 
 	virtual void Load();
 	virtual void Update(DWORD dt);

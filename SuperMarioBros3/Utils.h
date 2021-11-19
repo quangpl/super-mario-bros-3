@@ -9,6 +9,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include <memory>
 #include "tinyXML/tinystr.h"
 #include "tinyXML/tinyxml.h"
 #ifndef VECTOR_0

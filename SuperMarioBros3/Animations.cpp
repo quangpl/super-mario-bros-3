@@ -9,7 +9,7 @@ CAnimations* CAnimations::GetInstance()
 	return __instance;
 }
 
-void CAnimations::Add(int id, LPANIMATION ani)
+void CAnimations::Add(string id, LPANIMATION ani)
 {
 	if (animations[id] != NULL)
 		DebugOut(L"[WARNING] Animation %d already exists\n", id);
@@ -17,7 +17,47 @@ void CAnimations::Add(int id, LPANIMATION ani)
 	animations[id] = ani;
 }
 
-LPANIMATION CAnimations::Get(int id)
+void CAnimations::Import(const char* filePath) {
+	TiXmlDocument doc(filePath);
+	if (doc.LoadFile())
+	{
+		TiXmlElement* pRoot = doc.RootElement();
+
+		if (pRoot)
+		{
+			TiXmlElement* pObj = pRoot->FirstChildElement();
+
+			DebugOut(L"Object ID: %s\n", ToLPCWSTR(pObj->Attribute("gameObjectId")));
+			DebugOut(L"Texture ID: %s\n", ToLPCWSTR(pObj->Attribute("textureId")));
+
+			for (TiXmlElement* aniNode = pObj->FirstChildElement(); aniNode != nullptr; aniNode = aniNode->NextSiblingElement()) {
+				int animationDefaultFrameTime = 100;
+				aniNode->QueryIntAttribute("frameTime", &animationDefaultFrameTime);
+
+				CAnimation* ani = new CAnimation(animationDefaultFrameTime);
+
+				for (TiXmlElement* spriteNode = aniNode->FirstChildElement(); spriteNode != nullptr; spriteNode = spriteNode->NextSiblingElement()) {
+					string id = spriteNode->Attribute("id");
+
+					int frameTime = 0;
+					spriteNode->QueryIntAttribute("frameTime", &frameTime);
+
+					CSprite* sprite = CSprites::GetInstance()->Get(id);
+
+					ani->Add(id, frameTime);
+				}
+
+				this->Add(aniNode->Attribute("aniId"), ani);
+				DebugOut(L"Animation loaded. Id = %s\n", ToLPCWSTR(aniNode->Attribute("aniId")));
+			}
+		}
+	}
+	else
+	{
+		DebugOut(L"Failed to load file \"%s\"\n", ToLPCWSTR(filePath));
+	}
+}
+LPANIMATION CAnimations::Get(string id)
 {
 	LPANIMATION ani = animations[id];
 	if (ani == NULL)

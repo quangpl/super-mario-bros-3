@@ -8,7 +8,6 @@ using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-
 #include "Texture.h"
 #include "KeyEventHandler.h"
 #include "Scene.h"
@@ -51,14 +50,6 @@ class CGame
 	HINSTANCE hInstance;
 
 	ID3D10SamplerState* pPointSamplerState;
-
-	unordered_map<int, LPSCENE> scenes;
-	int current_scene;
-	int next_scene = -1;
-
-	void _ParseSection_SETTINGS(string line);
-	void _ParseSection_SCENES(string line);
-
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -105,13 +96,8 @@ public:
 
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
-	void LoadMap();
-	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
-	void Load(LPCWSTR gameFile);
-	void SwitchScene();
-	void InitiateSwitchScene(int scene_id);
 
-	void _ParseSection_TEXTURES(string line);
+	void LoadResources();
 
 
 	~CGame();

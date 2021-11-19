@@ -25,6 +25,9 @@
     <Filter Include="DataReader">
       <UniqueIdentifier>{f3da81a4-3d39-475b-a1a7-f5bd7095e36b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{1631d51b-5334-4217-b779-ed41d31f1415}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,9 +72,6 @@
     <ClCompile Include="Goomba.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -85,9 +85,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
@@ -153,6 +150,9 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -212,9 +212,6 @@
     <ClInclude Include="KeyEventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,9 +225,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
@@ -292,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

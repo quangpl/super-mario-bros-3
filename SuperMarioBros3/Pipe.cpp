@@ -18,7 +18,7 @@ void CPipe::Render()
 		else
 			ani = PIPE_ANI_SHORT;
 	}
-	CAnimations::GetInstance()->Get(ani)->Render(x, y);
+	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
 	//RenderBoundingBox();
 }
 

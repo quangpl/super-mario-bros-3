@@ -32,7 +32,7 @@ void CBrick::Render()
 	else {
 		ani = BRICK_ANI_BROKEN;
 	}
-	CAnimations::GetInstance()->Get(ani)->Render(x, y);
+	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
 	//RenderBoundingBox();
 
 }

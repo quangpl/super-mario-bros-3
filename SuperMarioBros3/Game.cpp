@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "debug.h"
 #include "Utils.h"
-
+#include "SceneManager.h"
 #include "Texture.h"
 #include "Animations.h"
 #include "PlayScene.h"
@@ -438,111 +438,50 @@ void CGame::ProcessKeyboard()
 #define GAME_FILE_SECTION_TEXTURES 3
 
 
-void CGame::_ParseSection_SETTINGS(string line)
-{
-	vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return;
-	if (tokens[0] == "start")
-		next_scene = atoi(tokens[1].c_str());
-	else
-		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
-}
+void CGame::LoadResources() {
+	TiXmlDocument doc("Resource/GameData.xml");
+	if (doc.LoadFile()) {
+		TiXmlElement* root = doc.RootElement();
+		TiXmlElement* resources = root->FirstChildElement("Resources");
 
-void CGame::_ParseSection_SCENES(string line)
-{
-	vector<string> tokens = split(line);
+		TiXmlElement* textures = resources->FirstChildElement("Textures");
+		TiXmlElement* sprites = resources->FirstChildElement("Sprites");
+		TiXmlElement* animations = resources->FirstChildElement("Animations");
 
-	if (tokens.size() < 2) return;
-	int id = atoi(tokens[0].c_str());
-	LPCWSTR path = ToLPCWSTR(tokens[1]);   // file: ASCII format (single-byte char) => Wide Char
 
-	LPSCENE scene = new CPlayScene(id, path);
-	scenes[id] = scene;
-}
-
-/*
-	Load game campaign file and load/initiate first scene
-*/
-void CGame::Load(LPCWSTR gameFile)
-{
-	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
-
-	ifstream f;
-	f.open(gameFile);
-	char str[MAX_GAME_LINE];
-
-	// current resource section flag
-	int section = GAME_FILE_SECTION_UNKNOWN;
-
-	while (f.getline(str, MAX_GAME_LINE))
-	{
-		string line(str);
-
-		if (line[0] == '#') continue;	// skip comment lines	
-
-		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
-		if (line == "[TEXTURES]") { section = GAME_FILE_SECTION_TEXTURES; continue; }
-		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
-		if (line[0] == '[') 
-		{ 
-			section = GAME_FILE_SECTION_UNKNOWN; 
-			DebugOut(L"[ERROR] Unknown section: %s\n", ToLPCWSTR(line));
-			continue; 
+		for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture")) {
+			CTextures::GetInstance()->Add(node->Attribute("id"), ToLPCWSTR(node->Attribute("path")));
 		}
 
-		//
-		// data section
-		//
-		switch (section)
-		{
-		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
-		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
-		case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
+		for (TiXmlElement* node = sprites->FirstChildElement("Sprite"); node != nullptr; node = node->NextSiblingElement("Sprite")) {
+			CSprites::GetInstance()->Import(node->Attribute("path"));
 		}
+
+		for (TiXmlElement* node = animations->FirstChildElement("Animation"); node != nullptr; node = node->NextSiblingElement("Animation")) {
+			CAnimations::GetInstance()->Import(node->Attribute("path"));
+		}
+
+		TiXmlElement* scenes = root->FirstChildElement("GameContent")->FirstChildElement("Scenes");
+
+		string startId = scenes->Attribute("start");
+		for (TiXmlElement* node = scenes->FirstChildElement("Scene"); node != NULL; node = node->NextSiblingElement("Scene")) {
+			string id = node->Attribute("id");
+			string type = node->Attribute("type");
+			string path = node->Attribute("path");
+
+			if (type.compare("PlayScene") == 0) {
+				shared_ptr<CPlayScene> scene = make_shared<CPlayScene>();
+				scene->SetDataPath(path);
+
+				SceneManager::GetInstance()->AddScene(id, scene);
+			}
+		}
+		SceneManager::GetInstance()->ActiveScene(startId);
+
+		doc.Clear();
 	}
-	f.close();
-
-	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
-
-	SwitchScene();
 }
-
-void CGame::SwitchScene()
-{
-	if (next_scene < 0 || next_scene == current_scene) return; 
-
-	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
-
-	scenes[current_scene]->Unload();
-
-	CSprites::GetInstance()->Clear();
-	CAnimations::GetInstance()->Clear();
-
-	current_scene = next_scene;
-	LPSCENE s = scenes[next_scene];
-	this->SetKeyHandler(s->GetKeyEventHandler());
-	s->Load();
-}
-
-void CGame::InitiateSwitchScene(int scene_id)
-{
-	next_scene = scene_id;
-}
-
-
-void CGame::_ParseSection_TEXTURES(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-
-	int texID = atoi(tokens[0].c_str());
-	wstring path = ToWSTR(tokens[1]);
-
-	CTextures::GetInstance()->Add(texID, path.c_str());
-}
-
 
 CGame::~CGame()
 {

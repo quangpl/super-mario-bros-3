@@ -115,7 +115,7 @@ void CKoopas::Render()
 		break;
 	}
 
-	CAnimations::GetInstance()->Get(ani)->Render(x, y);
+	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
 
 	//RenderBoundingBox();
 }

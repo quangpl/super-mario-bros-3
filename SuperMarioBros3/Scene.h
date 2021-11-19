@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Utils.h"
+#include "debug.h"
 #include "KeyEventHandler.h"
 
 /*
@@ -9,16 +10,16 @@ class CScene
 {
 protected:
 	LPKEYEVENTHANDLER key_handler;
-	int id;
-	LPCWSTR sceneFilePath;
+	string id;
+	string data_path = "";
 
 public: 
-	CScene(int id, LPCWSTR filePath);
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0; 
+	virtual void SetDataPath(string data_path);
 };
 typedef CScene * LPSCENE;
 

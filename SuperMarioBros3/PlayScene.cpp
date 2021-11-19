@@ -7,14 +7,12 @@
 #include "Textures.h"
 #include "Sprites.h"
 #include "Portal.h"
-#include "Platform.h"
 
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
 
-CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
-	CScene(id, filePath)
+CPlayScene::CPlayScene()
 {
 	key_handler = new CSampleKeyHandler(this);
 }
@@ -49,6 +47,7 @@ void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene from : %s \n");
 	LoadMap();
+	CGame::GetInstance()->SetKeyHandler(this->GetKeyEventHandler());
 	DebugOut(L"[INFO] Done loading scene  %s\n");
 }
 

@@ -183,7 +183,6 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
 //
@@ -375,7 +374,7 @@ void CMario::Render()
 		else {
 			aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT;
 		}
-		animations->Get(aniId)->Render(x, y);
+		//animations->Get(aniId)->Render(x, y);
 		//DebugOut(L"Mario ani: %d\n", aniId);
 		return;
 	}
@@ -386,7 +385,7 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
-	animations->Get(aniId)->Render(x, y);
+	//animations->Get(aniId)->Render(x, y);
 
 	//RenderBoundingBox();
 
