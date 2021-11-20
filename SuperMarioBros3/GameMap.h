@@ -2,7 +2,9 @@
 #include "Utils.h"
 #include "TileSet.h"
 #include "Layer.h"
+#include "SceneManager.h"
 #include "Game.h"
+#include "PlayScene.h"
 #include "Camera.h"
 
 class CGameMap
@@ -31,7 +33,6 @@ public:
 	virtual void AddLayer(shared_ptr<CLayer> layer);
 
 	virtual void Render();
-
 	static shared_ptr<CGameMap> FromTMX(string filePath);
 	~CGameMap();
 };

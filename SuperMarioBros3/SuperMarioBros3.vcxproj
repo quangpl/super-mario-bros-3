@@ -167,6 +167,8 @@
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MushRoom.cpp" />
+    <ClCompile Include="ObjectType.cpp" />
+    <ClCompile Include="ObjectTypeData.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -216,6 +218,8 @@
     <ClInclude Include="MapData.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MushRoom.h" />
+    <ClInclude Include="ObjectType.h" />
+    <ClInclude Include="ObjectTypeData.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />

@@ -1,13 +1,9 @@
-#include <iostream>
-#include <fstream>
 #include "AssetIDs.h"
-
 #include "PlayScene.h"
 #include "Utils.h"
 #include "Textures.h"
 #include "Sprites.h"
 #include "Portal.h"
-
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -42,6 +38,14 @@ void CPlayScene::LoadMap() {
 	doc.Clear();
 
 }
+void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData& data) {
+	if (strcmp(type, ObjectTypeData::Goomba.ToString().c_str()) == 0) {
+		AddObject(CGoomba::Create(position));
+	}
+	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
+		AddObject(CGround::Create(position, size), data);
+	}
+}
 
 void CPlayScene::Load()
 {
@@ -56,11 +60,10 @@ void CPlayScene::Update(DWORD dt)
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 0; i < objects.size(); i++)
+	/*for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
-	}
-
+	}*/
 	/*for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
@@ -77,16 +80,10 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	if (this->gameMap) {
-		this->gameMap->Render();
-	}
-	for (int i = 0; i < objects.size(); i++)
+	gameMap->Render();
+	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
-
-	for (auto x : CEffectManager::GetInstance()->GetAll())
-	{
-		LPEFFECT effect = x.second;
-		effect->Render();
+		objects[i]->RenderBoundingBox();
 	}
 }
 
@@ -96,10 +93,10 @@ void CPlayScene::Render()
 void CPlayScene::Clear()
 {
 	vector<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
+	/*for (it = objects.begin(); it != objects.end(); it++)
 	{
 		delete (*it);
-	}
+	}*/
 	objects.clear();
 }
 
@@ -111,8 +108,8 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
+	/*for (int i = 0; i < objects.size(); i++)
+		delete objects[i];*/
 
 	objects.clear();
 	//player = NULL;
@@ -124,20 +121,20 @@ bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; 
 
 void CPlayScene::PurgeDeletedObjects()
 {
-	vector<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
-	{
-		LPGAMEOBJECT o = *it;
-		if (o->IsDeleted())
-		{
-			delete o;
-			*it = NULL;
-		}
-	}
+	//vector<LPGAMEOBJECT>::iterator it;
+	//for (it = objects.begin(); it != objects.end(); it++)
+	//{
+	//	LPGAMEOBJECT o = *it;
+	//	if (o->IsDeleted())
+	//	{
+	//		delete o;
+	//		*it = NULL;
+	//	}
+	//}
 
-	// NOTE: remove_if will swap all deleted items to the end of the vector
-	// then simply trim the vector, this is much more efficient than deleting individual items
-	objects.erase(
-		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
-		objects.end());
+	//// NOTE: remove_if will swap all deleted items to the end of the vector
+	//// then simply trim the vector, this is much more efficient than deleting individual items
+	//objects.erase(
+	//	std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
+	//	objects.end());
 }

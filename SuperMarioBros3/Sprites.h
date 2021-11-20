@@ -1,8 +1,4 @@
 #pragma once
-#include <Windows.h>
-#include <unordered_map>
-
-#include <d3dx10.h>
 #include "Utils.h"
 #include "Texture.h"
 #include "Textures.h"

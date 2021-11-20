@@ -15,28 +15,27 @@ CGameObject::CGameObject()
 	nx = 1;
 	state = -1;
 	isDeleted = false;
+	id = starting_id++;
 }
-
+RectBox CGameObject::GetBoundingBox() {
+	return RectBox(0, 0, 0, 0);
+}
 void CGameObject::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	//LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+	LPTEXTURE bbox = CTextures::GetInstance()->Get("tex-test");
 
-	float l, t, r, b;
-
-	GetBoundingBox(l, t, r, b);
 	rect.left = 0;
 	rect.top = 0;
-	rect.right = (int)r - (int)l;
-	rect.bottom = (int)b - (int)t;
+	rect.right = (int)bounding_box.right - (int)bounding_box.left;
+	rect.bottom = (int)bounding_box.bottom - (int)bounding_box.top;
 
 	float cx, cy;
 	CGame::GetInstance()->GetCamPos(cx, cy);
 
-	//CGame::GetInstance()->Draw((r + l )/ 2 - cx,(t + b )/ 2 - cy, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.45f);
-
+	CGame::GetInstance()->Draw((bounding_box.right + bounding_box.left)/ 2 - cx,(bounding_box.top + bounding_box.bottom)/ 2 - cy, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.45f);
 }
 
 CGameObject::~CGameObject()

@@ -1,18 +1,21 @@
 #include "Ground.h"
 #include "debug.h"
 
-CGround::CGround(int w, int h, bool i)
+shared_ptr<CGround> CGround::Create(Vec2 position, Vec2 size) {
+	shared_ptr<CGround> ground = make_shared<CGround>();
+	ground->SetPosition(Vec2(position.x, position.y));
+	ground->size = size;
+	return ground;
+}
+CGround::CGround()
 {
 	type = Type::GROUND;
-	this->width = w;
-	this->height = h;
-	this->interact = i;
 
 }
 
 void CGround::Render()
 {
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 bool CGround::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy) {
 	if (collisionNy > 0) {

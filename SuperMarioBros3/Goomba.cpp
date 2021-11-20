@@ -1,5 +1,6 @@
 #include "Goomba.h"
 
+
 CGoomba::CGoomba(int level) :CGameObject(x, y)
 {
 	this->level = level;
@@ -19,6 +20,33 @@ CGoomba::CGoomba(int level) :CGameObject(x, y)
 	else {
 		DebugOut(L"Invalid Goomba Type");
 	}
+}
+
+CGoomba::CGoomba() :CGameObject(x, y)
+{
+	this->level = GoombaLevel::Nomal;
+	this->gravity = GOOMBA_GRAVITY;
+	timer = new CTimer(0);
+	die_start = -1;
+	if (nx > 0) {
+		nx *= -1;
+	}
+	if (level == GoombaLevel::Nomal) {
+		SetState(GOOMBA_STATE_WALKING);
+	}
+	else if (level == GoombaLevel::RedWing) {
+		jump_step = 1;
+		SetState(GOOMBA_STATE_WALKING);
+	}
+	else {
+		DebugOut(L"Invalid Goomba Type");
+	}
+}
+
+shared_ptr<CGoomba> CGoomba::Create(Vec2 position) {
+	shared_ptr<CGoomba> goomba = make_shared<CGoomba>();
+	goomba->SetPosition(Vec2(position.x, position.y));
+	return goomba;	
 }
 
 void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)

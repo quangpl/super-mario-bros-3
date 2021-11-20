@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Windows.h>
-
+#include "Utils.h"
 /*
 	Abstract class to define keyboard event handlers
 */

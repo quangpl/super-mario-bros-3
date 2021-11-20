@@ -9,12 +9,13 @@
 #include "Animations.h"
 #include "Ground.h"
 #include "Pipe.h"
+#include "MapData.h"
 #include "Utils.h"
 #include "Koopas.h"
 #include "MushRoom.h"
 #include "ActivationPoint.h"
 #include "EffectManager.h";
-#include <memory>
+#include "ObjectTypeData.h"
 #include "Camera.h"
 #include "GameMap.h"
 
@@ -27,13 +28,11 @@ class CPlayScene: public CScene
 protected: 
 	// A play scene has to have player, right? 
 	//LPGAMEOBJECT player;					
-
-	vector<LPGAMEOBJECT> objects;
-	
 public: 
 	CPlayScene();
 
 	virtual void Load();
+	virtual void LoadObjects(const char* type, Vec2 fixedPos, Vec2 size, MapData& data);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();

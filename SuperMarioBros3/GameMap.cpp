@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "GameMap.h"
+#include "ObjectTypeData.h"
 #include "MapData.h"
 
 
@@ -98,7 +99,8 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 
 					TiXmlElement* nodeProperties = object->FirstChildElement("properties");
 					MapData props = MapData(nodeProperties);
-
+					shared_ptr<CScene> activeScene = SceneManager::GetInstance()->GetActiveScene();
+					activeScene->LoadObjects(type, fixPos, size, props);
 				}
 				catch (exception) {}
 			}
@@ -112,7 +114,6 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 	}
 	throw "Load map fail";
 }
-
 CGameMap::~CGameMap()
 {
 	ptr_layers.clear();

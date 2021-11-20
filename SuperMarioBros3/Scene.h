@@ -1,8 +1,8 @@
 #pragma once
 #include "Utils.h"
-#include "debug.h"
+#include "MapData.h"	
 #include "KeyEventHandler.h"
-
+#include "GameObject.h"
 /*
 *  Abstract class for a game scene
 */
@@ -12,6 +12,7 @@ protected:
 	LPKEYEVENTHANDLER key_handler;
 	string id;
 	string data_path = "";
+	unordered_map<DWORD, shared_ptr<CGameObject>> objects;
 
 public: 
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
@@ -19,7 +20,10 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0; 
+	virtual void LoadObjects(const char* type, Vec2 fixedPos, Vec2 size, MapData& data) = 0;
 	virtual void SetDataPath(string data_path);
+	virtual void AddObject(shared_ptr<CGameObject> entity);
+	virtual void AddObject(shared_ptr<CGameObject> entity, MapData& data);
 };
 typedef CScene * LPSCENE;
 

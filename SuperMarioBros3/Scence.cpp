@@ -12,3 +12,13 @@ void CScene::SetDataPath(string path) {
 
 	this->data_path = path;
 }
+
+void CScene::AddObject(shared_ptr<CGameObject> entity)
+{
+	objects[entity->GetID()] = entity;
+}
+
+void CScene::AddObject(shared_ptr<CGameObject> entity, MapData& data)
+{
+	objects[entity->GetID()] = entity;
+}
