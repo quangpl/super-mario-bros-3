@@ -12,9 +12,10 @@ CSprite::CSprite(string id, int left, int top, int right, int bottom, LPTEXTURE 
 
 void CSprite::Draw(float x, float y)
 {
+	shared_ptr<Camera> camera = SceneManager::GetInstance()->GetActiveScene()->GetCamera();
 	CGame* g = CGame::GetInstance();
-	float cx, cy;
-	g->GetCamPos(cx, cy);
+	float cx = camera->GetPosition().x;
+	float cy = camera->GetPosition().y;
 
 	cx = (FLOAT)floor(cx);
 	cy = (FLOAT)floor(cy);

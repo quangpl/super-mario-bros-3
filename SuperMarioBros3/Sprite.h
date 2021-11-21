@@ -1,5 +1,7 @@
 #pragma once
-
+#include "Camera.h"
+#include "Utils.h"
+#include "SceneManager.h"
 #include "Texture.h"
 #include "Game.h"
 

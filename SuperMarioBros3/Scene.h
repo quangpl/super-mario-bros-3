@@ -3,9 +3,12 @@
 #include "MapData.h"	
 #include "KeyEventHandler.h"
 #include "GameObject.h"
+#include "Camera.h"
+#include <memory>
 /*
 *  Abstract class for a game scene
 */
+class Camera;
 class CScene
 {
 protected:
@@ -13,6 +16,7 @@ protected:
 	string id;
 	string data_path = "";
 	unordered_map<DWORD, shared_ptr<CGameObject>> objects;
+	shared_ptr<Camera> camera;
 
 public: 
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
@@ -24,6 +28,11 @@ public:
 	virtual void SetDataPath(string data_path);
 	virtual void AddObject(shared_ptr<CGameObject> entity);
 	virtual void AddObject(shared_ptr<CGameObject> entity, MapData& data);
+
+	shared_ptr<Camera> GetCamera() {
+		return this->camera;
+	}
+
 };
 typedef CScene * LPSCENE;
 

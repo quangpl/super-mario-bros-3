@@ -1,10 +1,6 @@
-#include "AssetIDs.h"
+#pragma once
 #include "PlayScene.h"
-#include "Utils.h"
-#include "Textures.h"
-#include "Sprites.h"
-#include "Portal.h"
-#include "SampleKeyEventHandler.h"
+
 
 using namespace std;
 
@@ -83,7 +79,6 @@ void CPlayScene::Render()
 	gameMap->Render();
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
-		objects[i]->RenderBoundingBox();
 	}
 }
 

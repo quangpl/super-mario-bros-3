@@ -3,7 +3,6 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Direction.h"
-#include <memory>
 #include "RectBox.h"
 #include "debug.h"
 #include "CameraRegion.h"
@@ -30,6 +29,8 @@ public:
 
 	virtual void ActiveRegion(int id);
 	virtual CameraRegion* GetActiveRegion();
+
+	Vec2 GetPosition() { return this->position; }
 
 	virtual void LoadFromTMX(TiXmlElement* data);
 

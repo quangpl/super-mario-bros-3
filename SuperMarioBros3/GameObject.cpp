@@ -1,10 +1,12 @@
 #include <d3dx9.h>
 #include <algorithm>
 
-
+#include "SceneManager.h"
 #include "debug.h"
+#include "PlayScene.h"
 #include "Textures.h"
 #include "Game.h"
+#include "Camera.h"
 #include "GameObject.h"
 #include "Sprites.h"
 
@@ -22,6 +24,7 @@ RectBox CGameObject::GetBoundingBox() {
 }
 void CGameObject::RenderBoundingBox()
 {
+	GetBoundingBox();
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
@@ -31,9 +34,10 @@ void CGameObject::RenderBoundingBox()
 	rect.top = 0;
 	rect.right = (int)bounding_box.right - (int)bounding_box.left;
 	rect.bottom = (int)bounding_box.bottom - (int)bounding_box.top;
-
+	shared_ptr<Camera> camera = SceneManager::GetInstance()->GetActiveScene()->GetCamera();
 	float cx, cy;
-	CGame::GetInstance()->GetCamPos(cx, cy);
+	cx = camera->position.x;
+	cy = camera->position.y;
 
 	CGame::GetInstance()->Draw((bounding_box.right + bounding_box.left)/ 2 - cx,(bounding_box.top + bounding_box.bottom)/ 2 - cy, bbox, rect.left, rect.top, rect.right, rect.bottom, 0.45f);
 }

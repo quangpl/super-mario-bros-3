@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
+
 #include "Textures.h"
-#include "Scene.h"
 #include "GameObject.h"
 #include "Brick.h"
 #include "Mario.h"
@@ -16,13 +16,15 @@
 #include "ActivationPoint.h"
 #include "EffectManager.h";
 #include "ObjectTypeData.h"
-#include "Camera.h"
+
 #include "GameMap.h"
+
+#include "SampleKeyEventHandler.h"
 
 class CPlayScene: public CScene
 {
 	Vec2 camSize = Vec2(769, 579);
-	shared_ptr<Camera> camera;
+	
 	shared_ptr<CGameMap> gameMap;
 	string xml_path = "Resource/Scenes/World1-1.xml";
 protected: 
