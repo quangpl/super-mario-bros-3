@@ -46,7 +46,7 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 		AddObject(CGoomba::Create(position), data);
 	}
 	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
-		AddObject(CBrick::Create(Vec2{200,800}), data);
+		AddObject(CBrick::Create(position), data);
 	}
 }
 
