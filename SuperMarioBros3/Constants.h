@@ -8,8 +8,8 @@
 #define SCREEN_WIDTH 640 //320 
 #define SCREEN_HEIGHT 480 //240
 
-#define BRICK_BBOX_WIDTH  48
-#define BRICK_BBOX_HEIGHT 48
+#define BRICK_BBOX_WIDTH  16
+#define BRICK_BBOX_HEIGHT 16
 
 enum Type
 {

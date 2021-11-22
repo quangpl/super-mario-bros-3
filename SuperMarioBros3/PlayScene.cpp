@@ -11,17 +11,17 @@ CPlayScene::CPlayScene()
 
 
 void CPlayScene::LoadMap() {
-	TiXmlDocument doc(this->xml_path.c_str());
+	TiXmlDocument doc(this->data_path.c_str());
 
 	if (!doc.LoadFile()) {
-		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(this->xml_path));
+		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(this->data_path));
 		return;
 	}
 
 	TiXmlElement* root = doc.RootElement();
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
-	this->camera = make_shared<Camera>(camSize);
+	this->camera = make_shared<Camera>(this->camSize);
 	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
 	//this->camera->SetTracking(mario);
 
@@ -34,12 +34,19 @@ void CPlayScene::LoadMap() {
 	doc.Clear();
 
 }
+
 void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData& data) {
 	if (strcmp(type, ObjectTypeData::Goomba.ToString().c_str()) == 0) {
 		AddObject(CGoomba::Create(position));
 	}
 	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size), data);
+	}
+	if (strcmp(type, ObjectTypeData::Goomba.ToString().c_str()) == 0) {
+		AddObject(CGoomba::Create(position), data);
+	}
+	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
+		AddObject(CBrick::Create(Vec2{200,800}), data);
 	}
 }
 

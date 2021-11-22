@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include <memory>
+
 /*
 *  Abstract class for a game scene
 */
@@ -17,8 +18,8 @@ protected:
 	string data_path = "";
 	unordered_map<DWORD, shared_ptr<CGameObject>> objects;
 	shared_ptr<Camera> camera;
-
 public: 
+	Vec2 camSize = Vec2(769, 579);
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;

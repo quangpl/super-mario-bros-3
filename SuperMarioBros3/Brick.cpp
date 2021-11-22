@@ -1,7 +1,8 @@
 #include "Brick.h"
 
-CBrick::CBrick(float x, float y, int _brickType, int _child_item_id)
+CBrick::CBrick(Vec2 _position, int _brickType, int _child_item_id)
 {
+	this->position = _position;
 	this->brickType = _brickType;
 	this->type = Type::BRICK;
 	this->vx = 0;
@@ -20,9 +21,17 @@ CBrick::~CBrick()
 
 }
 
+shared_ptr<CBrick> CBrick::Create(Vec2 pos)
+{
+	shared_ptr<CBrick> brick = make_shared<CBrick>(pos,2,1);
+	brick->SetPosition(pos);
+	return brick;
+}
+
+
 void CBrick::Render()
 {
-	if (!is_show) {
+	/*if (!is_show) {
 		return;
 	}
 	int ani;
@@ -31,10 +40,11 @@ void CBrick::Render()
 	}
 	else {
 		ani = BRICK_ANI_BROKEN;
-	}
+	}*/
 	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	//RenderBoundingBox();
-
+	RenderBoundingBox();
+	CAnimation* ani = CAnimations::GetInstance()->Get("ani-empty-block");
+	ani->Render(this->position.x, this->position.y);
 }
 
 void CBrick::OnNoCollision(DWORD dt)
@@ -78,7 +88,13 @@ void CBrick::SetState(int state)
 		break;
 	}
 }
-
+RectBox CBrick::GetBoundingBox() {
+	this->bounding_box.left = x;
+	this->bounding_box.top = y;
+	this->bounding_box.right = this->bounding_box.left + BRICK_BBOX_WIDTH;
+	this->bounding_box.bottom = this->bounding_box.top + BRICK_BBOX_HEIGHT;
+	return this->bounding_box;
+}
 
 void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {

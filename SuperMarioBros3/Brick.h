@@ -36,23 +36,22 @@ enum BrickChildItem {
 };
 class CBrick : public CGameObject
 {
-	float start_y;
 public:
 	int brickType;
 	int child_item_id = BrickChildItem::Empty;
 	LPGAMEOBJECT child_item = NULL;
 	void OnNoCollision(DWORD dt);
-	CBrick(float x, float y, int brickType, int child_item_id);
+	CBrick(Vec2 position, int brickType, int child_item_id);
 	~CBrick();
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
+	virtual RectBox GetBoundingBox();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;
 	void SetState(int state);
-
 	int GetChildItemId() { return this->child_item_id; }
 	void SetChildItemId(int _child_item_id) { this->child_item_id = _child_item_id; }
-
 	LPGAMEOBJECT GetChildItem() { return this->child_item; }
 	void SetChildItem(LPGAMEOBJECT _child_item) { this->child_item = _child_item; }
 
+	static shared_ptr<CBrick> Create(Vec2 pos);
 };
