@@ -53,5 +53,5 @@ public:
 	LPGAMEOBJECT GetChildItem() { return this->child_item; }
 	void SetChildItem(LPGAMEOBJECT _child_item) { this->child_item = _child_item; }
 
-	static shared_ptr<CBrick> Create(Vec2 pos);
+	static CBrick* Create(Vec2 pos);
 };

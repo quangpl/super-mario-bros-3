@@ -10,7 +10,7 @@ CLayer::CLayer()
 }
 
 //,  = 44
-CLayer::CLayer(TiXmlElement* data, shared_ptr<CGameMap> map) : CLayer()
+CLayer::CLayer(TiXmlElement* data, CGameMap* map) : CLayer()
 {
 	data->QueryIntAttribute("id", &this->id);
 	data->QueryIntAttribute("width", &this->width);

@@ -9,7 +9,7 @@ CGameMap::CGameMap()
 	this->width = this->height = this->tile_height = this->tile_width = 0;
 }
 
-void CGameMap::AddLayer(shared_ptr<CLayer> layer)
+void CGameMap::AddLayer(CLayer* layer)
 {
 	this->layers.push_back(layer);
 }
@@ -49,13 +49,13 @@ void CGameMap::Render()
 	}
 }
 
-shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
+CGameMap* CGameMap::FromTMX(string filePath)
 {
 	TiXmlDocument doc(filePath.c_str());
 
 	if (doc.LoadFile()) {
 		TiXmlElement* root = doc.RootElement();
-		shared_ptr<CGameMap> gameMap = make_shared<CGameMap>();
+		CGameMap* gameMap = new CGameMap();
 
 		root->QueryIntAttribute("width", &gameMap->width);
 		root->QueryIntAttribute("height", &gameMap->height);
@@ -77,11 +77,11 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 		//Load tileset
 		char mapDir[_MAX_DIR];
 		_splitpath(filePath.c_str(), NULL, mapDir, NULL, NULL);
-		gameMap->tileSet = make_shared<CTileSet>(root->FirstChildElement("tileset"), mapDir);
+		gameMap->tileSet = new CTileSet(root->FirstChildElement("tileset"), mapDir);
 
 		//Load layer
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
-			shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
+			CLayer* layer =new CLayer(node, gameMap);
 			gameMap->AddLayer(layer);
 			gameMap->ptr_layers.push_back(&*layer);
 		}
@@ -99,7 +99,7 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 
 					TiXmlElement* nodeProperties = object->FirstChildElement("properties");
 					MapData props = MapData(nodeProperties);
-					shared_ptr<CScene> activeScene = SceneManager::GetInstance()->GetActiveScene();
+					CScene* activeScene = SceneManager::GetInstance()->GetActiveScene();
 					activeScene->LoadObjects(type, fixPos, size, props);
 				}
 				catch (exception) {}

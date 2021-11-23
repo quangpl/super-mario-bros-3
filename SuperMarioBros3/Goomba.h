@@ -74,7 +74,7 @@ protected:
 public:
 	CGoomba(int goombaType);
 	CGoomba();
-	static shared_ptr<CGoomba> Create(Vec2 position);
+	static CGoomba* Create(Vec2 position);
 	virtual void SetState(int state);
 	int GetLevel() { return this->level; }
 	void SetLevel(int _level) { level = _level; }

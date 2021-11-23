@@ -16,8 +16,9 @@ protected:
 	LPKEYEVENTHANDLER key_handler;
 	string id;
 	string data_path = "";
-	unordered_map<DWORD, shared_ptr<CGameObject>> objects;
-	shared_ptr<Camera> camera;
+	vector<CGameObject*> objects;
+	Camera* camera;
+	CGameObject* player;
 public: 
 	Vec2 camSize = Vec2(769, 579);
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
@@ -27,10 +28,12 @@ public:
 	virtual void Render() = 0; 
 	virtual void LoadObjects(const char* type, Vec2 fixedPos, Vec2 size, MapData& data) = 0;
 	virtual void SetDataPath(string data_path);
-	virtual void AddObject(shared_ptr<CGameObject> entity);
-	virtual void AddObject(shared_ptr<CGameObject> entity, MapData& data);
+	virtual void AddObject(CGameObject* entity);
+	virtual void AddObject(CGameObject* entity, MapData& data);
 
-	shared_ptr<Camera> GetCamera() {
+	CGameObject* GetPlayer() { return this->player; }
+
+	Camera* GetCamera() {
 		return this->camera;
 	}
 

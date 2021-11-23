@@ -14,7 +14,7 @@ class CLayer
 	int** tiles;
 public:
 	CLayer();
-	CLayer(TiXmlElement* data, shared_ptr<CGameMap> map);
+	CLayer(TiXmlElement* data, CGameMap* map);
 
 	bool Visible();
 

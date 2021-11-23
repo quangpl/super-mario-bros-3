@@ -20,7 +20,7 @@
 
 class CPlayScene: public CScene
 {
-	shared_ptr<CGameMap> gameMap;
+	CGameMap* gameMap;
 public: 
 	CPlayScene();
 

@@ -16,24 +16,24 @@ class CGameMap
 
 	D3DXCOLOR backgroundColor = D3DXCOLOR(181, 235, 242, 255);
 
-	shared_ptr<Camera> camera;
+	Camera* camera;
 
-	shared_ptr<CTileSet> tileSet;
+	CTileSet* tileSet;
 
-	vector<shared_ptr<CLayer>> layers;
+	vector<CLayer*> layers;
 	vector<CLayer*> ptr_layers;
 
 public:
 	CGameMap();
 
-	virtual shared_ptr<Camera> GetCamera() { return this->camera; }
+	virtual Camera* GetCamera() { return this->camera; }
 
-	virtual void SetCamera(shared_ptr<Camera> camera) { this->camera = camera; }
+	virtual void SetCamera(Camera* camera) { this->camera = camera; }
 
-	virtual void AddLayer(shared_ptr<CLayer> layer);
+	virtual void AddLayer(CLayer* layer);
 
 	virtual void Render();
-	static shared_ptr<CGameMap> FromTMX(string filePath);
+	static CGameMap* FromTMX(string filePath);
 	~CGameMap();
 };
 

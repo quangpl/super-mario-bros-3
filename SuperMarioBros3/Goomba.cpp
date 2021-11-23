@@ -43,8 +43,8 @@ CGoomba::CGoomba() :CGameObject(x, y)
 	}
 }
 
-shared_ptr<CGoomba> CGoomba::Create(Vec2 position) {
-	shared_ptr<CGoomba> goomba = make_shared<CGoomba>();
+CGoomba* CGoomba::Create(Vec2 position) {
+	CGoomba* goomba = new CGoomba();
 	goomba->SetPosition(Vec2(position.x, position.y));
 	return goomba;	
 }
@@ -118,14 +118,14 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	CMario* mario = CMario::GetInstance();
+	//CMario* mario = CMario::GetInstance();
 	if (level != GoombaLevel::RedWing) {
 		return;
 	}
 	if (timer->IsRunning() && !timer->IsTimeUp()) {
 		return;
 	}
-	if (is_on_ground && jump_step !=0) {
+	/*if (is_on_ground && jump_step !=0) {
 		switch (jump_step)
 		{
 		case 1:
@@ -168,7 +168,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		default:
 			break;
 		}
-	}
+	}*/
 }
 int CGoomba::IsCollidable() {
 	if (state == GOOMBA_STATE_DIE_BY_ATTACK) {

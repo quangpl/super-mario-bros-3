@@ -17,7 +17,7 @@ CGameObject::CGameObject()
 	nx = 1;
 	state = -1;
 	isDeleted = false;
-	id = starting_id++;
+	id = ++starting_id;
 }
 RectBox CGameObject::GetBoundingBox() {
 	return RectBox(0, 0, 0, 0);
@@ -34,7 +34,7 @@ void CGameObject::RenderBoundingBox()
 	rect.top = 0;
 	rect.right = (int)bounding_box.right - (int)bounding_box.left;
 	rect.bottom = (int)bounding_box.bottom - (int)bounding_box.top;
-	shared_ptr<Camera> camera = SceneManager::GetInstance()->GetActiveScene()->GetCamera();
+	Camera* camera = SceneManager::GetInstance()->GetActiveScene()->GetCamera();
 	float cx, cy;
 	cx = camera->position.x;
 	cy = camera->position.y;

@@ -556,7 +556,9 @@ CMario* CMario::__instance = NULL;
 
 CMario* CMario::GetInstance()
 {
-	if (__instance == NULL) __instance = new CMario();
+	if (__instance == NULL) {
+		__instance = new CMario();
+	}
 	return __instance;
 }
 

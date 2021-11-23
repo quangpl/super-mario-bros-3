@@ -16,6 +16,6 @@ public:
 	virtual float GetFloat(string name, float def = 0.0f);
 
 protected:
-	shared_ptr<DataReader> storage = make_shared<DataReader>("Root");
+	DataReader* storage = new DataReader("Root");
 };
 

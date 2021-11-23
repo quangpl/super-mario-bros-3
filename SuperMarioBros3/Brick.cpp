@@ -21,9 +21,9 @@ CBrick::~CBrick()
 
 }
 
-shared_ptr<CBrick> CBrick::Create(Vec2 pos)
+CBrick* CBrick::Create(Vec2 pos)
 {
-	shared_ptr<CBrick> brick = make_shared<CBrick>(pos,2,1);
+	CBrick* brick = new CBrick(pos,2,1);
 	brick->SetPosition(pos);
 	return brick;
 }

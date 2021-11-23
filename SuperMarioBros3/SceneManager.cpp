@@ -2,7 +2,7 @@
 
 SceneManager* SceneManager::__instance = nullptr;
 
-void SceneManager::AddScene(string id, shared_ptr<CScene> scene)
+void SceneManager::AddScene(string id, CScene* scene)
 {
 	if (!scene) return;
 	scenes[id] = scene;
@@ -21,13 +21,13 @@ bool SceneManager::ActiveScene(string id)
 	return true;
 }
 
-shared_ptr<CScene> SceneManager::GetActiveScene()
+CScene* SceneManager::GetActiveScene()
 {
 	if (scenes.find(activeSceneID) == scenes.end()) return nullptr;
 	return scenes.at(activeSceneID);
 }
 
-shared_ptr<CScene> SceneManager::GetScene(string id)
+CScene* SceneManager::GetScene(string id)
 {
 	if (scenes.find(id) == scenes.end()) return nullptr;
 	return scenes.at(id);

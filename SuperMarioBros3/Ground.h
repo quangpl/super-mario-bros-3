@@ -9,7 +9,7 @@ class CGround :public CGameObject
 	int height;
 	Vec2 size;
 public:
-	static shared_ptr<CGround> Create(Vec2 position, Vec2 size);
+	static CGround* Create(Vec2 position, Vec2 size);
 	bool interact;
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);

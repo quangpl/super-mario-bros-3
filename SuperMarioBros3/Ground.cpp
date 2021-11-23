@@ -1,8 +1,8 @@
 #include "Ground.h"
 #include "debug.h"
 
-shared_ptr<CGround> CGround::Create(Vec2 position, Vec2 size) {
-	shared_ptr<CGround> ground = make_shared<CGround>();
+CGround* CGround::Create(Vec2 position, Vec2 size) {
+	CGround* ground = new CGround();
 	ground->SetPosition(Vec2(position.x, position.y));
 	ground->size = size;
 	return ground;

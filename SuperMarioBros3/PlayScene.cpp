@@ -21,7 +21,7 @@ void CPlayScene::LoadMap() {
 	TiXmlElement* root = doc.RootElement();
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
-	this->camera = make_shared<Camera>(this->camSize);
+	this->camera = new Camera(this->camSize);
 	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
 	//this->camera->SetTracking(mario);
 

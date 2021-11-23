@@ -86,13 +86,13 @@ void DataReader::SetString(string tagName, string value)
 	contents[tagName] = value;
 }
 
-shared_ptr<DataReader> DataReader::GetDataTag(string tagName, shared_ptr<DataReader> default_val)
+DataReader* DataReader::GetDataTag(string tagName, DataReader* default_val)
 {
 	if (!HasKey(tagName)) return default_val;
-	return any_cast<shared_ptr<DataReader>>(contents.at(tagName));
+	return any_cast<DataReader*>(contents.at(tagName));
 }
 
-void DataReader::SetDataTag(shared_ptr<DataReader> value)
+void DataReader::SetDataTag(DataReader* value)
 {
 	if (value == nullptr)
 		throw "Value cannot be null!!!";

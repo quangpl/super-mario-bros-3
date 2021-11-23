@@ -471,7 +471,7 @@ void CGame::LoadResources() {
 			string path = node->Attribute("path");
 
 			if (type.compare("PlayScene") == 0) {
-				shared_ptr<CPlayScene> scene = make_shared<CPlayScene>();
+				CPlayScene* scene = new CPlayScene();
 				scene->SetDataPath(path);
 
 				SceneManager::GetInstance()->AddScene(id, scene);

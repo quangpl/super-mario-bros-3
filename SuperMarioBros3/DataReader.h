@@ -35,7 +35,7 @@ public:
 	string GetString(string tagName, string default_val = "");
 	void SetString(string tagName, string value);
 
-	shared_ptr<DataReader> GetDataTag(string tagName, shared_ptr<DataReader> default_val = nullptr);
-	void SetDataTag(shared_ptr<DataReader> value);
+	DataReader* GetDataTag(string tagName, DataReader* default_val = nullptr);
+	void SetDataTag(DataReader* value);
 };
 
