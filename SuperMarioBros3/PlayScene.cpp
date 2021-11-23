@@ -36,6 +36,9 @@ void CPlayScene::LoadMap() {
 }
 
 void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData& data) {
+	if (strcmp(type, "SpawnPoint") == 0) {
+		this->player->SetPosition(position);
+	}
 	if (strcmp(type, ObjectTypeData::Goomba.ToString().c_str()) == 0) {
 		AddObject(CGoomba::Create(position));
 	}
@@ -52,6 +55,7 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 
 void CPlayScene::Load()
 {
+	player = CMario::GetInstance();
 	DebugOut(L"[INFO] Start loading scene from : %s \n");
 	LoadMap();
 	CGame::GetInstance()->SetKeyHandler(this->GetKeyEventHandler());
@@ -60,17 +64,16 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;
-	/*for (size_t i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
-	}*/
-	/*for (size_t i = 0; i < objects.size(); i++)
+	}
+	player->Update(dt, &coObjects);
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
-	}*/
+	}
 	/*for (auto x : CEffectManager::GetInstance()->GetAll())
 	{
 		LPEFFECT effect = x.second;
@@ -84,6 +87,7 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	gameMap->Render();
+	player->Render();
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
 	}

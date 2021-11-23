@@ -198,4 +198,6 @@ public:
 	bool GetHolding() { return this->holding; }
 
 	int GetWidth() { return MARIO_BIG_BBOX_WIDTH; }
+
+	virtual RectBox GetBoundingBox();
 };

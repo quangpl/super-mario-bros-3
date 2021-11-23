@@ -19,9 +19,10 @@
 #include "SampleKeyEventHandler.h"
 
 class CPlayScene: public CScene
-{
+{	
 	CGameMap* gameMap;
 public: 
+	CGameObject* player = NULL;
 	CPlayScene();
 
 	virtual void Load();

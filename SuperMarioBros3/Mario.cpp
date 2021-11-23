@@ -364,33 +364,33 @@ int CMario::GetAniIdBig()
 void CMario::Render()
 {
 	// TODO: Need improve with Effect
+	CAnimations::GetInstance()->Get("ani-big-mario-walk")->Render(position.x, position.y);
+	//CAnimations* animations = CAnimations::GetInstance();
+	//int aniId = -1;
+	//if (state == MARIO_STATE_TRANSFORM_SMALL_TO_BIG) {
+	//	if (nx > 0) {
+	//		aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_RIGHT;
+	//	}
+	//	else {
+	//		aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT;
+	//	}
+	//	//animations->Get(aniId)->Render(x, y);
+	//	//DebugOut(L"Mario ani: %d\n", aniId);
+	//	return;
+	//}
+	//if (state == MARIO_STATE_DIE)
+	//	aniId = ID_ANI_MARIO_DIE;
+	//else if (level == MARIO_LEVEL_BIG)
+	//	aniId = GetAniIdBig();
+	//else if (level == MARIO_LEVEL_SMALL)
+	//	aniId = GetAniIdSmall();
 
-	CAnimations* animations = CAnimations::GetInstance();
-	int aniId = -1;
-	if (state == MARIO_STATE_TRANSFORM_SMALL_TO_BIG) {
-		if (nx > 0) {
-			aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_RIGHT;
-		}
-		else {
-			aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT;
-		}
-		//animations->Get(aniId)->Render(x, y);
-		//DebugOut(L"Mario ani: %d\n", aniId);
-		return;
-	}
-	if (state == MARIO_STATE_DIE)
-		aniId = ID_ANI_MARIO_DIE;
-	else if (level == MARIO_LEVEL_BIG)
-		aniId = GetAniIdBig();
-	else if (level == MARIO_LEVEL_SMALL)
-		aniId = GetAniIdSmall();
-
-	//animations->Get(aniId)->Render(x, y);
+	////animations->Get(aniId)->Render(x, y);
 
 	//RenderBoundingBox();
 
-	DebugOutTitle(L"Coins: %d", coin);
-	//DebugOut(L"Mario ani: %d \n", aniId);
+	//DebugOutTitle(L"Coins: %d", coin);
+	////DebugOut(L"Mario ani: %d \n", aniId);
 }
 
 void CMario::SetState(int state)
@@ -514,30 +514,12 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level == MARIO_LEVEL_BIG)
-	{
-		if (isSitting)
-		{
-			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
-			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
-		}
-		else
-		{
-			left = x - MARIO_BIG_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
-			right = left + MARIO_BIG_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_BBOX_HEIGHT;
-		}
-	}
-	else
-	{
-		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
-		right = left + MARIO_SMALL_BBOX_WIDTH;
-		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
-	}
+	x = 100;
+	y = 1600;
+	left = x - MARIO_BIG_BBOX_WIDTH / 2;
+	top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+	right = left + MARIO_BIG_BBOX_WIDTH;
+	bottom = top + MARIO_BIG_BBOX_HEIGHT;
 }
 
 void CMario::SetLevel(int l)
@@ -550,7 +532,13 @@ void CMario::SetLevel(int l)
 	}
 	level = l;
 }
-
+RectBox CMario::GetBoundingBox() {
+	this->bounding_box.left = x;
+	this->bounding_box.top = y;
+	this->bounding_box.right = this->bounding_box.left + BRICK_BBOX_WIDTH * 3;
+	this->bounding_box.bottom = this->bounding_box.top + BRICK_BBOX_HEIGHT * 3;
+	return this->bounding_box;
+}
 
 CMario* CMario::__instance = NULL;
 

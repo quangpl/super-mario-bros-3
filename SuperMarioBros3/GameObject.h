@@ -61,7 +61,6 @@ public:
 	CGameObject();
 	CGameObject(float x, float y) :CGameObject() {
 		this->x = x; this->y = y;
-		id = ++starting_id;
 	}
 
 	virtual RectBox GetBoundingBox();

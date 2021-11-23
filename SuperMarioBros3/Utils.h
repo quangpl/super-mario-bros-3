@@ -23,7 +23,6 @@
 #endif // !VEC0
 #include <D3DX10math.h>
 
-static DWORD starting_id = 0;
 
 typedef D3DXVECTOR2 Vec2;
 using namespace std;

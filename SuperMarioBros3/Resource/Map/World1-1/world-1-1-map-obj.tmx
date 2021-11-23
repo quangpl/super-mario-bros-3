@@ -828,7 +828,7 @@
    </properties>
    <point/>
   </object>
-  <object id="327" type="SpawnPoint" x="96" y="1151">
+  <object id="327" type="SpawnPoint" x="130" y="1151">
    <point/>
   </object>
   <object id="328" type="EndPortal" x="6284.33" y="1392" width="7.33333" height="96">

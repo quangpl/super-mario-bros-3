@@ -17,7 +17,6 @@ CGameObject::CGameObject()
 	nx = 1;
 	state = -1;
 	isDeleted = false;
-	id = ++starting_id;
 }
 RectBox CGameObject::GetBoundingBox() {
 	return RectBox(0, 0, 0, 0);
