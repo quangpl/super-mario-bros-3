@@ -68,6 +68,12 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
 		AddObject(CBrick::Create(position), data);
 	}
+	if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
+		AddObject(CKoopas::Create(position), data);
+	}
+	if (strcmp(type, ObjectTypeData::Pipe.ToString().c_str()) == 0) {
+		AddObject(CPipe::Create(position), data);
+	}
 }
 
 void CPlayScene::Load()

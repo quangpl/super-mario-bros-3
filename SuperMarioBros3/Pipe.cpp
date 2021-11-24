@@ -1,10 +1,9 @@
 #include "Pipe.h"
 #include "Utils.h"
-CPipe::CPipe(int pipe_type, bool direction)
+CPipe::CPipe()
 {
 	this->type = Type::PIPE;
-	this->pipe_type = pipe_type;
-	this->direction = direction;
+	this->pipe_type = PipeType::Long;
 }
 
 void CPipe::Render()
@@ -21,7 +20,11 @@ void CPipe::Render()
 	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
 	//RenderBoundingBox();
 }
-
+CPipe* CPipe::Create(Vec2 pos) {
+	CPipe* pipe = new CPipe();
+	pipe->position = pos;
+	return pipe;
+}
 void CPipe::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	/*int height = pipe_type == PipeType::Long ? PIPE_BBOX_HEIGHT_LONG : PIPE_BBOX_HEIGHT_SHORT;

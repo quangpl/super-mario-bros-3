@@ -1,9 +1,9 @@
 #include "Koopas.h"
 
-CKoopas::CKoopas(int _koopas_type, float x, float y) :CGameObject()
+CKoopas::CKoopas() :CGameObject()
 {
 	type = Type::KOOPAS;
-	koopas_type = _koopas_type;
+	koopas_type = KoopaType::RedTroopa;
 	SetState(KOOPAS_STATE_WALKING);
 	this->gravity = KOOPAS_GRAVITY;
 }
@@ -35,6 +35,12 @@ void CKoopas::OnNoCollision(DWORD dt)
 	y += vy * dt;*/
 	//DebugOut(L"Vx: %f", vx);
 };
+
+CKoopas* CKoopas::Create(Vec2 pos) {
+	CKoopas* koopas = new CKoopas();
+	koopas->SetPosition(Vec2(pos.x, pos.y));
+	return koopas;
+}
 
 void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 {

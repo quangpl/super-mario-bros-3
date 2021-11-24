@@ -14,12 +14,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
+	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
 		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
 	}
 	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
 		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
-	}
+	}*/
 
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {

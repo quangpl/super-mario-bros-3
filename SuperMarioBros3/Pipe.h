@@ -21,8 +21,9 @@ class CPipe : public CGameObject
 	int pipe_type;
 	bool direction;
 public:
-	CPipe(int pipe_type, bool direction);
+	CPipe();
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
+	static CPipe* Create(Vec2 pos);
 };
 

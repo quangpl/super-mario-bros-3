@@ -69,10 +69,12 @@ protected:
 	virtual void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 
 public:
-	CKoopas(int koopas_type, float x, float y);
+	CKoopas();
 	virtual void SetState(int state);
 
 	void SetOwner(LPGAMEOBJECT _owner) { this->owner = _owner; }
 	LPGAMEOBJECT GetOwner() { return this->owner; }
+
+	static CKoopas* Create(Vec2 position);
 
 };
