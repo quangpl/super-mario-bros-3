@@ -23,10 +23,10 @@ bool CActivationPoint::CanThrough(CGameObject* sourceObject, float collisionNx, 
 
 void CActivationPoint::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - ACTIVATION_POINT_WIDTH / 2;
+	/*l = x - ACTIVATION_POINT_WIDTH / 2;
 	t = y - ACTIVATION_POINT_HEIGHT / 2;
 	r = l + ACTIVATION_POINT_WIDTH * width;
-	b = t + ACTIVATION_POINT_HEIGHT * height;
+	b = t + ACTIVATION_POINT_HEIGHT * height;*/
 }
 
 CActivationPoint::~CActivationPoint()

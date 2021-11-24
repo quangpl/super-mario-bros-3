@@ -24,9 +24,9 @@ void CPipe::Render()
 
 void CPipe::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	int height = pipe_type == PipeType::Long ? PIPE_BBOX_HEIGHT_LONG : PIPE_BBOX_HEIGHT_SHORT;
+	/*int height = pipe_type == PipeType::Long ? PIPE_BBOX_HEIGHT_LONG : PIPE_BBOX_HEIGHT_SHORT;
 	l = x - PIPE_BBOX_WIDTH / 2;
 	t = y - height / 2;
 	r = l + PIPE_BBOX_WIDTH;
-	b = t + height;
+	b = t + height;*/
 }

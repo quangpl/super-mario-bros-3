@@ -135,14 +135,16 @@ class CMario : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
-	int level; 
-	int untouchable; 
+	int level;
+	int untouchable;
 	ULONGLONG untouchable_start;
 	ULONGLONG transformation_start;
 	BOOLEAN isOnPlatform;
-	int coin; 
+	int coin;
 	int backup_state;
-	
+
+	RectBox move_limitation = RectBox(9999, 9999, 9999, 9999);
+
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
@@ -152,6 +154,8 @@ class CMario : public CGameObject
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
+
+
 	LPGAMEOBJECT holder = NULL;
 	bool holding;
 public:
@@ -161,7 +165,7 @@ public:
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = MARIO_GRAVITY; 
+		ay = MARIO_GRAVITY;
 
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
@@ -174,18 +178,18 @@ public:
 	void SetState(int state);
 
 	int IsCollidable()
-	{ 
-		return (state != MARIO_STATE_DIE); 
+	{
+		return (state != MARIO_STATE_DIE);
 	}
 
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable == 0); }
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	//void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	static CMario* GetInstance();
 
 	void SetLevel(int _level);
@@ -198,6 +202,14 @@ public:
 	bool GetHolding() { return this->holding; }
 
 	int GetWidth() { return MARIO_BIG_BBOX_WIDTH; }
+
+	void OnKeyUp(int keyCode);
+
+	void OnKeyDown(int keyCode);
+
+	void SetMoveLimitation(RectBox limitation) {
+		this->move_limitation = limitation;
+	}
 
 	virtual RectBox GetBoundingBox();
 };

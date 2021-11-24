@@ -25,7 +25,6 @@ class CGame
 {
 	static CGame* __instance;
 	HWND hWnd;									// Window handle
-
 	int backBufferWidth = 0;					// Backbuffer width & height, will be set during Direct3D initialization
 	int backBufferHeight = 0;
 

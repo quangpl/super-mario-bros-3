@@ -19,18 +19,19 @@ protected:
 	vector<CGameObject*> objects;
 	Camera* camera;
 	CGameObject* player;
-public: 
+public:
 	Vec2 camSize = Vec2(769, 579);
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
-	virtual void Render() = 0; 
+	virtual void Render() = 0;
 	virtual void LoadObjects(const char* type, Vec2 fixedPos, Vec2 size, MapData& data) = 0;
 	virtual void SetDataPath(string data_path);
 	virtual void AddObject(CGameObject* entity);
 	virtual void AddObject(CGameObject* entity, MapData& data);
-
+	virtual void OnKeyDown(int KeyCode) = 0;
+	virtual void OnKeyUp(int KeyCode) = 0;
 	CGameObject* GetPlayer() { return this->player; }
 
 	Camera* GetCamera() {
@@ -38,19 +39,21 @@ public:
 	}
 
 };
-typedef CScene * LPSCENE;
+typedef CScene* LPSCENE;
 
 
 class CSceneKeyHandler : public CKeyEventHandler
 {
-protected: 
-	CScene * scence; 
+protected:
+	CScene* scence;
 
 public:
-	virtual void KeyState(BYTE *states) = 0;
+	virtual void KeyState(BYTE* states) = 0;
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
-	CSceneKeyHandler(LPSCENE s) :CKeyEventHandler() { scence = s; }
+	CSceneKeyHandler(CScene* s) : CKeyEventHandler() {
+		scence = s;
+	}
 };
 
 typedef CSceneKeyHandler* LPSCENEKEYHANDLER;

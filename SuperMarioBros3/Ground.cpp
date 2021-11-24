@@ -26,8 +26,8 @@ bool CGround::CanThrough(CGameObject* gameObject, float collisionNx, float colli
 
 void CGround::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - BRICK_BBOX_WIDTH / 2;
-	t = y - BRICK_BBOX_HEIGHT / 2;
+	l = position.x - BRICK_BBOX_WIDTH / 2;
+	t = position.y - BRICK_BBOX_HEIGHT / 2;
 	r = l + BRICK_BBOX_WIDTH * width;
 	b = t + BRICK_BBOX_HEIGHT * height;
 }

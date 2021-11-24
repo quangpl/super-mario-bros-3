@@ -1,6 +1,6 @@
 #include "Mushroom.h"
 
-CMushroom::CMushroom(int level) :CGameObject(x, y)
+CMushroom::CMushroom(int level) :CGameObject()
 {
 	this->type = Type::MUSHROOM;
 	this->vy = 0;
@@ -10,16 +10,16 @@ CMushroom::CMushroom(int level) :CGameObject(x, y)
 
 void CMushroom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - MUSHROOM_BBOX_WIDTH / 2;
+	/*left = x - MUSHROOM_BBOX_WIDTH / 2;
 	top = y - MUSHROOM_BBOX_HEIGHT / 2;
 	right = left + MUSHROOM_BBOX_WIDTH;
-	bottom = top + MUSHROOM_BBOX_HEIGHT;
+	bottom = top + MUSHROOM_BBOX_HEIGHT;*/
 }
 
 void CMushroom::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	/*x += vx * dt;
+	y += vy * dt;*/
 };
 bool CMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy)
 {
@@ -41,7 +41,7 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - y) >= BRICK_BBOX_HEIGHT) {
+	/*if (state == UP_MUSHROOM_STATE_UP && abs(start_y - y) >= BRICK_BBOX_HEIGHT) {
 		SetState(UP_MUSHROOM_STATE_RUN);
 	}
 	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - y) >= UP_MUSHROOM_EATABLE_DISTANCE) {
@@ -49,7 +49,7 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vy += (this->gravity * dt);
 	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);*/
 }
 
 
@@ -74,12 +74,12 @@ void CMushroom::SetState(int state)
 		vy = -MUSHROOM_SPEED_Y;
 		break;
 	case UP_MUSHROOM_STATE_RUN:
-		if (CMario::GetInstance()->GetPositionX() > x) {
+		/*if (CMario::GetInstance()->GetPositionX() > x) {
 			nx = -1;
 		}
 		else {
 			nx = 1;
-		}
+		}*/
 		vx = nx * MUSHROOM_SPEED_X;
 		this->gravity = MUSHROOM_GRAVITY;
 		break;

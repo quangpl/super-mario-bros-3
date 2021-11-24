@@ -61,7 +61,6 @@ protected:
 	int jump_step = 0;
 	bool is_on_ground;
 	CTimer* timer;
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
@@ -78,5 +77,4 @@ public:
 	virtual void SetState(int state);
 	int GetLevel() { return this->level; }
 	void SetLevel(int _level) { level = _level; }
-
 };

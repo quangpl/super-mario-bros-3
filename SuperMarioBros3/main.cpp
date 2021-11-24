@@ -168,8 +168,7 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-
-			CGame::GetInstance()->ProcessKeyboard();			
+			CGame::GetInstance()->ProcessKeyboard();	
 			Update(dt);
 			Render();
 		}

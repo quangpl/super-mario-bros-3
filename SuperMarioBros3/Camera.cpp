@@ -25,6 +25,17 @@ RectBox Camera::GetBoundingBox()
 
 void Camera::Update()
 {
+	RectBox trackingObjectBox = tracking_object->GetBoundingBox();
+	RectBox camLimitation = active_bound;
+	if (trackingObjectBox.left - camLimitation.left <= size.x / 2) {
+		position.x = camLimitation.left;
+	}
+	else if (trackingObjectBox.left - camLimitation.right <= size.x / 2) {
+		position.x = camLimitation.right;
+	}
+	else {
+		position.x = trackingObjectBox.left - size.x / 2;
+	}
 }
 void Camera::ActiveRegion(int id)
 {

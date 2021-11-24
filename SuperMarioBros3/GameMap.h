@@ -32,6 +32,10 @@ public:
 
 	virtual void AddLayer(CLayer* layer);
 
+	Vec2 GetBoundingBox()
+	{
+		return Vec2((float)this->width * (float)tile_width, (float)this->height * (float)tile_height);
+	}
 	virtual void Render();
 	static CGameMap* FromTMX(string filePath);
 	~CGameMap();

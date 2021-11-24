@@ -8,7 +8,7 @@
 #include "Animations.h"
 #include "PlayScene.h"
 
-CGame * CGame::__instance = NULL;
+CGame* CGame::__instance = NULL;
 
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
@@ -98,7 +98,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	//
 	//
 
-	D3D10_SAMPLER_DESC desc; 
+	D3D10_SAMPLER_DESC desc;
 	desc.Filter = D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR;
 	desc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
 	desc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
@@ -249,7 +249,7 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 		return NULL;
 	}
 
-	D3DX10_IMAGE_LOAD_INFO info; 
+	D3DX10_IMAGE_LOAD_INFO info;
 	ZeroMemory(&info, sizeof(D3DX10_IMAGE_LOAD_INFO));
 	info.Width = imageInfo.Width;
 	info.Height = imageInfo.Height;
@@ -423,9 +423,9 @@ void CGame::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			keyHandler->OnKeyDown(KeyCode);
+			SceneManager::GetInstance()->GetActiveScene()->OnKeyDown(KeyCode);
 		else
-			keyHandler->OnKeyUp(KeyCode);
+			SceneManager::GetInstance()->GetActiveScene()->OnKeyUp(KeyCode);
 	}
 }
 

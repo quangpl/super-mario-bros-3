@@ -6,8 +6,25 @@ using namespace std;
 
 CPlayScene::CPlayScene()
 {
+	this->player = CMario::GetInstance();
 	key_handler = new CSampleKeyHandler(this);
 }
+
+
+void CPlayScene::OnKeyDown(int KeyCode)
+{
+	if (!player)
+		return;
+	player->OnKeyDown(KeyCode);
+}
+
+void CPlayScene::OnKeyUp(int KeyCode)
+{
+	if (!player)
+		return;
+	player->OnKeyUp(KeyCode);
+}
+
 
 
 void CPlayScene::LoadMap() {
@@ -23,13 +40,13 @@ void CPlayScene::LoadMap() {
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
 	this->camera = new Camera(this->camSize);
 	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
-	//this->camera->SetTracking(mario);
+	this->camera->SetTrackingObject(this->player);
 
 	this->gameMap = CGameMap::FromTMX(mapPath);
 	this->gameMap->SetCamera(camera);
 
-	//Vec2 mapBound = gameMap->GetBound();
-	//this->mario->MovingBound = RectF(0, -mapBound.y, mapBound.x, mapBound.y);
+	Vec2 boundingMap = gameMap->GetBoundingBox();
+	this->player->SetMoveLimitation(RectBox(0, -boundingMap.y, boundingMap.x, boundingMap.y));
 
 	doc.Clear();
 
@@ -55,7 +72,6 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 
 void CPlayScene::Load()
 {
-	player = CMario::GetInstance();
 	DebugOut(L"[INFO] Start loading scene from : %s \n");
 	LoadMap();
 	CGame::GetInstance()->SetKeyHandler(this->GetKeyEventHandler());
@@ -64,6 +80,7 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
+	this->camera->Update();
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 0; i < objects.size(); i++)
 	{

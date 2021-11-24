@@ -1,6 +1,6 @@
 #include "Koopas.h"
 
-CKoopas::CKoopas(int _koopas_type, float x, float y) :CGameObject(x, y)
+CKoopas::CKoopas(int _koopas_type, float x, float y) :CGameObject()
 {
 	type = Type::KOOPAS;
 	koopas_type = _koopas_type;
@@ -8,31 +8,31 @@ CKoopas::CKoopas(int _koopas_type, float x, float y) :CGameObject(x, y)
 	this->gravity = KOOPAS_GRAVITY;
 }
 
-void CKoopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	left = x - KOOPAS_BBOX_WIDTH/2;
-	top = y - KOOPAS_BBOX_HEIGHT/2;
-	right = left + KOOPAS_BBOX_WIDTH;
-	bottom = top + KOOPAS_BBOX_HEIGHT;
-	switch (state)
-	{
-	case KOOPAS_STATE_IDLE:
-	case KOOPAS_STATE_DIE_MOVE:
-	case KOOPAS_STATE_DIE_BY_ATTACK:
-		left = x - KOOPAS_BBOX_WIDTH / 2;
-		top = y - KOOPAS_BBOX_HEIGHT_DIE / 2;
-		right = left + KOOPAS_BBOX_WIDTH;
-		bottom = top + KOOPAS_BBOX_HEIGHT_DIE;
-		break;
-	default:
-		break;
-	}
-}
+//void CKoopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+//{
+//	/*left = x - KOOPAS_BBOX_WIDTH/2;
+//	top = y - KOOPAS_BBOX_HEIGHT/2;
+//	right = left + KOOPAS_BBOX_WIDTH;
+//	bottom = top + KOOPAS_BBOX_HEIGHT;
+//	switch (state)
+//	{
+//	case KOOPAS_STATE_IDLE:
+//	case KOOPAS_STATE_DIE_MOVE:
+//	case KOOPAS_STATE_DIE_BY_ATTACK:
+//		left = x - KOOPAS_BBOX_WIDTH / 2;
+//		top = y - KOOPAS_BBOX_HEIGHT_DIE / 2;
+//		right = left + KOOPAS_BBOX_WIDTH;
+//		bottom = top + KOOPAS_BBOX_HEIGHT_DIE;
+//		break;
+//	default:
+//		break;
+//	}*/
+//}
 
 void CKoopas::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	/*x += vx * dt;
+	y += vy * dt;*/
 	//DebugOut(L"Vx: %f", vx);
 };
 
@@ -64,8 +64,8 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Switch case for each owner type
 	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
 		CMario* mario = dynamic_cast<CMario*>(this->owner);
-		x = this->owner->GetPositionX() + mario->GetNx() * mario->GetWidth();
-		y = this->owner->GetPositionY();
+	/*	x = this->owner->GetPositionX() + mario->GetNx() * mario->GetWidth();
+		y = this->owner->GetPositionY();*/
 	}
 	else {
 		vy += (KOOPAS_GRAVITY * dt);
@@ -129,11 +129,11 @@ void CKoopas::SetState(int state)
 		this->vx = KOOPAS_WALKING_SPEED;
 		break;
 	case KOOPAS_STATE_DIE_BY_ATTACK:
-		y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
+		//y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
 		this->vx = 0;
 		break;
 	case KOOPAS_STATE_DIE_MOVE:
-		y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
+		//y = y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
 		nx = CMario::GetInstance()->GetNx();
 		this->SetVelocityX(nx * KOOPAS_SHELL_RUN_SPEED);
 		break;

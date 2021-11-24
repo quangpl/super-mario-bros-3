@@ -12,36 +12,23 @@ class CGameObject
 protected:
 
 	DWORD id;
-	float x;
-	float y;
-
 	float vx;
 	float vy;
-	Vec2 position;
 	float gravity;
-
 	int nx;
-
 	int state;
 	int ani;
 	bool isDeleted;
 	bool is_show = true;
 	RectBox bounding_box;
 public:
+	Vec2 position;
 	int type;
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void SetVelocityX(float _vx) { this->vx = _vx; }
 	void SetVelocityY(float _vy) { this->vy = _vy; }
-	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
-	float GetPositionX() { return this->x; }
-	float GetPositionY() { return this->y; }
-
 	Vec2 GetPosition() { return this->position; }
 	void SetPosition(Vec2 pos) { this->position = pos; }
-
-	void SetPositionX(float _x) { this->x = _x; }
-	void SetPositionY(float _y) { this->y = _y; }
 
 	float GetGravity() { return this->gravity; }
 	void SetGravity(float _gravity) { this->gravity = _gravity; }
@@ -59,12 +46,7 @@ public:
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y) :CGameObject() {
-		this->x = x; this->y = y;
-	}
-
 	virtual RectBox GetBoundingBox();
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }

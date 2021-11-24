@@ -58,7 +58,6 @@ class CKoopas : public CGameObject
 	int koopas_type;
 	LPGAMEOBJECT owner = NULL;
 protected:
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 

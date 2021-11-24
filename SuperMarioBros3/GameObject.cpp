@@ -12,7 +12,7 @@
 
 CGameObject::CGameObject()
 {
-	x = y = 0;
+	position = Vec2{0,0};
 	vx = vy = 0;
 	nx = 1;
 	state = -1;
@@ -24,7 +24,7 @@ RectBox CGameObject::GetBoundingBox() {
 void CGameObject::RenderBoundingBox()
 {
 	GetBoundingBox();
-	D3DXVECTOR3 p(x, y, 0);
+	D3DXVECTOR3 p(position.x, position.y, 0);
 	RECT rect;
 
 	LPTEXTURE bbox = CTextures::GetInstance()->Get("tex-test");

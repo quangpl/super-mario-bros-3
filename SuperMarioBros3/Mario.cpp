@@ -11,12 +11,23 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	// TODO: Need improve after implement Camera completely
-	if (x <= 0) {
-		x = 0;
-	}
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
+		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
+	}
+	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
+		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
+	}
+
+	CGame* game = CGame::GetInstance();
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		this->SetState(MARIO_STATE_WALKING_RIGHT);
+	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		this->SetState(MARIO_STATE_WALKING_LEFT);
+	}
 	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
@@ -34,8 +45,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMario::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	position.x += vx * dt;
+	position.y += vy * dt;
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -387,7 +398,7 @@ void CMario::Render()
 
 	////animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 	////DebugOut(L"Mario ani: %d \n", aniId);
@@ -452,7 +463,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y += MARIO_SIT_HEIGHT_ADJUST;
+			//y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -461,7 +472,7 @@ void CMario::SetState(int state)
 		{
 			isSitting = false;
 			state = MARIO_STATE_IDLE;
-			y -= MARIO_SIT_HEIGHT_ADJUST;
+			//y -= MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -512,15 +523,15 @@ void CMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	x = 100;
-	y = 1600;
-	left = x - MARIO_BIG_BBOX_WIDTH / 2;
-	top = y - MARIO_BIG_BBOX_HEIGHT / 2;
-	right = left + MARIO_BIG_BBOX_WIDTH;
-	bottom = top + MARIO_BIG_BBOX_HEIGHT;
-}
+//void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+//{
+//	/*x = 100;
+//	y = 1600;*/
+//	//left = x - MARIO_BIG_BBOX_WIDTH / 2;
+//	//top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+//	//right = left + MARIO_BIG_BBOX_WIDTH;
+//	//bottom = top + MARIO_BIG_BBOX_HEIGHT;
+//}
 
 void CMario::SetLevel(int l)
 {
@@ -528,15 +539,27 @@ void CMario::SetLevel(int l)
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		//y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
 	level = l;
 }
+void CMario::OnKeyUp(int KeyCode) {
+	DebugOut(L"On key up %d", KeyCode);
+}
+
+void CMario::OnKeyDown(int KeyCode) {
+	maxVx = MARIO_RUNNING_SPEED;
+	ax = MARIO_ACCEL_RUN_X;
+	nx = 1;
+	DebugOut(L"On key down %d", KeyCode);
+}
+
+
 RectBox CMario::GetBoundingBox() {
-	this->bounding_box.left = x;
-	this->bounding_box.top = y;
-	this->bounding_box.right = this->bounding_box.left + BRICK_BBOX_WIDTH * 3;
-	this->bounding_box.bottom = this->bounding_box.top + BRICK_BBOX_HEIGHT * 3;
+	this->bounding_box.left = position.x - MARIO_BIG_BBOX_WIDTH * 3 / 2;
+	this->bounding_box.top = position.y - MARIO_BIG_BBOX_HEIGHT * 3 / 2;
+	this->bounding_box.right = this->bounding_box.left + MARIO_BIG_BBOX_WIDTH * 3;
+	this->bounding_box.bottom = this->bounding_box.top + MARIO_BIG_BBOX_HEIGHT * 3;
 	return this->bounding_box;
 }
 

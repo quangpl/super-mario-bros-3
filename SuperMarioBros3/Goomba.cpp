@@ -1,7 +1,7 @@
 #include "Goomba.h"
 
 
-CGoomba::CGoomba(int level) :CGameObject(x, y)
+CGoomba::CGoomba(int level) :CGameObject()
 {
 	this->level = level;
 	this->gravity = GOOMBA_GRAVITY;
@@ -22,7 +22,7 @@ CGoomba::CGoomba(int level) :CGameObject(x, y)
 	}
 }
 
-CGoomba::CGoomba() :CGameObject(x, y)
+CGoomba::CGoomba() :CGameObject()
 {
 	this->level = GoombaLevel::Nomal;
 	this->gravity = GOOMBA_GRAVITY;
@@ -49,38 +49,38 @@ CGoomba* CGoomba::Create(Vec2 position) {
 	return goomba;	
 }
 
-void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	if (state == GOOMBA_STATE_DIE)
-	{
-		left = top = right = bottom = 0;
-		return;
-	}
-	switch (level)
-	{
-	case GoombaLevel::Nomal:
-	{
-		left = x - GOOMBA_BBOX_WIDTH / 2;
-		top = y - GOOMBA_BBOX_HEIGHT / 2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT;
-		break;
-	}
-	case GoombaLevel::RedWing:
-	case GoombaLevel::Red:
-		left = x - GOOMBA_BBOX_WIDTH / 2;
-		top = y - GOOMBA_BBOX_HEIGHT / 2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT;
-	default:
-		break;
-	}
-}
+//void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+//{
+//	if (state == GOOMBA_STATE_DIE)
+//	{
+//		left = top = right = bottom = 0;
+//		return;
+//	}
+//	switch (level)
+//	{
+//	case GoombaLevel::Nomal:
+//	{
+//		/*left = x - GOOMBA_BBOX_WIDTH / 2;
+//		top = y - GOOMBA_BBOX_HEIGHT / 2;
+//		right = left + GOOMBA_BBOX_WIDTH;
+//		bottom = top + GOOMBA_BBOX_HEIGHT;*/
+//		break;
+//	}
+//	case GoombaLevel::RedWing:
+//	case GoombaLevel::Red:
+//		/*left = x - GOOMBA_BBOX_WIDTH / 2;
+//		top = y - GOOMBA_BBOX_HEIGHT / 2;
+//		right = left + GOOMBA_BBOX_WIDTH;
+//		bottom = top + GOOMBA_BBOX_HEIGHT;*/
+//	default:
+//		break;
+//	}
+//}
 
 void CGoomba::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	/*x += vx * dt;
+	y += vy * dt;*/
 };
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -242,7 +242,7 @@ void CGoomba::SetState(int state)
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
 		is_on_ground = true;
-		y = y - (RED_PARA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT)/2;
+		//y = y - (RED_PARA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT)/2;
 		break;
 	case GOOMBA_STATE_JUMP_LOW:
 		is_on_ground = false;

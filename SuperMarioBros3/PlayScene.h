@@ -22,7 +22,7 @@ class CPlayScene: public CScene
 {	
 	CGameMap* gameMap;
 public: 
-	CGameObject* player = NULL;
+	CMario* player = NULL;
 	CPlayScene();
 
 	virtual void Load();
@@ -30,9 +30,12 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
 	void LoadMap();
 	void Clear();
 	void PurgeDeletedObjects();
+
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 };
