@@ -28,7 +28,14 @@ CKoopas::CKoopas() :CGameObject()
 //		break;
 //	}*/
 //}
+RectBox CKoopas::GetBoundingBox() {
+	this->bounding_box.left = position.x - KOOPAS_BBOX_WIDTH / 2;
+	this->bounding_box.top = position.y - KOOPAS_BBOX_HEIGHT / 2;
 
+	this->bounding_box.right = position.x + this->bounding_box.left;
+	this->bounding_box.bottom = this->bounding_box.top + KOOPAS_BBOX_HEIGHT;
+	return this->bounding_box;
+}
 void CKoopas::OnNoCollision(DWORD dt)
 {
 	/*x += vx * dt;

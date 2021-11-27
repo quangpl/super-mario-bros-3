@@ -24,6 +24,8 @@ public:
 	CPipe();
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
+	virtual RectBox GetBoundingBox();
+
 	static CPipe* Create(Vec2 pos);
 };
 

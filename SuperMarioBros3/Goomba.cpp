@@ -1,27 +1,5 @@
 #include "Goomba.h"
 
-
-CGoomba::CGoomba(int level) :CGameObject()
-{
-	this->level = level;
-	this->gravity = GOOMBA_GRAVITY;
-	timer = new CTimer(0);
-	die_start = -1;
-	if (nx > 0) {
-		nx *= -1;
-	}
-	if (level == GoombaLevel::Nomal) {
-		SetState(GOOMBA_STATE_WALKING);
-	}
-	else if (level == GoombaLevel::RedWing) {
-		jump_step = 1;
-		SetState(GOOMBA_STATE_WALKING);
-	}
-	else {
-		DebugOut(L"Invalid Goomba Type");
-	}
-}
-
 CGoomba::CGoomba() :CGameObject()
 {
 	this->level = GoombaLevel::Nomal;
@@ -45,42 +23,22 @@ CGoomba::CGoomba() :CGameObject()
 
 CGoomba* CGoomba::Create(Vec2 position) {
 	CGoomba* goomba = new CGoomba();
-	goomba->SetPosition(Vec2(position.x, position.y));
+	goomba->SetPosition(Vec2(position.x, position.y - 50));
 	return goomba;	
 }
 
-//void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-//{
-//	if (state == GOOMBA_STATE_DIE)
-//	{
-//		left = top = right = bottom = 0;
-//		return;
-//	}
-//	switch (level)
-//	{
-//	case GoombaLevel::Nomal:
-//	{
-//		/*left = x - GOOMBA_BBOX_WIDTH / 2;
-//		top = y - GOOMBA_BBOX_HEIGHT / 2;
-//		right = left + GOOMBA_BBOX_WIDTH;
-//		bottom = top + GOOMBA_BBOX_HEIGHT;*/
-//		break;
-//	}
-//	case GoombaLevel::RedWing:
-//	case GoombaLevel::Red:
-//		/*left = x - GOOMBA_BBOX_WIDTH / 2;
-//		top = y - GOOMBA_BBOX_HEIGHT / 2;
-//		right = left + GOOMBA_BBOX_WIDTH;
-//		bottom = top + GOOMBA_BBOX_HEIGHT;*/
-//	default:
-//		break;
-//	}
-//}
+RectBox CGoomba::GetBoundingBox() {
+	this->bounding_box.left = position.x - GOOMBA_BBOX_WIDTH / 2;
+	this->bounding_box.top = position.y - GOOMBA_BBOX_HEIGHT / 2;
+	this->bounding_box.right = this->bounding_box.left + GOOMBA_BBOX_WIDTH;
+	this->bounding_box.bottom = this->bounding_box.top + GOOMBA_BBOX_HEIGHT;
+	return this->bounding_box;
+}
 
 void CGoomba::OnNoCollision(DWORD dt)
 {
-	/*x += vx * dt;
-	y += vy * dt;*/
+	position.x += vx * dt;
+	position.y += vy * dt;
 };
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -118,13 +76,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	//CMario* mario = CMario::GetInstance();
-	if (level != GoombaLevel::RedWing) {
-		return;
-	}
-	if (timer->IsRunning() && !timer->IsTimeUp()) {
-		return;
-	}
+	////CMario* mario = CMario::GetInstance();
+	//if (level != GoombaLevel::RedWing) {
+	//	return;
+	//}
+	//if (timer->IsRunning() && !timer->IsTimeUp()) {
+	//	return;
+	//}
 	/*if (is_on_ground && jump_step !=0) {
 		switch (jump_step)
 		{
@@ -179,7 +137,7 @@ int CGoomba::IsCollidable() {
 
 void CGoomba::Render()
 {
-	if (level == GoombaLevel::Nomal) {
+	/*if (level == GoombaLevel::Nomal) {
 		switch (state)
 		{
 		case GOOMBA_STATE_WALKING:
@@ -223,8 +181,8 @@ void CGoomba::Render()
 		default:
 			break;
 		}
-	}
-	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
+	}*/
+	CAnimations::GetInstance()->Get("ani-goomba-walk")->Render(position.x, position.y);
 	//RenderBoundingBox();
 }
 
@@ -246,12 +204,12 @@ void CGoomba::SetState(int state)
 		break;
 	case GOOMBA_STATE_JUMP_LOW:
 		is_on_ground = false;
-		//vx = nx * GOOMBA_WALKING_SPEED;
+		vx = nx * GOOMBA_WALKING_SPEED;
 		vy = -GOOMBA_JUMP_LOW_SPEED;
 		break;
 	case GOOMBA_STATE_JUMP_HIGH:
 		is_on_ground = false;
-		//vx = nx * GOOMBA_WALKING_SPEED;
+		vx = nx * GOOMBA_WALKING_SPEED;
 		vy = -2 * GOOMBA_JUMP_LOW_SPEED;
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:

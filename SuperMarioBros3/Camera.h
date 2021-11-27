@@ -32,6 +32,7 @@ public:
 	virtual CameraRegion* GetActiveRegion();
 	virtual void LoadFromTMX(TiXmlElement* data);
 
+	bool IsInCamera(CGameObject* obj);
 
 	~Camera();
 };

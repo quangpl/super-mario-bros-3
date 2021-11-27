@@ -12,7 +12,6 @@ public:
 	static CGround* Create(Vec2 position, Vec2 size);
 	bool interact;
 	virtual void Render();
-	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	CGround();
 	bool CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy);
 	~CGround();

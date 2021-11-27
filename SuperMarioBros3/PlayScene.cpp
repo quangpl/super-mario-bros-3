@@ -29,7 +29,6 @@ void CPlayScene::OnKeyUp(int KeyCode)
 
 void CPlayScene::LoadMap() {
 	TiXmlDocument doc(this->data_path.c_str());
-
 	if (!doc.LoadFile()) {
 		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(this->data_path));
 		return;
@@ -62,9 +61,7 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size), data);
 	}
-	if (strcmp(type, ObjectTypeData::Goomba.ToString().c_str()) == 0) {
-		AddObject(CGoomba::Create(position), data);
-	}
+	
 	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
 		AddObject(CBrick::Create(position), data);
 	}
@@ -73,6 +70,9 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	}
 	if (strcmp(type, ObjectTypeData::Pipe.ToString().c_str()) == 0) {
 		AddObject(CPipe::Create(position), data);
+	}
+	if (strcmp(type, ObjectTypeData::Spawner.ToString().c_str()) == 0) {
+		AddObject(Spawner::Create(position, data), data);
 	}
 }
 
@@ -91,8 +91,21 @@ void CPlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
+		if (!this->camera->IsInCamera(objects[i])) {
+			if (objects[i]->is_in_camera) {
+				objects[i]->OnLeavingCamera();
+			}
+			objects[i]->is_in_camera = false;
+		}
+		else {
+			if (!objects[i]->is_in_camera) {
+				objects[i]->OnGoingToCamera();
+			}
+			objects[i]->is_in_camera = true;
+		}
 	}
 	player->Update(dt, &coObjects);
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);

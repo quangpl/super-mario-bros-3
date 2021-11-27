@@ -20,6 +20,13 @@ void CPipe::Render()
 	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
 	//RenderBoundingBox();
 }
+RectBox CPipe::GetBoundingBox() {
+	this->bounding_box.left = position.x - PIPE_BBOX_WIDTH / 2;
+	this->bounding_box.top = position.y - PIPE_BBOX_HEIGHT_SHORT / 2;
+	this->bounding_box.right = this->bounding_box.left + PIPE_BBOX_WIDTH;
+	this->bounding_box.left = this->bounding_box.top + PIPE_BBOX_HEIGHT_SHORT;
+	return this->bounding_box;
+}
 CPipe* CPipe::Create(Vec2 pos) {
 	CPipe* pipe = new CPipe();
 	pipe->position = pos;

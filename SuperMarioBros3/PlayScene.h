@@ -17,6 +17,7 @@
 #include "ObjectTypeData.h"
 #include "GameMap.h"
 #include "SampleKeyEventHandler.h"
+#include "Spawner.h"
 
 class CPlayScene: public CScene
 {	

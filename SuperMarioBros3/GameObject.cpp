@@ -18,9 +18,19 @@ CGameObject::CGameObject()
 	state = -1;
 	isDeleted = false;
 }
+
+void CGameObject::OnGoingToCamera() {
+
+}
+
+void CGameObject::OnLeavingCamera() {
+
+}
+
 RectBox CGameObject::GetBoundingBox() {
 	return RectBox(0, 0, 0, 0);
 }
+
 void CGameObject::RenderBoundingBox()
 {
 	GetBoundingBox();

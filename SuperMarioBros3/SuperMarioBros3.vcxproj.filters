@@ -28,6 +28,18 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{1631d51b-5334-4217-b779-ed41d31f1415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Spawner">
+      <UniqueIdentifier>{ea858a16-0c29-42f5-bba6-fdbc77d75650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{b36f7dee-6fd1-487e-be34-520759812662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stopwatch">
+      <UniqueIdentifier>{5fb2a7c1-ff84-4d7b-9583-2e98212a74a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Goomba">
+      <UniqueIdentifier>{4020f4f8-5393-4d59-bebe-7a9153d9eaed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -67,9 +79,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
@@ -159,6 +168,15 @@
     <ClCompile Include="ObjectTypeData.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="Stopwatch.cpp">
+      <Filter>Stopwatch</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Goomba</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -210,9 +228,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
@@ -301,6 +316,15 @@
     </ClInclude>
     <ClInclude Include="ObjectTypeData.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="Stopwatch.h">
+      <Filter>Stopwatch</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Goomba</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

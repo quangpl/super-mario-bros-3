@@ -23,10 +23,15 @@ protected:
 	RectBox bounding_box;
 public:
 	Vec2 position;
+	bool is_in_camera = false;
 	int type;
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void SetVelocityX(float _vx) { this->vx = _vx; }
 	void SetVelocityY(float _vy) { this->vy = _vy; }
+
+	Vec2 GetSpeed() {
+		return Vec2{ this->vx, this->vy };
+	}
 	Vec2 GetPosition() { return this->position; }
 	void SetPosition(Vec2 pos) { this->position = pos; }
 
@@ -42,7 +47,6 @@ public:
 	virtual void Delete() { isDeleted = true; }
 	bool IsDeleted() { return isDeleted; }
 
-
 	void RenderBoundingBox();
 
 	CGameObject();
@@ -50,6 +54,9 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
+
+	virtual void OnGoingToCamera();
+	virtual void OnLeavingCamera();
 
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die

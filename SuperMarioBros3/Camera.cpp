@@ -27,15 +27,19 @@ void Camera::Update()
 {
 	RectBox trackingObjectBox = tracking_object->GetBoundingBox();
 	RectBox camLimitation = active_bound;
-	/*if (trackingObjectBox.left - camLimitation.left <= size.x / 2) {
+	DebugOut(L"trackingObjectBox %f %f \n", trackingObjectBox.left, trackingObjectBox.right);
+	DebugOut(L"camLimitation %f %f \n", camLimitation.left, camLimitation.right);
+	DebugOut(L"size %f %f \n", size.x, size.y);
+
+	if (abs(trackingObjectBox.left - camLimitation.left) <= size.x / 2) {
 		position.x = camLimitation.left;
 	}
-	else if (trackingObjectBox.left - camLimitation.right <= size.x / 2) {
+	else if (abs(trackingObjectBox.right - camLimitation.right) <= size.x / 2) {
 		position.x = camLimitation.right;
 	}
 	else {
 		position.x = trackingObjectBox.left - size.x / 2;
-	}*/
+	}
 }
 void Camera::ActiveRegion(int id)
 {
@@ -65,6 +69,10 @@ void Camera::LoadFromTMX(TiXmlElement* config)
 	}
 
 	ActiveRegion(startId);
+}
+bool Camera::IsInCamera(CGameObject* obj) {
+	RectBox objectBoundingBox = obj->GetBoundingBox();
+	return !(objectBoundingBox.right <= active_bound.left || objectBoundingBox.left >= active_bound.right || objectBoundingBox.top >= active_bound.bottom || objectBoundingBox.bottom <= active_bound.top);
 }
 
 Camera::~Camera()
