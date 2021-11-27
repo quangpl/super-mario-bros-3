@@ -23,7 +23,6 @@
 #endif // !VEC0
 #include <D3DX10math.h>
 
-
 typedef D3DXVECTOR2 Vec2;
 using namespace std;
 

@@ -10,9 +10,9 @@ CSprites* CSprites::GetInstance()
 	return __instance;
 }
 
-void CSprites::Add(string id, int left, int top, int right, int bottom, LPTEXTURE tex)
+void CSprites::Add(string id, int left, int top, int width, int height, int pivot_x, int pivot_y, LPTEXTURE texture)
 {
-	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
+	LPSPRITE s = new CSprite(id, left, top, width, height, pivot_x, pivot_y, texture);
 	sprites[id] = s;
 }
 
@@ -59,8 +59,7 @@ void CSprites::Import(const char* filePath)
 					pNode->QueryIntAttribute("height", &height);
 					if (pNode->Attribute("xPivot") != NULL) pNode->QueryIntAttribute("xPivot", &xPivot);
 					if (pNode->Attribute("yPivot") != NULL) pNode->QueryIntAttribute("yPivot", &yPivot);
-
-					CSprites::GetInstance()->Add(id, left * 3, top * 3, width * 3, height * 3, texture);
+					CSprites::GetInstance()->Add(id, left * 3, top * 3, width * 3, height * 3, xPivot * 3, yPivot * 3, texture);
 
 					DebugOut(L"Load sprite: %s\n", ToLPCWSTR(id));
 				}

@@ -17,7 +17,7 @@ protected:
 	float gravity;
 	int nx;
 	int state;
-	int ani;
+	string ani;
 	bool isDeleted;
 	bool is_show = true;
 	RectBox bounding_box;

@@ -150,6 +150,24 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	StateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
 	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
+	ID3D10RasterizerState* g_pRasterState;
+	D3D10_RASTERIZER_DESC rasterizerState;
+	// https://docs.microsoft.com/en-us/windows/win32/api/d3d10/ns-d3d10-d3d10_rasterizer_desc
+	rasterizerState.FillMode = D3D10_FILL_SOLID;
+	rasterizerState.CullMode = D3D10_CULL_NONE;
+	rasterizerState.FrontCounterClockwise = true;
+	rasterizerState.DepthBias = false;
+	rasterizerState.DepthBiasClamp = 0;
+	rasterizerState.SlopeScaledDepthBias = 0;
+	rasterizerState.DepthClipEnable = true;
+	rasterizerState.ScissorEnable = false;
+	rasterizerState.MultisampleEnable = false;
+	rasterizerState.AntialiasedLineEnable = false;
+
+	pD3DDevice->CreateRasterizerState(&rasterizerState, &g_pRasterState);
+
+	pD3DDevice->RSSetState(g_pRasterState);
+
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
 	return;
@@ -167,48 +185,38 @@ void CGame::SetPointSamplerState()
 	NOTE: This function is very inefficient because it has to convert
 	from texture to sprite every time we need to draw it
 */
-void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha)
+void CGame::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, RECT r, Transformation& transform, float alpha)
 {
-	if (tex == NULL) return;
+	if (texture == NULL) return;
+
+	RECT viewport;
+	UINT id = 1;
+	this->pD3DDevice->RSGetScissorRects(&id, &viewport);
+
+	x += viewport.left;
+	y += viewport.top;
 
 	int spriteWidth = 0;
 	int spriteHeight = 0;
 
 	D3DX10_SPRITE sprite;
 
-	// Set the sprite’s shader resource view
-	sprite.pTexture = tex->getShaderResourceView();
+	// Set the sprite's shader resource view
+	sprite.pTexture = texture->getShaderResourceView();
 
-	if (rect == NULL)
-	{
-		// top-left location in U,V coords
-		sprite.TexCoord.x = 0;
-		sprite.TexCoord.y = 0;
+	sprite.TexCoord.x = r.left / (float)texture->getWidth();
+	sprite.TexCoord.y = r.top / (float)texture->getHeight();
 
-		// Determine the texture size in U,V coords
-		sprite.TexSize.x = 1.0f;
-		sprite.TexSize.y = 1.0f;
+	spriteWidth = r.right - r.left;
+	spriteHeight = r.bottom - r.top;
 
-		spriteWidth = tex->getWidth();
-		spriteHeight = tex->getHeight();
-	}
-	else
-	{
-		sprite.TexCoord.x = rect->left / (float)tex->getWidth();
-		sprite.TexCoord.y = rect->top / (float)tex->getHeight();
-
-		spriteWidth = (rect->right - rect->left);
-		spriteHeight = (rect->bottom - rect->top);
-
-		sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
-		sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
-	}
+	sprite.TexSize.x = spriteWidth / (float)texture->getWidth();
+	sprite.TexSize.y = spriteHeight / (float)texture->getHeight();
 
 	// Set the texture index. Single textures will use 0
 	sprite.TextureIndex = 0;
 
 	// The color to apply to this sprite, full color applies white.
-	//sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha);
 
 
@@ -219,14 +227,21 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha)
 	// The translation matrix to be created
 	D3DXMATRIX matTranslation;
 
+	pivot.x = pivot.x == 0 ? spriteWidth / 2 : pivot.x;
+	pivot.y = pivot.y == 0 ? spriteHeight / 2 : pivot.y;
+
+	FLOAT rx = x + (spriteWidth / 2 - pivot.x) * transform.Scale.x;
+	FLOAT ry = (backBufferHeight - y) - (spriteHeight / 2 - pivot.y) * transform.Scale.y;
+
 	// Create the translation matrix
-	D3DXMatrixTranslation(&matTranslation, x, (backBufferHeight - y), 0.1f);
+	D3DXMatrixTranslation(&matTranslation, rx, ry, 0.1f);
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	//D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth * transform.Scale.x, (FLOAT)spriteHeight * transform.Scale.y, 1.0f);
+	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth * transform.Scale.x, (FLOAT)spriteHeight * transform.Scale.y, 1.0f);
 
-	// Setting the sprite’s position and size
+	// Setting the sprite's position and size
 	sprite.matWorld = (matScaling * matTranslation);
 
 	spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);

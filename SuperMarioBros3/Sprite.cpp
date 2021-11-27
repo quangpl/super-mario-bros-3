@@ -1,27 +1,29 @@
 #include "Sprite.h"
+#include "Game.h"
 
-CSprite::CSprite(string id, int left, int top, int right, int bottom, LPTEXTURE tex)
+CSprite::CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPTEXTURE texture)
 {
 	this->id = id;
 	this->left = left;
 	this->top = top;
-	this->right = right + left;
-	this->bottom = bottom + top;
-	this->texture = tex;
+	this->width = width;
+	this->height = height;
+	this->pivot = D3DXVECTOR3((float)xPivot, (float)yPivot, 0);
+	this->texture = texture;
 }
 
-void CSprite::Draw(float x, float y)
+void CSprite::Draw(float x, float y, Transformation& transform, float alpha)
 {
 	Camera* camera = SceneManager::GetInstance()->GetActiveScene()->GetCamera();
 	CGame* g = CGame::GetInstance();
 	float cx = camera->GetPosition().x;
 	float cy = camera->GetPosition().y;
+	RECT r;
 
-	cx = (FLOAT)floor(cx);
-	cy = (FLOAT)floor(cy);
-	
-	x = (FLOAT)floor(x);
-	y = (FLOAT)floor(y);
-	g->Draw(x - cx, y - cy, this->texture, this->left, this->top, this->right,this->bottom, 1);
+	r.left = this->left;
+	r.top = this->top;
+	r.right = this->left + this->width;
+	r.bottom = this->top + this->height;
+
+	CGame::GetInstance()->Draw(x - cx, y - cy, pivot, this->texture, r, transform, alpha);
 }
-

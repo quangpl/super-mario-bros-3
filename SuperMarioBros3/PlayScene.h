@@ -12,7 +12,6 @@
 #include "Utils.h"
 #include "Koopas.h"
 #include "MushRoom.h"
-#include "ActivationPoint.h"
 #include "EffectManager.h";
 #include "ObjectTypeData.h"
 #include "GameMap.h"

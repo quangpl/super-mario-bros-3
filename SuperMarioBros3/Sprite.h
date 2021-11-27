@@ -1,26 +1,28 @@
 #pragma once
-#include "Camera.h"
 #include "Utils.h"
-#include "SceneManager.h"
+#include "Transformation.h"
 #include "Texture.h"
-#include "Game.h"
+#include "SceneManager.h"
 
 class CSprite
 {
-	string id;				// Sprite ID in the sprite database
-
-	int left;
-	int top;
-	int right;
-	int bottom;
-
-	LPTEXTURE texture;
-	D3DX10_SPRITE sprite;
-	D3DXMATRIX matScaling;
 public:
-	CSprite(string id, int left, int top, int right, int bottom, LPTEXTURE tex);
+	string id = "";
 
-	void Draw(float x, float y);
+	int left = 0;
+	int top = 0;
+	int width = 0;
+	int height = 0;
+
+	D3DXVECTOR3 pivot;
+
+	LPTEXTURE texture = nullptr;
+
+public:
+	CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPTEXTURE texture);
+
+	virtual void Draw(float x, float y, Transformation& transform, float alpha);
 };
 
 typedef CSprite* LPSPRITE;
+

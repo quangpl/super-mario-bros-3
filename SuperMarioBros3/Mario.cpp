@@ -375,6 +375,7 @@ int CMario::GetAniIdBig()
 void CMario::Render()
 {
 	// TODO: Need improve with Effect
+	CAnimations::GetInstance()->Get("ani-big-mario-walk")->GetTransform()->Scale = Vec2(1.0f, 1.0f);
 	CAnimations::GetInstance()->Get("ani-big-mario-walk")->Render(position.x, position.y);
 	//CAnimations* animations = CAnimations::GetInstance();
 	//int aniId = -1;

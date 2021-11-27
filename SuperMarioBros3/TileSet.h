@@ -1,6 +1,7 @@
 #pragma once
 #include "Utils.h"
 #include "Texture.h"
+#include "Transformation.h"
 
 class CTileSet
 {

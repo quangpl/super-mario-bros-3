@@ -16,7 +16,7 @@ class CSprites
 	unordered_map<string, LPSPRITE> sprites;
 
 public:
-	void Add(string id, int left, int top, int right, int bottom, LPTEXTURE tex);
+	void Add(string id, int left, int top, int width, int height, int pivot_x, int pivot_y, LPTEXTURE texture);
 	LPSPRITE Get(string id);
 	void Clear();
 	virtual void Import(const char* filePath);
