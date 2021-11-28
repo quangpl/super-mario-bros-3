@@ -24,6 +24,5 @@ void CSprite::Draw(float x, float y, Transformation& transform, float alpha)
 	r.top = this->top;
 	r.right = this->left + this->width;
 	r.bottom = this->top + this->height;
-
 	CGame::GetInstance()->Draw(x - cx, y - cy, pivot, this->texture, r, transform, alpha);
 }

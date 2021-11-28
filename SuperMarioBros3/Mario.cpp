@@ -549,9 +549,9 @@ void CMario::OnKeyUp(int KeyCode) {
 }
 
 void CMario::OnKeyDown(int KeyCode) {
-	maxVx = MARIO_RUNNING_SPEED;
+	/*maxVx = MARIO_RUNNING_SPEED;
 	ax = MARIO_ACCEL_RUN_X;
-	nx = 1;
+	nx = 1;*/
 	DebugOut(L"On key down %d", KeyCode);
 }
 

@@ -11,6 +11,9 @@ CGameObject* Spawner::GetSpawnObject()
 	if (type.compare(ObjectTypeData::Goomba.ToString()) == 0) {
 		return (CGoomba::Create(position));
 	}
+	else if (type.compare(ObjectTypeData::RedGoomba.ToString()) == 0) {
+		return (CRedGoomba::Create(position));
+	}
 	else {
 		return NULL;
 	}

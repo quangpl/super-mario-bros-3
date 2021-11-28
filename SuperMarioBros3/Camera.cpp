@@ -31,7 +31,7 @@ void Camera::Update()
 	DebugOut(L"camLimitation %f %f \n", camLimitation.left, camLimitation.right);
 	DebugOut(L"size %f %f \n", size.x, size.y);
 
-	if (abs(trackingObjectBox.left - camLimitation.left) <= size.x / 2) {
+	/*if (abs(trackingObjectBox.left - camLimitation.left) <= size.x / 2) {
 		position.x = camLimitation.left;
 	}
 	else if (abs(trackingObjectBox.right - camLimitation.right) <= size.x / 2) {
@@ -39,7 +39,7 @@ void Camera::Update()
 	}
 	else {
 		position.x = trackingObjectBox.left - size.x / 2;
-	}
+	}*/
 }
 void Camera::ActiveRegion(int id)
 {

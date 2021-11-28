@@ -13,16 +13,29 @@ CPlayScene::CPlayScene()
 
 void CPlayScene::OnKeyDown(int KeyCode)
 {
-	if (!player)
+	/*if (!player)
 		return;
-	player->OnKeyDown(KeyCode);
+	player->OnKeyDown(KeyCode);*/
+	switch (KeyCode)
+	{
+		// FIXME: Just for development
+	case DIK_D:
+		this->camera->position.x = this->camera->position.x + 70;
+		break;
+		// FIXME: Just for development
+	case DIK_A:
+		this->camera->position.x = this->camera->position.x - 70;
+		break;
+	default:
+		break;
+	}
 }
 
 void CPlayScene::OnKeyUp(int KeyCode)
 {
 	if (!player)
 		return;
-	player->OnKeyUp(KeyCode);
+	//player->OnKeyUp(KeyCode);
 }
 
 
@@ -58,6 +71,9 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::Goomba.ToString().c_str()) == 0) {
 		AddObject(CGoomba::Create(position));
 	}
+	if (strcmp(type, ObjectTypeData::RedGoomba.ToString().c_str()) == 0) {
+		AddObject(CRedGoomba::Create(position), data);
+	}
 	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size), data);
 	}
@@ -65,7 +81,7 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 		AddObject(CGround::Create(position, size), data);
 	}
 	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
-		AddObject(CBrick::Create(position), data);
+		AddObject(CBrick::Create(position, size), data);
 	}
 	if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
 		AddObject(CKoopas::Create(position), data);

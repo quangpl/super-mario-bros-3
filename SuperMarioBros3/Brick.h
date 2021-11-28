@@ -37,6 +37,7 @@ enum BrickChildItem {
 class CBrick : public CGameObject
 {
 public:
+	Vec2 size;
 	int brickType;
 	int child_item_id = BrickChildItem::Empty;
 	LPGAMEOBJECT child_item = NULL;
@@ -52,5 +53,5 @@ public:
 	LPGAMEOBJECT GetChildItem() { return this->child_item; }
 	void SetChildItem(LPGAMEOBJECT _child_item) { this->child_item = _child_item; }
 
-	static CBrick* Create(Vec2 pos);
+	static CBrick* Create(Vec2 pos, Vec2 size);
 };

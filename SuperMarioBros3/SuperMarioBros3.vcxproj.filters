@@ -177,6 +177,9 @@
     <ClCompile Include="Goomba.cpp">
       <Filter>Goomba</Filter>
     </ClCompile>
+    <ClCompile Include="RedGoomba.cpp">
+      <Filter>Goomba</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="Transformation.h">
       <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="RedGoomba.h">
+      <Filter>Goomba</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

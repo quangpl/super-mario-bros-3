@@ -21,30 +21,20 @@ CBrick::~CBrick()
 
 }
 
-CBrick* CBrick::Create(Vec2 pos)
+CBrick* CBrick::Create(Vec2 pos, Vec2 size)
 {
-	CBrick* brick = new CBrick(pos,2,1);
+	CBrick* brick = new CBrick(pos, 2, 1);
 	brick->SetPosition(pos);
+	brick->size = size;
 	return brick;
 }
 
 
 void CBrick::Render()
 {
-	/*if (!is_show) {
-		return;
-	}
-	int ani;
-	if (this->state == BRICK_STATE_NORMAL) {
-		ani = BRICK_ANI_NORMAL;
-	}
-	else {
-		ani = BRICK_ANI_BROKEN;
-	}*/
-	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	RenderBoundingBox();
 	CAnimation* ani = CAnimations::GetInstance()->Get("ani-empty-block");
-	ani->Render(this->position.x, this->position.y);
+	ani->Render(this->position.x + BRICK_BBOX_WIDTH / 2, this->position.y + BRICK_BBOX_HEIGHT / 2);
+	RenderBoundingBox();
 }
 
 void CBrick::OnNoCollision(DWORD dt)
@@ -54,7 +44,7 @@ void CBrick::OnNoCollision(DWORD dt)
 }
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
-	
+
 }
 
 void CBrick::SetState(int state)
