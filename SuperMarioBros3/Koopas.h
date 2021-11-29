@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "Mario.h"
+#include "Transformation.h"
 #include "Brick.h"
 #define KOOPAS_WALKING_SPEED	0.03f
 #define KOOPAS_GRAVITY	0.0018f
@@ -9,7 +10,7 @@
 #define KOOPAS_SHELL_RUN_SPEED 0.15f
 
 
-#define KOOPAS_BBOX_WIDTH 16
+#define KOOPAS_BBOX_WIDTH 16*
 #define KOOPAS_BBOX_HEIGHT 26
 #define KOOPAS_BBOX_HEIGHT_DIE 15
 
@@ -55,6 +56,7 @@ enum KoopaType
 
 class CKoopas : public CGameObject
 {
+	Vec2 size = Vec2(45, 45);
 	int koopas_type;
 	LPGAMEOBJECT owner = NULL;
 protected:

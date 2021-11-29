@@ -27,10 +27,7 @@ void Camera::Update()
 {
 	RectBox trackingObjectBox = tracking_object->GetBoundingBox();
 	RectBox camLimitation = active_bound;
-	DebugOut(L"trackingObjectBox %f %f \n", trackingObjectBox.left, trackingObjectBox.right);
-	DebugOut(L"camLimitation %f %f \n", camLimitation.left, camLimitation.right);
-	DebugOut(L"size %f %f \n", size.x, size.y);
-
+	DebugOut(L"position %f %f \n", position.x, position.y);
 	/*if (abs(trackingObjectBox.left - camLimitation.left) <= size.x / 2) {
 		position.x = camLimitation.left;
 	}

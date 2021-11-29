@@ -43,6 +43,12 @@
     <Filter Include="Transformation">
       <UniqueIdentifier>{75966633-f7f5-41e3-9e35-1e18ed36f54b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Koopas">
+      <UniqueIdentifier>{e81ac620-72f7-4977-a854-a7f47771a107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandPoint">
+      <UniqueIdentifier>{e3c97f89-961b-41f5-b68e-8034b83ad50e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -103,9 +109,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pipe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MushRoom.cpp">
@@ -179,6 +182,12 @@
     </ClCompile>
     <ClCompile Include="RedGoomba.cpp">
       <Filter>Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Koopas</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandPoint.cpp">
+      <Filter>CommandPoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,9 +266,6 @@
     <ClInclude Include="Pipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MushRoom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -331,6 +337,12 @@
     </ClInclude>
     <ClInclude Include="RedGoomba.h">
       <Filter>Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>Koopas</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandPoint.h">
+      <Filter>CommandPoint</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

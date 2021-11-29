@@ -150,6 +150,7 @@
     <ClCompile Include="CameraRegion.cpp" />
     <ClCompile Include="CoinEffect.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CommandPoint.cpp" />
     <ClCompile Include="DataReader.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Direction.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="CameraRegion.h" />
     <ClInclude Include="CoinEffect.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CommandPoint.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DataReader.h" />
     <ClInclude Include="Debug.h" />

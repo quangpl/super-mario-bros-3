@@ -64,6 +64,8 @@ public:
 	static const ObjectType Tree;
 	static const ObjectType Node;
 
+	static const ObjectType CommandPoint;
+
 	static bool IsTile(ObjectType);
 
 	static bool IsMario(ObjectType);

@@ -62,6 +62,10 @@ const ObjectType ObjectTypeData::TinyMario = ObjectType::CreateObjectType(30001,
 const ObjectType ObjectTypeData::Tree = ObjectType::CreateObjectType(30002, "Tree");
 const ObjectType ObjectTypeData::Node = ObjectType::CreateObjectType(30003, "Node");
 
+
+const ObjectType ObjectTypeData::CommandPoint = ObjectType::CreateObjectType(30010, "CommandPoint");
+
+
 bool ObjectTypeData::IsTile(ObjectType type)
 {
     bool normalTile = type == DEFAULT_TILE_ID;

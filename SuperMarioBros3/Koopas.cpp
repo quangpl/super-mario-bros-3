@@ -29,23 +29,23 @@ CKoopas::CKoopas() :CGameObject()
 //	}*/
 //}
 RectBox CKoopas::GetBoundingBox() {
-	this->bounding_box.left = position.x - KOOPAS_BBOX_WIDTH / 2;
-	this->bounding_box.top = position.y - KOOPAS_BBOX_HEIGHT / 2;
-
-	this->bounding_box.right = position.x + this->bounding_box.left;
-	this->bounding_box.bottom = this->bounding_box.top + KOOPAS_BBOX_HEIGHT;
+	bounding_box.left = position.x - size.x / 2;
+	bounding_box.top = position.y - size.y / 2;
+	bounding_box.right = bounding_box.left + size.x;
+	bounding_box.bottom = bounding_box.top + size.y;
 	return this->bounding_box;
 }
 void CKoopas::OnNoCollision(DWORD dt)
 {
-	/*x += vx * dt;
-	y += vy * dt;*/
+	position.x += vx * dt;
+	position.y += vy * dt;
 	//DebugOut(L"Vx: %f", vx);
 };
 
 CKoopas* CKoopas::Create(Vec2 pos) {
 	CKoopas* koopas = new CKoopas();
-	koopas->SetPosition(Vec2(pos.x, pos.y));
+	RectBox bounding_box = koopas->GetBoundingBox();
+	koopas->SetPosition(Vec2(pos.x, pos.y - (bounding_box.bottom - bounding_box.top) / 2));
 	return koopas;
 }
 
@@ -59,7 +59,8 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0)
 	{
-		vx = -vx;
+		nx = -nx;
+		vx = nx * abs(vx);
 	}
 
 	if (dynamic_cast<CBrick*>(e->obj)) {
@@ -77,8 +78,8 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Switch case for each owner type
 	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
 		CMario* mario = dynamic_cast<CMario*>(this->owner);
-	/*	x = this->owner->GetPositionX() + mario->GetNx() * mario->GetWidth();
-		y = this->owner->GetPositionY();*/
+		/*	x = this->owner->GetPositionX() + mario->GetNx() * mario->GetWidth();
+			y = this->owner->GetPositionY();*/
 	}
 	else {
 		vy += (KOOPAS_GRAVITY * dt);
@@ -91,46 +92,11 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CKoopas::Render()
 {
-	//DebugOut(L"ani:%d \n", ani);
-	switch (state)
-	{
-	case KOOPAS_STATE_DIE_BY_ATTACK:
-		ani = PARA_KOOPAS_ANI_DIE;
-		break;
-	case KOOPAS_STATE_DIE_MOVE:
-		ani = PARA_KOOPAS_ANI_DIE_SPIN;
-		break;
-	case KOOPAS_STATE_IDLE:
-		ani = KOOPAS_ANI_DIE;
-		break;
-	case KOOPAS_STATE_WALKING:
-	case KOOPAS_STATE_WALKING_DOWN:
-		if (koopas_type == KoopaType::RedTroopa)
-		{
-			if (vx > 0)
-				ani = PARA_KOOPAS_ANI_RIGHT;
-			else
-			{
-				ani = PARA_KOOPAS_ANI_LEFT;
-			}
-		}
-		else
-		{
-			if (vx > 0)
-				ani = KOOPAS_ANI_WALKING_RIGHT;
-			else
-			{
-				ani = KOOPAS_ANI_WALKING_LEFT;
-			}
-		}
-		break;
-	default:
-		break;
-	}
+	ani = "ani-red-koopa-troopa-move";
 
-	//CAnimations::GetInstance()->Get(ani)->Render(x, y);
-
-	//RenderBoundingBox();
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(-nx, 1);
+	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
+	RenderBoundingBox();
 }
 
 void CKoopas::SetState(int state)

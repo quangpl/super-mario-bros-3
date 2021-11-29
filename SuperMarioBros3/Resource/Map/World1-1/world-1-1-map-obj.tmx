@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="366">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="368">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -968,6 +968,24 @@
     <property name="RespawnLimit" type="int" value="999"/>
     <property name="SpawnDelay" type="int" value="500"/>
     <property name="SpawnLimit" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="366" type="CommandPoint" x="1508.67" y="1133.33">
+   <properties>
+    <property name="Command" value="koopas_turnback"/>
+    <property name="EntityType" value="CommandPoint"/>
+    <property name="Height" type="int" value="48"/>
+    <property name="Width" type="int" value="48"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="367" type="CommandPoint" x="1852.33" y="1135.33">
+   <properties>
+    <property name="Command" value="koopas_turnback"/>
+    <property name="EntityType" value="CommandPoint"/>
+    <property name="Height" type="int" value="48"/>
+    <property name="Width" type="int" value="48"/>
    </properties>
    <point/>
   </object>

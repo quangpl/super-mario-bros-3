@@ -12,6 +12,7 @@
 #include "Utils.h"
 #include "Koopas.h"
 #include "MushRoom.h"
+#include "CommandPoint.h"
 #include "RedGoomba.h"
 #include "EffectManager.h";
 #include "ObjectTypeData.h"
