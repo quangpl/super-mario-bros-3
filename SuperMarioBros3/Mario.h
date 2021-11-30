@@ -7,14 +7,13 @@
 #include "Koopas.h"
 #include "debug.h"
 
-#define MARIO_TRANSFORMATION_TIME 20000
-#define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
-#define MARIO_DECREASE_SPEED	 0.0065f
-#define MARIO_ACCEL_WALK_X	0.0005f
-#define MARIO_ACCEL_RUN_X	0.0001f
+#define MARIO_WALKING_SPEED		0.27f
+#define MARIO_RUNNING_SPEED		0.48f
 
-#define MARIO_ACCEL_INCREMENT 0.00001f
+#define MARIO_DECREASE_SPEED	 0.0016366f
+#define MARIO_ACCEL_WALK_X	0.000376f
+#define MARIO_ACCEL_RUN_X	0.0003613f
+
 
 #define MARIO_JUMP_SPEED_Y		0.52f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
@@ -152,8 +151,8 @@ class CMario : public CGameObject
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
 
-	int GetAniIdBig();
-	int GetAniIdSmall();
+	string GetAniIdBig();
+	string GetAniIdSmall();
 
 
 	LPGAMEOBJECT holder = NULL;

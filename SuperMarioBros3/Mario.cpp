@@ -196,213 +196,157 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CPortal* p = (CPortal*)e->obj;
 }
 
-//
-// Get animation ID for small Mario
-//
-int CMario::GetAniIdSmall()
+string CMario::GetAniIdSmall()
 {
-	int aniId = -1;
 	bool has_holding = this->holder != NULL;
 	if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT;
+			ani = "ani-small-mario-high-jump";
 		}
 		else if (has_holding)
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_HOLD_SHELL_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_HOLD_SHELL_LEFT;
+			ani = "ani-small-mario-hold";
 		}
 		else
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
+			ani = "ani-small-mario-jump";
 		}
 	}
 	else
 		if (isSitting)
 		{
-			if (nx > 0)
-				aniId = ID_ANI_MARIO_SIT_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SIT_LEFT;
+			ani = "ani-small-mario-idle";
 		}
 		else
 			if (vx == 0)
 			{
-				if (nx > 0) {
-					aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
-				}
-				else {
-					aniId = ID_ANI_MARIO_SMALL_IDLE_LEFT;
-				}
+				ani = "ani-small-mario-idle";
 				if (has_holding) {
-					if (nx > 0) {
-						aniId = ID_ANI_MARIO_SMALL_IDLE_HOLD_SHELL_RIGHT;
-					}
-					else {
-						aniId = ID_ANI_MARIO_SMALL_IDLE_HOLD_SHELL_LEFT;
-					}
+					ani = "ani-small-mario-hold";
 				}
 			}
 			else if (vx > 0)
 			{
 				if (ax < 0)
-					aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
+				{
+					nx = 1;
+					ani = "ani-small-mario-skid";
+				}
 				else if (vx >= MARIO_RUNNING_SPEED)
-					aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
+					ani = "ani-small-mario-run";
 				else
-					aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
+					ani = "ani-small-mario-walk";
 				if (has_holding) {
-					aniId = ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_RIGHT;
+					ani = "ani-small-mario-hold";
 				}
 			}
 			else // vx < 0
 			{
 				if (ax > 0)
-					aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
+				{
+					nx = -1;
+					ani = "ani-small-mario-skid";
+				}
 				else if (vx <= -MARIO_RUNNING_SPEED)
-					aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
+					ani = "ani-small-mario-run";
 				else
-					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
+					ani = "ani-small-mario-walk";
 				if (has_holding) {
-					aniId = ID_ANI_MARIO_SMALL_WALK_HOLD_SHELL_LEFT;
+					ani = "ani-small-mario-hold";
 				}
 			}
 
-	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
+	if (ani.compare("ani") == 0) ani = "ani-small-mario-idle";
 
-	return aniId;
+	return ani;
 }
 
 
 //
 // Get animdation ID for big Mario
 //
-int CMario::GetAniIdBig()
+string CMario::GetAniIdBig()
 {
-	int aniId = -1;
 	bool has_holding = this->holder != NULL;
 	if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_JUMP_RUN_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_JUMP_RUN_LEFT;
+			ani = "ani-big-mario-run";
 		}
 		else if (has_holding) {
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_JUMP_HOLD_SHELL_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_JUMP_HOLD_SHELL_LEFT;
+			ani = "ani-big-mario-hold";
 		}
 		else
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;
+			ani = "ani-big-mario-walk";
 		}
 	}
 	else
 		if (isSitting)
 		{
-			if (nx > 0)
-				aniId = ID_ANI_MARIO_SIT_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SIT_LEFT;
+			ani = "ani-big-mario-crouch";
 		}
 		else
 			if (vx == 0)
 			{
-				if (nx > 0) {
-					aniId = ID_ANI_MARIO_IDLE_RIGHT;
-				}
-				else {
-					aniId = ID_ANI_MARIO_IDLE_LEFT;
-				}
+				ani = "ani-big-mario-idle";
 				if (has_holding) {
-					if (nx > 0) {
-						aniId = ID_ANI_MARIO_IDLE_HOLD_SHELL_RIGHT;
-					}
-					else {
-						aniId = ID_ANI_MARIO_IDLE_HOLD_SHELL_LEFT;
-					}
+					ani = "ani-big-mario-hold";
 				}
 
 			}
 			else if (vx > 0)
 			{
 				if (ax < 0)
-					aniId = ID_ANI_MARIO_BRACE_RIGHT;
+				{
+					nx = 1;
+					ani = "ani-big-mario-skid";
+				}
 				else if (vx >= MARIO_RUNNING_SPEED)
-					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+					ani = "ani-big-mario-run";
 				else {
-					aniId = ID_ANI_MARIO_WALKING_RIGHT;
+					ani = "ani-big-mario-walk";
 				}
 				if (has_holding) {
-					aniId = ID_ANI_MARIO_WALK_HOLD_SHELL_RIGHT;
+					ani = "ani-big-mario-hold";
 				}
 			}
 			else // vx < 0
 			{
 				if (ax > 0)
-					aniId = ID_ANI_MARIO_BRACE_LEFT;
+				{
+					nx = -1;
+					ani = "ani-big-mario-skid";
+				}
 				else if (vx <= -MARIO_RUNNING_SPEED)
-					aniId = ID_ANI_MARIO_RUNNING_LEFT;
+					ani = "ani-big-mario-run";
 				else
-					aniId = ID_ANI_MARIO_WALKING_LEFT;
+					ani = "ani-big-mario-walk";
 				if (has_holding) {
-					aniId = ID_ANI_MARIO_WALK_HOLD_SHELL_LEFT;
+					ani = "ani-big-mario-hold";
 				}
 			}
 
-	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+	if (ani.compare("") == 0) ani = "ani-big-mario-idle";
 
-	return aniId;
+	return ani;
 }
 
 void CMario::Render()
 {
+	if (state == MARIO_STATE_DIE)
+		ani = "ani-small-mario-die";
+	else if (level == MARIO_LEVEL_BIG)
+		ani = GetAniIdBig();
+	else if (level == MARIO_LEVEL_SMALL)
+		ani = GetAniIdSmall();
 	// TODO: Need improve with Effect
-	CAnimations::GetInstance()->Get("ani-big-mario-walk")->GetTransform()->Scale = Vec2(1.0f, 1.0f);
-	CAnimations::GetInstance()->Get("ani-big-mario-walk")->Render(position.x, position.y);
-	//CAnimations* animations = CAnimations::GetInstance();
-	//int aniId = -1;
-	//if (state == MARIO_STATE_TRANSFORM_SMALL_TO_BIG) {
-	//	if (nx > 0) {
-	//		aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_RIGHT;
-	//	}
-	//	else {
-	//		aniId = ID_ANI_MARIO_TRANSFORM_SMALL_TO_BIG_LEFT;
-	//	}
-	//	//animations->Get(aniId)->Render(x, y);
-	//	//DebugOut(L"Mario ani: %d\n", aniId);
-	//	return;
-	//}
-	//if (state == MARIO_STATE_DIE)
-	//	aniId = ID_ANI_MARIO_DIE;
-	//else if (level == MARIO_LEVEL_BIG)
-	//	aniId = GetAniIdBig();
-	//else if (level == MARIO_LEVEL_SMALL)
-	//	aniId = GetAniIdSmall();
-
-	////animations->Get(aniId)->Render(x, y);
-
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(nx * 1.0f, 1.0f);
+	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
 	RenderBoundingBox();
-
-	//DebugOutTitle(L"Coins: %d", coin);
-	////DebugOut(L"Mario ani: %d \n", aniId);
 }
 
 void CMario::SetState(int state)
@@ -497,6 +441,12 @@ void CMario::SetState(int state)
 
 	case MARIO_STATE_DIE:
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		if (vx > 0) {
+			nx = 1;
+		}
+		else {
+			nx = -1;
+		}
 		vx = 0;
 		ax = 0;
 		break;
@@ -524,35 +474,58 @@ void CMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-//void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-//{
-//	/*x = 100;
-//	y = 1600;*/
-//	//left = x - MARIO_BIG_BBOX_WIDTH / 2;
-//	//top = y - MARIO_BIG_BBOX_HEIGHT / 2;
-//	//right = left + MARIO_BIG_BBOX_WIDTH;
-//	//bottom = top + MARIO_BIG_BBOX_HEIGHT;
-//}
-
 void CMario::SetLevel(int l)
 {
 	// TODO : Improve collision framework to remove "hard" behavior to make sure everything right.
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
-		//y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		position.y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
 	level = l;
 }
 void CMario::OnKeyUp(int KeyCode) {
 	DebugOut(L"On key up %d", KeyCode);
+	switch (KeyCode)
+	{
+	case DIK_S:
+		this->SetState(MARIO_STATE_RELEASE_JUMP);
+		break;
+	case DIK_A:
+		this->SetState(MARIO_STATE_RELEASE_RUNNING);
+		break;
+	case DIK_Z:
+		this->SetState(MARIO_STATE_RELEASE_HOLDING);
+		break;
+	case DIK_DOWN:
+		this->SetState(MARIO_STATE_SIT_RELEASE);
+		break;
+	}
 }
 
 void CMario::OnKeyDown(int KeyCode) {
-	/*maxVx = MARIO_RUNNING_SPEED;
-	ax = MARIO_ACCEL_RUN_X;
-	nx = 1;*/
 	DebugOut(L"On key down %d", KeyCode);
+	switch (KeyCode)
+	{
+	case DIK_DOWN:
+		this->SetState(MARIO_STATE_SIT);
+		break;
+	case DIK_S:
+		this->SetState(MARIO_STATE_JUMP);
+		break;
+	case DIK_1:
+		this->SetLevel(MARIO_LEVEL_SMALL);
+		break;
+	case DIK_2:
+		this->SetLevel(MARIO_LEVEL_BIG);
+		break;
+	case DIK_0:
+		this->SetState(MARIO_STATE_DIE);
+		break;
+	case DIK_R: // reset
+		//Reload();
+		break;
+	}
 }
 
 

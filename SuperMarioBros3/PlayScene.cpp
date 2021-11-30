@@ -13,9 +13,10 @@ CPlayScene::CPlayScene()
 
 void CPlayScene::OnKeyDown(int KeyCode)
 {
-	/*if (!player)
+	if (!player)
 		return;
-	player->OnKeyDown(KeyCode);*/
+	player->OnKeyDown(KeyCode);
+
 	switch (KeyCode)
 	{
 		// FIXME: Just for development
@@ -30,12 +31,35 @@ void CPlayScene::OnKeyDown(int KeyCode)
 		break;
 	}
 }
+void CPlayScene::KeyStateHandler() {
+	LPGAME game = CGame::GetInstance();
+	CMario* mario = this->player;
+	if (game->IsKeyDown(DIK_Z)) {
+		mario->SetHolding(true);
+	}
+	if (game->IsKeyDown(DIK_RIGHT))
+	{
+		if (game->IsKeyDown(DIK_A))
+			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+		else
+			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+	}
+	else if (game->IsKeyDown(DIK_LEFT))
+	{
+		if (game->IsKeyDown(DIK_A))
+			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+		else
+			mario->SetState(MARIO_STATE_WALKING_LEFT);
+	}
+	else
+		mario->SetState(MARIO_STATE_IDLE);
+}
 
 void CPlayScene::OnKeyUp(int KeyCode)
 {
 	if (!player)
 		return;
-	//player->OnKeyUp(KeyCode);
+	player->OnKeyUp(KeyCode);
 }
 
 
@@ -107,6 +131,7 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
+	this->KeyStateHandler();
 	this->camera->Update();
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 0; i < objects.size(); i++)

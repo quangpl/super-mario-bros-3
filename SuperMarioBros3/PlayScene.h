@@ -34,6 +34,8 @@ public:
 	virtual void Unload();
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
+
+	virtual void KeyStateHandler();
 	void LoadMap();
 	void Clear();
 	void PurgeDeletedObjects();

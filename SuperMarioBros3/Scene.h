@@ -19,6 +19,7 @@ protected:
 	vector<CGameObject*> objects;
 	Camera* camera;
 	CGameObject* player;
+
 public:
 	Vec2 camSize = Vec2(769, 579);
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
@@ -32,6 +33,7 @@ public:
 	virtual void AddObject(CGameObject* entity, MapData& data);
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
+	virtual void KeyStateHandler(){}
 	CGameObject* GetPlayer() { return this->player; }
 
 	Camera* GetCamera() {
