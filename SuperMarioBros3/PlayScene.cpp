@@ -7,6 +7,7 @@ using namespace std;
 CPlayScene::CPlayScene()
 {
 	this->player = CMario::GetInstance();
+	this->player->SetPlayerState(new SmallMario());
 	key_handler = new CSampleKeyHandler(this);
 }
 
@@ -15,7 +16,7 @@ void CPlayScene::OnKeyDown(int KeyCode)
 {
 	if (!player)
 		return;
-	player->OnKeyDown(KeyCode);
+	player->GetPlayerState()->OnKeyDown(KeyCode);
 
 	//switch (KeyCode)
 	//{
@@ -35,31 +36,31 @@ void CPlayScene::KeyStateHandler() {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = this->player;
 	if (game->IsKeyDown(DIK_Z)) {
-		mario->SetHolding(true);
+		mario->GetPlayerState()->SetHolding(true);
 	}
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))
-			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING_RIGHT);
 		else
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
 		if (game->IsKeyDown(DIK_A))
-			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING_LEFT);
 		else
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
+			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_LEFT);
 	}
 	else
-		mario->SetState(MARIO_STATE_IDLE);
+		mario->GetPlayerState()->SetState(MARIO_STATE_IDLE);
 }
 
 void CPlayScene::OnKeyUp(int KeyCode)
 {
 	if (!player)
 		return;
-	player->OnKeyUp(KeyCode);
+	player->GetPlayerState()->OnKeyUp(KeyCode);
 }
 
 
@@ -82,7 +83,7 @@ void CPlayScene::LoadMap() {
 	this->gameMap->SetCamera(camera);
 
 	Vec2 boundingMap = gameMap->GetBoundingBox();
-	this->player->SetMoveLimitation(RectBox(0, -boundingMap.y, boundingMap.x, boundingMap.y));
+	//this->player->SetMoveLimitation(RectBox(0, -boundingMap.y, boundingMap.x, boundingMap.y));
 
 	doc.Clear();
 

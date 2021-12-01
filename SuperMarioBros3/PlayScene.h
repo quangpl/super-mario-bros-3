@@ -19,11 +19,13 @@
 #include "GameMap.h"
 #include "SampleKeyEventHandler.h"
 #include "Spawner.h"
+#include "SmallMario.h"
 
 class CPlayScene: public CScene
 {	
 	CGameMap* gameMap;
 public: 
+	CKeyEventHandler* key_handler;
 	CMario* player = NULL;
 	CPlayScene();
 
@@ -36,6 +38,7 @@ public:
 	virtual void OnKeyUp(int KeyCode);
 
 	virtual void KeyStateHandler();
+	CKeyEventHandler* GetKeyEventHandler() { return this->key_handler; }
 	void LoadMap();
 	void Clear();
 	void PurgeDeletedObjects();

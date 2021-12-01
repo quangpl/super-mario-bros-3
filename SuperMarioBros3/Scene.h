@@ -13,7 +13,6 @@ class Camera;
 class CScene
 {
 protected:
-	LPKEYEVENTHANDLER key_handler;
 	string id;
 	string data_path = "";
 	vector<CGameObject*> objects;
@@ -22,7 +21,6 @@ protected:
 
 public:
 	Vec2 camSize = Vec2(769, 579);
-	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
