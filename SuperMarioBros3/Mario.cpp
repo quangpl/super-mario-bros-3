@@ -281,7 +281,7 @@ string CMario::GetAniIdBig()
 		}
 		else
 		{
-			ani = "ani-big-mario-walk";
+			ani = "ani-big-mario-jump";
 		}
 	}
 	else
