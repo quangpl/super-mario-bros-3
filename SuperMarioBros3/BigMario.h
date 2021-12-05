@@ -2,17 +2,17 @@
 #include "Goomba.h"
 #include "Brick.h"
 #include "MushRoom.h"
-
+#include "MasterMario.h"
 #include "Koopas.h"
 
-#define MARIO_SMALL_BBOX_WIDTH  13
-#define MARIO_SMALL_BBOX_HEIGHT 12
-class CMasterMario;
-class SmallMario : public CMasterMario
+#define MARIO_BIG_BBOX_WIDTH  14
+#define MARIO_BIG_BBOX_HEIGHT 24
+
+class BigMario : public CMasterMario
 {
 public:
 
-	SmallMario() : CMasterMario()
+	BigMario() : CMasterMario()
 	{
 		maxVx = 0.0f;
 		ax = 0.0f;

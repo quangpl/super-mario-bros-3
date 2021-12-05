@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickEffect.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
+    <ClInclude Include="BigMario.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickEffect.h" />
     <ClInclude Include="Camera.h" />

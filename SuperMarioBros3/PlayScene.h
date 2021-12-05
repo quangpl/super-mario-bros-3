@@ -19,7 +19,9 @@
 #include "GameMap.h"
 #include "SampleKeyEventHandler.h"
 #include "Spawner.h"
+#include "BigMario.h"
 #include "SmallMario.h"
+
 
 class CPlayScene: public CScene
 {	

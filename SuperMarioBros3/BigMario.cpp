@@ -1,6 +1,6 @@
-#include "MasterMario.h"
-#include "SmallMario.h"
-void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+#include "BigMario.h"
+
+void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
@@ -34,13 +34,13 @@ void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
-void SmallMario::OnNoCollision(DWORD dt)
+void BigMario::OnNoCollision(DWORD dt)
 {
 	position.x += vx * dt;
 	position.y += vy * dt;
 }
 
-void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
+void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
@@ -139,41 +139,35 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 
 
-void SmallMario::Render()
+void BigMario::Render()
 {
-	if (state == MARIO_STATE_DIE)
-	{
-		ani = "ani-small-mario-die";
-		CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
-		return;
-	}
 	bool has_holding = this->holder != NULL;
 	if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
-			ani = "ani-small-mario-high-jump";
+			ani = "ani-big-mario-high-speed";
 		}
 		else if (has_holding)
 		{
-			ani = "ani-small-mario-hold";
+			ani = "ani-big-mario-hold";
 		}
 		else
 		{
-			ani = "ani-small-mario-jump";
+			ani = "ani-big-mario-jump";
 		}
 	}
 	else
 		if (isSitting)
 		{
-			ani = "ani-small-mario-idle";
+			ani = "ani-big-mario-crouch";
 		}
 		else
 			if (vx == 0)
 			{
-				ani = "ani-small-mario-idle";
+				ani = "ani-big-mario-idle";
 				if (has_holding) {
-					ani = "ani-small-mario-hold";
+					ani = "ani-big-mario-hold-idle";
 				}
 			}
 			else if (vx > 0)
@@ -181,14 +175,14 @@ void SmallMario::Render()
 				if (ax < 0)
 				{
 					nx = 1;
-					ani = "ani-small-mario-skid";
+					ani = "ani-big-mario-skid";
 				}
 				else if (vx >= MARIO_RUNNING_SPEED)
-					ani = "ani-small-mario-run";
+					ani = "ani-big-mario-run";
 				else
-					ani = "ani-small-mario-walk";
+					ani = "ani-big-mario-walk";
 				if (has_holding) {
-					ani = "ani-small-mario-hold";
+					ani = "ani-big-mario-hold";
 				}
 			}
 			else // vx < 0
@@ -196,25 +190,25 @@ void SmallMario::Render()
 				if (ax > 0)
 				{
 					nx = -1;
-					ani = "ani-small-mario-skid";
+					ani = "ani-big-mario-skid";
 				}
 				else if (vx <= -MARIO_RUNNING_SPEED)
-					ani = "ani-small-mario-run";
+					ani = "ani-big-mario-run";
 				else
-					ani = "ani-small-mario-walk";
+					ani = "ani-big-mario-walk";
 				if (has_holding) {
-					ani = "ani-small-mario-hold";
+					ani = "ani-big-mario-hold";
 				}
 			}
 
-	if (ani.compare("ani") == 0) ani = "ani-small-mario-idle";
+	if (ani.compare("ani") == 0) ani = "ani-big-mario-idle";
 	// TODO: Need improve with Effect
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(nx * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
 	RenderBoundingBox();
 }
 
-void SmallMario::SetState(int state)
+void BigMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return;
@@ -315,7 +309,7 @@ void SmallMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-void SmallMario::OnKeyUp(int KeyCode) {
+void BigMario::OnKeyUp(int KeyCode) {
 	DebugOut(L"On key up %d", KeyCode);
 	switch (KeyCode)
 	{
@@ -334,7 +328,7 @@ void SmallMario::OnKeyUp(int KeyCode) {
 	}
 }
 
-void SmallMario::OnKeyDown(int KeyCode) {
+void BigMario::OnKeyDown(int KeyCode) {
 	DebugOut(L"On key down %d", KeyCode);
 	switch (KeyCode)
 	{
@@ -354,10 +348,10 @@ void SmallMario::OnKeyDown(int KeyCode) {
 }
 
 
-RectBox SmallMario::GetBoundingBox() {
-	this->bounding_box.left = position.x - MARIO_SMALL_BBOX_WIDTH * 3 / 2;
-	this->bounding_box.top = position.y - MARIO_SMALL_BBOX_HEIGHT * 3 / 2;
-	this->bounding_box.right = this->bounding_box.left + MARIO_SMALL_BBOX_WIDTH * 3;
-	this->bounding_box.bottom = this->bounding_box.top + MARIO_SMALL_BBOX_HEIGHT * 3;
+RectBox BigMario::GetBoundingBox() {
+	this->bounding_box.left = position.x - MARIO_BIG_BBOX_WIDTH * 3 / 2;
+	this->bounding_box.top = position.y - MARIO_BIG_BBOX_HEIGHT * 3 / 2;
+	this->bounding_box.right = this->bounding_box.left + MARIO_BIG_BBOX_WIDTH * 3;
+	this->bounding_box.bottom = this->bounding_box.top + MARIO_BIG_BBOX_HEIGHT * 3;
 	return this->bounding_box;
 }

@@ -18,19 +18,23 @@ void CPlayScene::OnKeyDown(int KeyCode)
 		return;
 	player->GetPlayerState()->OnKeyDown(KeyCode);
 
-	//switch (KeyCode)
-	//{
-	//	// FIXME: Just for development
-	//case DIK_D:
-	//	this->camera->position.x = this->camera->position.x + 70;
-	//	break;
-	//	// FIXME: Just for development
-	//case DIK_A:
-	//	this->camera->position.x = this->camera->position.x - 70;
-	//	break;
-	//default:
-	//	break;
-	//}
+	switch (KeyCode)
+	{
+		// FIXME: Just for development
+	case DIK_D:
+		this->camera->position.x = this->camera->position.x + 70;
+		break;
+		// FIXME: Just for development
+	case DIK_A:
+		this->camera->position.x = this->camera->position.x - 70;
+		break;
+	case DIK_2:
+		player->SetPlayerState(new BigMario());
+		break;
+		// FIXME: Just for development
+	default:
+		break;
+	}
 }
 void CPlayScene::KeyStateHandler() {
 	LPGAME game = CGame::GetInstance();

@@ -198,6 +198,9 @@
     <ClCompile Include="MasterMario.cpp">
       <Filter>Mario</Filter>
     </ClCompile>
+    <ClCompile Include="BigMario.cpp">
+      <Filter>Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -357,6 +360,9 @@
       <Filter>Mario</Filter>
     </ClInclude>
     <ClInclude Include="MasterMario.h">
+      <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="BigMario.h">
       <Filter>Mario</Filter>
     </ClInclude>
   </ItemGroup>
