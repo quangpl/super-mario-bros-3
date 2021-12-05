@@ -179,11 +179,11 @@ void CRedGoomba::SetState(int state)
 		vy = -GOOMBA_HIT_SPEED;
 		if (nx > 0)
 		{
-			vx = MARIO_WALKING_SPEED;
+			vx = GOOMBA_HIT_SPEED;
 		}
 		else
 		{
-			vx = -MARIO_WALKING_SPEED;
+			vx = -GOOMBA_HIT_SPEED;
 		}
 		break;
 	default:

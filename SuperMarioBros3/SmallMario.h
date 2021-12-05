@@ -1,18 +1,18 @@
 #pragma once
-#include "Mario.h"
 #include "Goomba.h"
 #include "Brick.h"
 #include "MushRoom.h"
+#include "MasterMario.h"
 #include "Koopas.h"
 
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
-class SmallMario : public CMario
+class SmallMario : public CMasterMario
 {
 public:
 
-	SmallMario() : CMario()
+	SmallMario() : CMasterMario()
 	{
 		maxVx = 0.0f;
 		ax = 0.0f;

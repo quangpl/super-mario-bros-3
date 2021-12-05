@@ -1,19 +1,45 @@
+#include "Mario.h"
+#include "MasterMario.h"
 #include <algorithm>
 #include "debug.h"
-
-#include "Mario.h"
 #include "Game.h"
-
 #include "Goomba.h"
 #include "Portal.h"
-
+#include "Animation.h"
+#include "Animations.h"
+#include "Koopas.h"
+#include "debug.h"
 #include "Collision.h"
+
+
+void CMario::StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+void CMario::SetHolder(LPGAMEOBJECT _holder) { this->holder = _holder; }
+LPGAMEOBJECT  CMario::GetHolder() { return this->holder; }
+
+void  CMario::SetHolding(bool _holding) { this->holding = _holding; }
+bool  CMario::GetHolding() { return this->holding; }
+
+void CMario::SetPlayerState(CMasterMario* pState) {
+	this->playerState = pState;
+}
+
+CMasterMario* CMario::GetPlayerState() {
+	return this->playerState;
+}
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->playerState->Update(dt, coObjects);
 }
 
+int CMario::IsCollidable()
+{
+	return this->playerState->IsCollidable();
+}
+
+int CMario::IsBlocking() {
+	return this->playerState->IsBlocking();
+}
 void CMario::OnNoCollision(DWORD dt)
 {
 	this->playerState->OnNoCollision(dt);

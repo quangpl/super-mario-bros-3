@@ -166,6 +166,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MasterMario.cpp" />
     <ClCompile Include="MushRoom.cpp" />
     <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="ObjectTypeData.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="MasterMario.h" />
     <ClInclude Include="MushRoom.h" />
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="ObjectTypeData.h" />
