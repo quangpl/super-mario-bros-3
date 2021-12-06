@@ -1,12 +1,12 @@
-#include "RedGoomba.h"
+#include "RedWingGoomba.h"
 
-CRedGoomba* CRedGoomba::Create(Vec2 position) {
-	CRedGoomba* goomba = new CRedGoomba();
+CRedWingGoomba* CRedWingGoomba::Create(Vec2 position) {
+	CRedWingGoomba* goomba = new CRedWingGoomba();
 	goomba->SetPosition(Vec2(position.x, position.y - 50));
 	return goomba;
 }
 
-CRedGoomba::CRedGoomba() :CGameObject()
+CRedWingGoomba::CRedWingGoomba() :CGameObject()
 {
 	this->jump_step = 1;
 	this->gravity = GOOMBA_GRAVITY;
@@ -17,7 +17,7 @@ CRedGoomba::CRedGoomba() :CGameObject()
 	SetState(GOOMBA_STATE_WALKING);
 }
 
-RectBox CRedGoomba::GetBoundingBox() {
+RectBox CRedWingGoomba::GetBoundingBox() {
 	this->bounding_box.left = position.x - GOOMBA_BBOX_WIDTH / 2;
 	this->bounding_box.top = position.y - GOOMBA_BBOX_HEIGHT / 2;
 	this->bounding_box.right = this->bounding_box.left + GOOMBA_BBOX_WIDTH;
@@ -25,13 +25,13 @@ RectBox CRedGoomba::GetBoundingBox() {
 	return this->bounding_box;
 }
 
-void CRedGoomba::OnNoCollision(DWORD dt)
+void CRedWingGoomba::OnNoCollision(DWORD dt)
 {
 	position.x += vx * dt;
 	position.y += vy * dt;
 };
 
-void CRedGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
+void CRedWingGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny != 0)
 	{
@@ -47,14 +47,14 @@ void CRedGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopas(e);
 }
 
-void CRedGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
+void CRedWingGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 {
 	if (e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
 		SetState(GOOMBA_STATE_DIE_BY_ATTACK);
 	}
 }
 
-void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CRedWingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += (this->gravity * dt);
 
@@ -109,14 +109,14 @@ void CRedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 }
-int CRedGoomba::IsCollidable() {
+int CRedWingGoomba::IsCollidable() {
 	if (state == GOOMBA_STATE_DIE_BY_ATTACK) {
 		return 0;
 	}
 	return 1;
 }
 
-void CRedGoomba::Render()
+void CRedWingGoomba::Render()
 {
 	if (level == GoombaLevel::Red) {
 		switch (state)
@@ -151,7 +151,7 @@ void CRedGoomba::Render()
 	//RenderBoundingBox();
 }
 
-void CRedGoomba::SetState(int state)
+void CRedWingGoomba::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

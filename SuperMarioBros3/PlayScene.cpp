@@ -100,7 +100,7 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 		AddObject(CGoomba::Create(position));
 	}
 	if (strcmp(type, ObjectTypeData::RedGoomba.ToString().c_str()) == 0) {
-		AddObject(CRedGoomba::Create(position), data);
+		AddObject(CRedWingGoomba::Create(position), data);
 	}
 	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size), data);

@@ -13,7 +13,7 @@
 #include "Koopas.h"
 #include "MushRoom.h"
 #include "CommandPoint.h"
-#include "RedGoomba.h"
+#include "RedWingGoomba.h"
 #include "EffectManager.h";
 #include "ObjectTypeData.h"
 #include "GameMap.h"

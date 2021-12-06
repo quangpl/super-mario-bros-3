@@ -180,7 +180,7 @@
     <ClCompile Include="Goomba.cpp">
       <Filter>Goomba</Filter>
     </ClCompile>
-    <ClCompile Include="RedGoomba.cpp">
+    <ClCompile Include="RedWingGoomba.cpp">
       <Filter>Goomba</Filter>
     </ClCompile>
     <ClCompile Include="Koopas.cpp">
@@ -344,7 +344,7 @@
     <ClInclude Include="Transformation.h">
       <Filter>Transformation</Filter>
     </ClInclude>
-    <ClInclude Include="RedGoomba.h">
+    <ClInclude Include="RedWingGoomba.h">
       <Filter>Goomba</Filter>
     </ClInclude>
     <ClInclude Include="Koopas.h">

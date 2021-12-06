@@ -12,7 +12,7 @@ CGameObject* Spawner::GetSpawnObject()
 		return (CGoomba::Create(position));
 	}
 	else if (type.compare(ObjectTypeData::RedGoomba.ToString()) == 0) {
-		return (CRedGoomba::Create(position));
+		return (CRedWingGoomba::Create(position));
 	}
 	else if (type.compare(ObjectTypeData::RedKoopas.ToString()) == 0) {
 		return (CKoopas::Create(position));

@@ -5,7 +5,7 @@
 #include "StopWatch.h"
 #include "ObjectTypeData.h"
 #include "SceneManager.h"
-#include "RedGoomba.h"
+#include "RedWingGoomba.h"
 
 class Spawner :
 	public CGameObject

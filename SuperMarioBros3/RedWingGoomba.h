@@ -50,7 +50,7 @@
 
 
 
-class CRedGoomba : public CGameObject
+class CRedWingGoomba : public CGameObject
 {
 protected:
 	int level;
@@ -69,8 +69,8 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
 public:
-	CRedGoomba();
-	static CRedGoomba* Create(Vec2 position);
+	CRedWingGoomba();
+	static CRedWingGoomba* Create(Vec2 position);
 	virtual void SetState(int state);
 	int GetLevel() { return this->level; }
 	void SetLevel(int _level) { level = _level; }
