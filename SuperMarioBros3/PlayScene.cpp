@@ -18,20 +18,19 @@ void CPlayScene::OnKeyDown(int KeyCode)
 		return;
 	player->GetPlayerState()->OnKeyDown(KeyCode);
 
+	// FIXME: Just for development
 	switch (KeyCode)
 	{
-		// FIXME: Just for development
 	case DIK_D:
 		this->camera->position.x = this->camera->position.x + 70;
 		break;
-		// FIXME: Just for development
 	case DIK_A:
 		this->camera->position.x = this->camera->position.x - 70;
 		break;
 	case DIK_2:
+		player->position.y = player->position.y - 50;
 		player->SetPlayerState(new BigMario());
 		break;
-		// FIXME: Just for development
 	default:
 		break;
 	}
@@ -40,7 +39,7 @@ void CPlayScene::KeyStateHandler() {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = this->player;
 	if (game->IsKeyDown(DIK_Z)) {
-		mario->GetPlayerState()->SetHolding(true);
+		mario->SetHolding(true);
 	}
 	if (game->IsKeyDown(DIK_RIGHT))
 	{

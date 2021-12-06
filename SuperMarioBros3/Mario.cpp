@@ -34,11 +34,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 int CMario::IsCollidable()
 {
-	return this->playerState->IsCollidable();
+	return (state != MARIO_STATE_DIE);
 }
 
-int CMario::IsBlocking() {
-	return this->playerState->IsBlocking();
+int CMario::IsBlocking()
+{
+	return (state != MARIO_STATE_DIE && untouchable == 0);
 }
 void CMario::OnNoCollision(DWORD dt)
 {
@@ -61,7 +62,9 @@ void CMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-
+bool CMario::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	return false;
+}
 void CMario::OnKeyUp(int KeyCode) {
 	if (this->playerState != NULL) {
 		this->playerState->OnKeyUp(KeyCode);

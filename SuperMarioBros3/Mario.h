@@ -25,6 +25,13 @@ public:
 	bool holding;
 	CMario() : CGameObject()
 	{
+		this->maxVx = 0.0f;
+		this->ax = 0.0f;
+		this->ay = 0.002f;
+		this->untouchable = 0;
+		this->untouchable_start = -1;
+		this->isOnPlatform = true;
+		this->coin = 0;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -53,6 +60,8 @@ public:
 	bool GetHolding();
 
 	virtual void OnKeyUp(int keyCode);
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
+
 
 	virtual void OnKeyDown(int keyCode);
 	virtual RectBox GetBoundingBox();

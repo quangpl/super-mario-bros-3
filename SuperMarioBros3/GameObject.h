@@ -12,16 +12,16 @@ class CGameObject
 protected:
 
 	DWORD id;
-	float vx;
-	float vy;
 	float gravity;
 	int nx;
 	int state;
-	string ani;
 	bool isDeleted;
 	bool is_show = true;
-	RectBox bounding_box;
 public:
+	RectBox bounding_box;
+	string ani;
+	float vx;
+	float vy;
 	Vec2 position;
 	bool is_in_camera = false;
 	int type;

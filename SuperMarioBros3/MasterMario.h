@@ -47,41 +47,20 @@ enum MarioLevel {
 class CMario;
 
 #define MARIO_UNTOUCHABLE_TIME 2500
-class CMasterMario : public CGameObject
+class CMasterMario
 {
 public:
+	string ani;
 	CMario* mario;
-	BOOLEAN isSitting;
-	float maxVx;
-	float ax;				// acceleration on x 
-	float ay;				// acceleration on y 
-
-	int untouchable;
-	ULONGLONG untouchable_start;
-	ULONGLONG transformation_start;
-	BOOLEAN isOnPlatform;
-	int coin;
-	LPGAMEOBJECT holder = NULL;
-	bool holding;
-
-	Vec2 size;
 	CMasterMario();
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	void Render();
-	void SetState(int state);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
+	virtual void SetState(int state);
 
-	void OnNoCollision(DWORD dt);
-	void OnCollisionWith(LPCOLLISIONEVENT e);
-
-
-	void SetHolder(LPGAMEOBJECT _holder);
-	LPGAMEOBJECT GetHolder();
-
-	void SetHolding(bool _holding);
-	bool GetHolding();
+	virtual void OnNoCollision(DWORD dt);
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	virtual void OnKeyUp(int keyCode);
-
 	virtual void OnKeyDown(int keyCode);
 	virtual RectBox GetBoundingBox();
 };
