@@ -9,6 +9,7 @@ CRedWingGoomba* CRedWingGoomba::Create(Vec2 position) {
 CRedWingGoomba::CRedWingGoomba() :CGameObject()
 {
 	this->jump_step = 1;
+	this->level = RedWingGoombaLevel::RedWing;
 	this->gravity = GOOMBA_GRAVITY;
 	if (nx > 0) {
 		nx *= -1;
@@ -18,10 +19,11 @@ CRedWingGoomba::CRedWingGoomba() :CGameObject()
 }
 
 RectBox CRedWingGoomba::GetBoundingBox() {
+	int bbox_height = this->state == GOOMBA_STATE_DIE ? GOOMBA_BBOX_HEIGHT_DIE : GOOMBA_BBOX_HEIGHT;
 	this->bounding_box.left = position.x - GOOMBA_BBOX_WIDTH / 2;
-	this->bounding_box.top = position.y - GOOMBA_BBOX_HEIGHT / 2;
+	this->bounding_box.top = position.y - bbox_height / 2;
 	this->bounding_box.right = this->bounding_box.left + GOOMBA_BBOX_WIDTH;
-	this->bounding_box.bottom = this->bounding_box.top + GOOMBA_BBOX_HEIGHT;
+	this->bounding_box.bottom = this->bounding_box.top + bbox_height;
 	return this->bounding_box;
 }
 
@@ -57,14 +59,18 @@ void CRedWingGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CRedWingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += (this->gravity * dt);
-
+	if ((state == GOOMBA_STATE_DIE && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	{
+		isDeleted = true;
+		return;
+	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	CMario* mario = CMario::GetInstance();
 	if (timer->IsRunning() && !timer->IsTimeUp()) {
 		return;
 	}
-	if (is_on_ground) {
+	if (is_on_ground && level == RedWingGoombaLevel::RedWing) {
 		switch (jump_step)
 		{
 		case 1:
@@ -118,34 +124,27 @@ int CRedWingGoomba::IsCollidable() {
 
 void CRedWingGoomba::Render()
 {
-	if (level == GoombaLevel::Red) {
-		switch (state)
-		{
-		case GOOMBA_STATE_WALKING:
-			ani = "ani-red-goomba-walk";
-			break;
-		case GOOMBA_STATE_DIE:
-			ani = "ani-red-goomba-die";
-			break;
-		default:
-			break;
-		}
-	}
-	else {
-		switch (state)
-		{
-		case GOOMBA_STATE_WALKING:
+	switch (state)
+	{
+	case GOOMBA_STATE_WALKING:
+		if (level == RedWingGoombaLevel::RedWing) {
 			ani = "ani-red-para-goomba-walk";
-			break;
-		case GOOMBA_STATE_JUMP_LOW:
-			ani = "ani-red-para-goomba-fly";
-			break;
-		case GOOMBA_STATE_JUMP_HIGH:
-			ani = "ani-red-para-goomba-fly";
-			break;
-		default:
-			break;
 		}
+		else {
+			ani = "ani-red-goomba-walk";
+		}
+		break;
+	case GOOMBA_STATE_JUMP_LOW:
+		ani = "ani-red-para-goomba-fly";
+		break;
+	case GOOMBA_STATE_JUMP_HIGH:
+		ani = "ani-red-para-goomba-fly";
+		break;
+	case GOOMBA_STATE_DIE:
+		ani = "ani-red-goomba-die";
+		break;
+	default:
+		break;
 	}
 	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
 	//RenderBoundingBox();
@@ -159,11 +158,12 @@ void CRedWingGoomba::SetState(int state)
 	case GOOMBA_STATE_DIE:
 		vx = 0;
 		vy = 0;
-		this->gravity = 0;
+		die_start = GetTickCount64();
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
 		is_on_ground = true;
+		//this->gravity = GOOMBA_GRAVITY;
 		break;
 	case GOOMBA_STATE_JUMP_LOW:
 		is_on_ground = false;

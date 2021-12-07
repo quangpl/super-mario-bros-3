@@ -2,7 +2,7 @@
 #include "Goomba.h"
 #include "Brick.h"
 #include "MushRoom.h"
-
+#include "RedWingGoomba.h"
 #include "Koopas.h"
 
 #define MARIO_SMALL_BBOX_WIDTH  13

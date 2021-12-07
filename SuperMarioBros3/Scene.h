@@ -4,6 +4,7 @@
 #include "KeyEventHandler.h"
 #include "GameObject.h"
 #include "Camera.h"
+#include "Mario.h"
 #include <memory>
 
 /*
@@ -17,7 +18,7 @@ protected:
 	string data_path = "";
 	vector<CGameObject*> objects;
 	Camera* camera;
-	CGameObject* player;
+	CMario* player;
 
 public:
 	Vec2 camSize = Vec2(769, 579);
@@ -32,7 +33,7 @@ public:
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
 	virtual void KeyStateHandler(){}
-	CGameObject* GetPlayer() { return this->player; }
+	CMario* GetPlayer() { return this->player; }
 
 	Camera* GetCamera() {
 		return this->camera;

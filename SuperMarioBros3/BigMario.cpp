@@ -63,24 +63,49 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 			{
-
-				if (goomba->GetLevel() == GoombaLevel::RedWing) {
-					goomba->SetLevel(GoombaLevel::Red);
-					goomba->SetState(GOOMBA_STATE_WALKING);
-					mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
-				}
-				else {
-					goomba->SetState(GOOMBA_STATE_DIE);
-					mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
-				}
+				goomba->SetState(GOOMBA_STATE_DIE);
+				mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 		}
 		else // hit by Goomba
 		{
 			if (mario->untouchable == 0)
 			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
+				if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
+				{
+					mario->StartUntouchable();
+					mario->SetPlayerState(new SmallMario());
+				}
+			}
+		}
+	}
+	else if (dynamic_cast<CRedWingGoomba*>(e->obj))
+	{
+		CRedWingGoomba* redWingGoomba = dynamic_cast<CRedWingGoomba*>(e->obj);
+
+		// jump on top >> kill Goomba and deflect a bit 
+		if (e->ny < 0)
+		{
+			if (redWingGoomba->GetState() != GOOMBA_STATE_DIE && redWingGoomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
+			{
+
+				if (redWingGoomba->GetLevel() == RedWingGoombaLevel::RedWing) {
+					redWingGoomba->SetLevel(RedWingGoombaLevel::Red);
+					redWingGoomba->SetState(GOOMBA_STATE_WALKING);
+					mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+				else {
+					redWingGoomba->SetState(GOOMBA_STATE_DIE);
+					mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+			}
+		}
+		else // hit by Goomba
+		{
+			if (redWingGoomba->GetState() != GOOMBA_STATE_DIE && redWingGoomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
+			{
+				mario->StartUntouchable();
+				mario->SetPlayerState(new SmallMario());
 			}
 		}
 	}
@@ -130,8 +155,8 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			else {
 				if (mario->untouchable == 0)
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					mario->StartUntouchable();
+					mario->SetPlayerState(new SmallMario());
 				}
 			}
 			break;

@@ -47,12 +47,16 @@
 #define TIME_GOOMBA_WAIT_TO_JUMP_LOW 1500
 #define TIME_GOOMBA_WAIT_TO_JUMP_HIGH 300
 
-
+enum RedWingGoombaLevel {
+	RedWing = 1,
+	Red = 2
+};
 
 
 class CRedWingGoomba : public CGameObject
 {
 protected:
+	ULONGLONG die_start;
 	int level;
 	ULONGLONG waiting_time;
 	int jump_step = 0;

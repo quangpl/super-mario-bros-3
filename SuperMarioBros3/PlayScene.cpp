@@ -175,6 +175,9 @@ void CPlayScene::Render()
 	gameMap->Render();
 	player->Render();
 	for (int i = 0; i < objects.size(); i++) {
+		if (objects[i]->IsDeleted()) {
+			continue;
+		}
 		objects[i]->Render();
 	}
 }

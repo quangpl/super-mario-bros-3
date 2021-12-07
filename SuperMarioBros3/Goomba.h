@@ -42,24 +42,10 @@
 #define TIME_GOOMBA_WAIT_TO_JUMP_LOW 500
 #define TIME_GOOMBA_WAIT_TO_JUMP_HIGH 1500
 
-
-enum GoombaLevel
-{
-	Nomal = 1,
-	Red = 2,
-	RedWing = 3
-};
-
-
-
 class CGoomba : public CGameObject
 {
 protected:
-	int level;
 	ULONGLONG die_start;
-	ULONGLONG waiting_time;
-	int jump_step = 0;
-	bool is_on_ground;
 	CTimer* timer;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
@@ -74,6 +60,4 @@ public:
 	CGoomba();
 	static CGoomba* Create(Vec2 position);
 	virtual void SetState(int state);
-	int GetLevel() { return this->level; }
-	void SetLevel(int _level) { level = _level; }
 };

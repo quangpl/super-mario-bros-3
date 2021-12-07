@@ -3,8 +3,10 @@
 #include "Brick.h"
 #include "MushRoom.h"
 #include "MasterMario.h"
+#include "RedWingGoomba.h"
 #include "Koopas.h"
-
+#include "SceneManager.h"
+#include "SmallMario.h"
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
 

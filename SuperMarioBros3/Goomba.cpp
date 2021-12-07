@@ -1,5 +1,4 @@
 #include "Goomba.h"
-
 CGoomba::CGoomba() :CGameObject()
 {
 	this->gravity = GOOMBA_GRAVITY;
@@ -17,7 +16,7 @@ CGoomba* CGoomba::Create(Vec2 position) {
 }
 
 RectBox CGoomba::GetBoundingBox() {
-	int bbox_height = this->state == GOOMBA_STATE_WALKING ? GOOMBA_BBOX_HEIGHT : GOOMBA_BBOX_HEIGHT_DIE;
+	int bbox_height = this->state == GOOMBA_STATE_DIE ? GOOMBA_BBOX_HEIGHT_DIE : GOOMBA_BBOX_HEIGHT;
 	this->bounding_box.left = position.x - GOOMBA_BBOX_WIDTH / 2;
 	this->bounding_box.top = position.y - bbox_height / 2;
 	this->bounding_box.right = this->bounding_box.left + GOOMBA_BBOX_WIDTH;
@@ -36,7 +35,6 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0)
 	{
 		vy = 0;
-		is_on_ground = true;
 	}
 	else if (e->nx != 0)
 	{
@@ -80,7 +78,7 @@ void CGoomba::Render()
 		ani = "ani-goomba-die";
 	}
 	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CGoomba::SetState(int state)
@@ -91,11 +89,10 @@ void CGoomba::SetState(int state)
 	case GOOMBA_STATE_DIE:
 		vx = 0;
 		vy = 0;
-		this->gravity = 0;
+		die_start = GetTickCount64();
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
-		is_on_ground = true;
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
 		vy = -GOOMBA_HIT_SPEED;
