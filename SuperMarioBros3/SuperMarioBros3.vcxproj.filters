@@ -207,6 +207,9 @@
     <ClCompile Include="CoinEffect.cpp">
       <Filter>Effects</Filter>
     </ClCompile>
+    <ClCompile Include="MarioGrowEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -369,6 +372,9 @@
       <Filter>Effects</Filter>
     </ClInclude>
     <ClInclude Include="CoinEffect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGrowEffect.h">
       <Filter>Effects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -167,6 +167,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MarioGrowEffect.cpp" />
     <ClCompile Include="MasterMario.cpp" />
     <ClCompile Include="RedMushRoom.cpp" />
     <ClCompile Include="ObjectType.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="MarioGrowEffect.h" />
     <ClInclude Include="MasterMario.h" />
     <ClInclude Include="RedMushRoom.h" />
     <ClInclude Include="ObjectType.h" />

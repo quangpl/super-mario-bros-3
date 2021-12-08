@@ -12,6 +12,7 @@
 #include "Collision.h"
 #include "SmallMario.h"
 #include "BigMario.h"
+#include "MarioGrowEffect.h"
 
 
 void CMario::StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
@@ -24,6 +25,14 @@ bool  CMario::GetHolding() { return this->holding; }
 void CMario::SetPlayerState(CMasterMario* pState) {
 	// small to big
 	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState)) {
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CMarioGrowEffect* marioGrowEffect = new CMarioGrowEffect(position, this->nx);
+		int effectId = effectManager->Add(marioGrowEffect);
+		isDeleted = true;
+		marioGrowEffect->Start([this, effectId]() {
+			isDeleted = false;
+			CEffectManager::GetInstance()->Delete(effectId);
+			});
 		this->position.y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) * 3 / 2;
 	}
 	this->playerState = pState;
@@ -35,6 +44,9 @@ CMasterMario* CMario::GetPlayerState() {
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isDeleted) {
+		return;
+	}
 	this->playerState->Update(dt, coObjects);
 }
 
