@@ -11,7 +11,7 @@
 #include "MapData.h"
 #include "Utils.h"
 #include "Koopas.h"
-#include "MushRoom.h"
+#include "RedMushRoom.h"
 #include "CommandPoint.h"
 #include "RedWingGoomba.h"
 #include "EffectManager.h";

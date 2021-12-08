@@ -1,4 +1,16 @@
+#include "Goomba.h"
+#include "Brick.h"
+#include "RedMushroom.h"
+#include "RedWingGoomba.h"
+#include "Koopas.h"
+#include "SceneManager.h"
+#include "SmallMario.h"
 #include "BigMario.h"
+
+BigMario::BigMario() :CMasterMario()
+{
+
+}
 void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
@@ -120,9 +132,9 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			brick->SetState(BRICK_STATE_HIT);
 		}
 	}
-	else if (dynamic_cast<CMushroom*>(e->obj))
+	else if (dynamic_cast<CRedMushroom*>(e->obj))
 	{
-		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+		CRedMushroom* mushroom = dynamic_cast<CRedMushroom*>(e->obj);
 		// TODO: Improve collision framework to do better
 		if (mushroom->GetEatable()) {
 			SetState(MARIO_STATE_TRANSFORM_SMALL_TO_BIG);

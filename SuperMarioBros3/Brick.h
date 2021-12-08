@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "debug.h"
-#include "MushRoom.h"
+#include "RedMushRoom.h"
 #include "ObjectType.h"
 #include "CoinEffect.h"
 #include "ObjectTypeData.h"

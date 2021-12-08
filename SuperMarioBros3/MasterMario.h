@@ -1,3 +1,5 @@
+#pragma once
+
 #include "GameObject.h"
 #define MARIO_WALKING_SPEED		0.27f
 #define MARIO_RUNNING_SPEED		0.48f
@@ -38,12 +40,6 @@
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
-enum MarioLevel {
-	SMALL = 0,
-	BIG = 1,
-	FIRE = 2,
-	RACCOON = 3,
-};
 class CMario;
 
 #define MARIO_UNTOUCHABLE_TIME 2500

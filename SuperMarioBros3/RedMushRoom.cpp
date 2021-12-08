@@ -1,6 +1,6 @@
-#include "Mushroom.h"
+#include "RedMushroom.h"
 
-CMushroom::CMushroom() :CGameObject()
+CRedMushroom::CRedMushroom() :CGameObject()
 {
 	this->type = Type::MUSHROOM;
 	this->vy = 0;
@@ -10,7 +10,7 @@ CMushroom::CMushroom() :CGameObject()
 	this->zIndex = 0;
 }
 
-RectBox CMushroom::GetBoundingBox()
+RectBox CRedMushroom::GetBoundingBox()
 {
 	this->bounding_box.left = position.x - MUSHROOM_BBOX_WIDTH / 2;
 	this->bounding_box.top = position.y - MUSHROOM_BBOX_HEIGHT / 2;
@@ -19,12 +19,12 @@ RectBox CMushroom::GetBoundingBox()
 	return this->bounding_box;
 }
 
-void CMushroom::OnNoCollision(DWORD dt)
+void CRedMushroom::OnNoCollision(DWORD dt)
 {
 	position.x += vx * dt;
 	position.y += vy * dt;
 };
-bool CMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy)
+bool CRedMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy)
 {
 	if (dynamic_cast<CGoomba*>(gameObject)) {
 		return true;
@@ -34,7 +34,7 @@ bool CMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float col
 	}
 };
 
-void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+void CRedMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (e->nx != 0)
@@ -42,7 +42,7 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 }
-void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CRedMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - position.y) >= BRICK_BBOX_HEIGHT) {
 		SetState(UP_MUSHROOM_STATE_RUN);
@@ -56,14 +56,14 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
-void CMushroom::Render()
+void CRedMushroom::Render()
 {
 	CAnimations::GetInstance()->Get("ani-super-mushroom")->Render(position.x, position.y);
 	RenderBoundingBox();
 
 }
 
-void CMushroom::SetState(int state)
+void CRedMushroom::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

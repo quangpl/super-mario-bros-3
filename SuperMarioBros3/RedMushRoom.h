@@ -22,7 +22,7 @@
 #define UP_MUSHROOM_STATE_DIE 40
 
 #define UP_MUSHROOM_EATABLE_DISTANCE 20
-class CMushroom : public CGameObject
+class CRedMushroom : public CGameObject
 {
 	float start_y;
 	bool eatable = false;
@@ -38,7 +38,7 @@ protected:
 	virtual bool CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy);
 
 public:
-	CMushroom();
+	CRedMushroom();
 	virtual void SetState(int state);
 	bool GetEatable() { return this->eatable; }
 	void SetEatable(bool _eatable) {  this->eatable = _eatable; }

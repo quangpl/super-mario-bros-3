@@ -10,6 +10,8 @@
 #include "Koopas.h"
 #include "debug.h"
 #include "Collision.h"
+#include "SmallMario.h"
+#include "BigMario.h"
 
 
 void CMario::StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
@@ -20,6 +22,10 @@ void  CMario::SetHolding(bool _holding) { this->holding = _holding; }
 bool  CMario::GetHolding() { return this->holding; }
 
 void CMario::SetPlayerState(CMasterMario* pState) {
+	// small to big
+	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState)) {
+		this->position.y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) * 3 / 2;
+	}
 	this->playerState = pState;
 }
 

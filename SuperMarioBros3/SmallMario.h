@@ -1,20 +1,19 @@
 #pragma once
 #include "Goomba.h"
 #include "Brick.h"
-#include "MushRoom.h"
+#include "RedMushRoom.h"
 #include "RedWingGoomba.h"
 #include "Koopas.h"
+#include "MasterMario.h"
 
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
+class CMasterMario;
 class SmallMario : public CMasterMario
 {
 public:
 
-	SmallMario() : CMasterMario()
-	{
-		
-	}
+	SmallMario();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

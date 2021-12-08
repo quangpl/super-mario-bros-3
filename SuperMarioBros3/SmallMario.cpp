@@ -1,5 +1,10 @@
-#include "MasterMario.h"
 #include "SmallMario.h"
+#include "BigMario.h"
+
+SmallMario::SmallMario() : CMasterMario()
+{
+
+}
 
 void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -125,12 +130,12 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			brick->SetState(BRICK_STATE_HIT);
 		}
 	}
-	else if (dynamic_cast<CMushroom*>(e->obj))
+	else if (dynamic_cast<CRedMushroom*>(e->obj))
 	{
-		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+		CRedMushroom* mushroom = dynamic_cast<CRedMushroom*>(e->obj);
 		// TODO: Improve collision framework to do better
 		if (mushroom->GetEatable()) {
-			//mario->SetPlayerState(new BigMario());
+			mario->SetPlayerState(new BigMario());
 			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 		}
 	}

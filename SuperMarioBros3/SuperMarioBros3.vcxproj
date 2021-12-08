@@ -168,7 +168,7 @@
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MasterMario.cpp" />
-    <ClCompile Include="MushRoom.cpp" />
+    <ClCompile Include="RedMushRoom.cpp" />
     <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="ObjectTypeData.cpp" />
     <ClCompile Include="Pipe.cpp" />
@@ -225,7 +225,7 @@
     <ClInclude Include="MapData.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MasterMario.h" />
-    <ClInclude Include="MushRoom.h" />
+    <ClInclude Include="RedMushRoom.h" />
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="ObjectTypeData.h" />
     <ClInclude Include="Pipe.h" />

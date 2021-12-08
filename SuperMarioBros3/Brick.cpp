@@ -62,7 +62,7 @@ void CBrick::SetState(int state)
 			});
 
 		if (reward == ObjectTypeData::RedMushroom) {
-			CMushroom* mushroom = new CMushroom();
+			CRedMushroom* mushroom = new CRedMushroom();
 			mushroom->SetStartY(this->position.y);
 			mushroom->SetPosition(Vec2{ this->position });
 			mushroom->SetState(UP_MUSHROOM_STATE_UP);
