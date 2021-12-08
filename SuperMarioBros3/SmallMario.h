@@ -7,8 +7,6 @@
 
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
-class CMasterMario;
-
 class SmallMario : public CMasterMario
 {
 public:

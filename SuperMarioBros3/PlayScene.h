@@ -20,6 +20,7 @@
 #include "SampleKeyEventHandler.h"
 #include "Spawner.h"
 #include "BigMario.h"
+#include "EffectManager.h"
 #include "SmallMario.h"
 
 

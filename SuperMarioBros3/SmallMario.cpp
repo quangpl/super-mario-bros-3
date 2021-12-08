@@ -90,7 +90,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			if (redWingGoomba->GetState() != GOOMBA_STATE_DIE && redWingGoomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 			{
-				 
+
 				if (redWingGoomba->GetLevel() == RedWingGoombaLevel::RedWing) {
 					redWingGoomba->SetLevel(RedWingGoombaLevel::Red);
 					redWingGoomba->SetState(GOOMBA_STATE_WALKING);
@@ -130,7 +130,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 		// TODO: Improve collision framework to do better
 		if (mushroom->GetEatable()) {
-			SetState(MARIO_STATE_TRANSFORM_SMALL_TO_BIG);
+			//mario->SetPlayerState(new BigMario());
 			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 		}
 	}
@@ -237,7 +237,7 @@ void SmallMario::Render()
 
 	if (ani.compare("ani") == 0) ani = "ani-small-mario-idle";
 	// TODO: Need improve with Effect
-	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2{ mario->GetNx() * 1.0f, 1.0f };
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
 	mario->RenderBoundingBox();
 }

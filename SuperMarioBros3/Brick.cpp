@@ -1,19 +1,6 @@
 #include "Brick.h"
 
-CBrick::CBrick(Vec2 _position, int _brickType, int _child_item_id)
-{
-	this->position = _position;
-	this->brickType = _brickType;
-	this->type = Type::BRICK;
-	this->vx = 0;
-	this->vy = 0;
-	this->child_item_id = _child_item_id;
-	if (brickType == BrickType::Question) {
-		state = BRICK_STATE_NORMAL;
-	}
-	else {
-		state = BRICK_ANI_BROKEN;
-	}
+CBrick::CBrick() {
 }
 
 CBrick::~CBrick()
@@ -21,26 +8,38 @@ CBrick::~CBrick()
 
 }
 
-CBrick* CBrick::Create(Vec2 pos, Vec2 size)
+CBrick* CBrick::Create(Vec2 pos, MapData& data)
 {
-	CBrick* brick = new CBrick(pos, 2, 1);
-	brick->SetPosition(pos);
-	brick->size = size;
-	return brick;
+	CBrick* birck = new CBrick();
+	birck->SetPosition(Vec2(pos.x, pos.y));
+	string rewardItem = data.GetText("HiddenItem", "QuestionCoin");
+	birck->state = BRICK_STATE_NORMAL;
+	if (rewardItem.compare(ObjectTypeData::RedMushroom.ToString()) == 0) {
+		birck->reward = ObjectTypeData::RedMushroom;
+	}
+	if (rewardItem.compare(ObjectTypeData::QuestionCoin.ToString()) == 0) {
+		birck->reward = ObjectTypeData::QuestionCoin;
+	}
+	return birck;
+
 }
 
 
 void CBrick::Render()
 {
-	CAnimation* ani = CAnimations::GetInstance()->Get("ani-empty-block");
-	ani->Render(this->position.x + BRICK_BBOX_WIDTH / 2, this->position.y + BRICK_BBOX_HEIGHT / 2);
-	RenderBoundingBox();
+	if (state == BRICK_STATE_HIT) {
+		ani = "ani-empty-block";
+	}
+	else {
+		ani = "ani-question-block";
+	}
+	CAnimations::GetInstance()->Get(ani)->Render(this->position.x, this->position.y);
+	//RenderBoundingBox();
 }
 
 void CBrick::OnNoCollision(DWORD dt)
 {
-	/*x += vx * dt;
-	y += vy * dt;*/
+
 }
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
@@ -53,26 +52,31 @@ void CBrick::SetState(int state)
 	switch (state) {
 	case BRICK_STATE_HIT:
 	{
-		//is_show = false;
-		//CEffectManager* effect_manager = CEffectManager::GetInstance();
-		////CBrickEffect* hit_effect = new CBrickEffect(x, y);
-		//int hit_effect_id = effect_manager->Add(hit_effect);
-		//hit_effect->Start([this, hit_effect_id]() {
-		//	is_show = true;
-		//	CEffectManager::GetInstance()->Delete(hit_effect_id);
-		//});
-		//if (dynamic_cast<CMushroom*>(this->child_item)) {
-		//	CMushroom* mushroom = dynamic_cast<CMushroom*>(this->child_item);
-		//	mushroom->SetState(UP_MUSHROOM_STATE_UP);
-		//}
-		//else if (this->child_item_id == BrickChildItem::Coin) {
-		//	CCoindEffect* coin_effect = new CCoindEffect(x, y);
-		//	int coin_effect_id = effect_manager->Add(coin_effect);
-		//	coin_effect->Start([this, coin_effect_id]() {
-		//		CEffectManager::GetInstance()->Delete(coin_effect_id);
-		//	});
-		//}
-		//break;
+		isDeleted = true;
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CBrickEffect* hitBrickEffect = new CBrickEffect(position.x, position.y);
+		int effectId = effectManager->Add(hitBrickEffect);
+		hitBrickEffect->Start([this, effectId]() {
+			isDeleted = false;
+			CEffectManager::GetInstance()->Delete(effectId);
+			});
+
+		if (reward == ObjectTypeData::RedMushroom) {
+			CMushroom* mushroom = new CMushroom();
+			mushroom->SetStartY(this->position.y);
+			mushroom->SetPosition(Vec2{ this->position });
+			mushroom->SetState(UP_MUSHROOM_STATE_UP);
+			SceneManager::GetInstance()->GetActiveScene()->AddObject(mushroom);
+		}
+		/*
+		else if (this->child_item_id == BrickChildItem::Coin) {
+			CCoindEffect* coin_effect = new CCoindEffect(x, y);
+			int coin_effect_id = effect_manager->Add(coin_effect);
+			coin_effect->Start([this, coin_effect_id]() {
+				CEffectManager::GetInstance()->Delete(coin_effect_id);
+			});
+		}*/
+		break;
 	}
 	default:
 		break;

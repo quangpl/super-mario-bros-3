@@ -7,7 +7,7 @@ CBrickEffect::CBrickEffect(float _x, float _y) : CEffect(_x, _y)
 
 void CBrickEffect::Render()
 {
-	//CAnimations::GetInstance()->Get(BRICK_ANI_BROKEN)->Render(x, y);
+	CAnimations::GetInstance()->Get("ani-empty-block")->Render(x, y);
 }
 
 void CBrickEffect::Start(function<void()> _callback)

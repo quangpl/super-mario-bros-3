@@ -174,7 +174,7 @@
   <object id="262" type="QuestionBlock" x="720" y="912">
    <properties>
     <property name="Grid" value="[{&quot;x&quot;:2,&quot;y&quot;:3}]"/>
-    <property name="HiddenItem" value="RaccoonLeaf"/>
+    <property name="HiddenItem" value="RedMushroom"/>
    </properties>
    <point/>
   </object>

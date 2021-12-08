@@ -117,9 +117,6 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 		if (e->ny > 0)
 		{
-			/*if (dynamic_cast<CCoin*>(e->obj)) {
-				coin++;
-			}*/
 			brick->SetState(BRICK_STATE_HIT);
 		}
 	}

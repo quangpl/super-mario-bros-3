@@ -16,8 +16,8 @@ protected:
 	int nx;
 	int state;
 	bool isDeleted;
-	bool is_show = true;
 public:
+	int zIndex = 1; // It will stand for render priority
 	RectBox bounding_box;
 	string ani;
 	float vx;

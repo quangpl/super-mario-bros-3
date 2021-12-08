@@ -112,7 +112,7 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 		AddObject(CGround::Create(position, size), data);
 	}
 	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
-		AddObject(CBrick::Create(position, size), data);
+		AddObject(CBrick::Create(position, data), data);
 	}
 	if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
 		AddObject(CKoopas::Create(position), data);
@@ -160,11 +160,11 @@ void CPlayScene::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
-	/*for (auto x : CEffectManager::GetInstance()->GetAll())
+	for (auto x : CEffectManager::GetInstance()->GetAll())
 	{
 		LPEFFECT effect = x.second;
 		effect->Update(dt);
-	}*/
+	}
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	//if (player == NULL) return;
 	PurgeDeletedObjects();
@@ -172,6 +172,10 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	sort(objects.begin(), objects.end(), [](CGameObject* firstObject, CGameObject* secondObject) {
+		return firstObject->zIndex < secondObject->zIndex;
+		});
+
 	gameMap->Render();
 	player->Render();
 	for (int i = 0; i < objects.size(); i++) {
@@ -179,6 +183,11 @@ void CPlayScene::Render()
 			continue;
 		}
 		objects[i]->Render();
+	}
+	for (auto x : CEffectManager::GetInstance()->GetAll())
+	{
+		LPEFFECT effect = x.second;
+		effect->Render();
 	}
 }
 

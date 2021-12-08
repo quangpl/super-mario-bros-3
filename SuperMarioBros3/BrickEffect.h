@@ -3,11 +3,11 @@
 #include "Animations.h"
 #include <functional>
 
-#define BRICK_RETURN_DISTANCE 5
+#define BRICK_RETURN_DISTANCE 15
 #define BRICK_ANI_NORMAL		702
 #define BRICK_ANI_BROKEN		703
 
-#define BRICK_SPEED 0.1f
+#define BRICK_SPEED 0.25f
 
 #define BRICK_STATE_NORMAL		1
 #define BRICK_STATE_BROKEN		2

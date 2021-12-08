@@ -52,6 +52,12 @@
     <Filter Include="Mario">
       <UniqueIdentifier>{aa9aa442-ff34-477e-a706-164f13b70d14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Brick">
+      <UniqueIdentifier>{1a22c1dd-fdf3-4a41-8304-fa4daa8dcc36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{04502a47-6fbd-4b9f-a852-419b76341bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -79,12 +85,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Textures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CoinEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
@@ -118,9 +118,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BrickEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tinyXML\tinystr.cpp">
@@ -201,6 +198,15 @@
     <ClCompile Include="BigMario.cpp">
       <Filter>Mario</Filter>
     </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -242,12 +248,6 @@
     <ClInclude Include="AssetIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CoinEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -285,9 +285,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BrickEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tinyXML\tinystr.h">
@@ -364,6 +361,15 @@
     </ClInclude>
     <ClInclude Include="BigMario.h">
       <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickEffect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinEffect.h">
+      <Filter>Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
