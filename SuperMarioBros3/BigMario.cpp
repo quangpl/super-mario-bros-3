@@ -15,7 +15,7 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
-
+	DebugOut(L"vx: %f\n", mario->vx);
 
 	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
 		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
@@ -25,10 +25,16 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}*/
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		this->SetState(MARIO_STATE_WALKING_RIGHT);
+		if (game->IsKeyDown(DIK_A))
+			this->SetState(MARIO_STATE_RUNNING_RIGHT);
+		else
+			this->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		this->SetState(MARIO_STATE_WALKING_LEFT);
+		if (game->IsKeyDown(DIK_A))
+			this->SetState(MARIO_STATE_RUNNING_LEFT);
+		else
+			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
 	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(mario->GetSpeed().x) > abs(mario->maxVx)) {
@@ -213,7 +219,7 @@ void BigMario::Render()
 					ani = "ani-big-mario-skid";
 				}
 				else if (mario->vx >= MARIO_RUNNING_SPEED)
-					ani = "ani-big-mario-run";
+					ani = "ani-big-mario-high-speed";
 				else
 					ani = "ani-big-mario-walk";
 				if (has_holding) {
@@ -228,7 +234,7 @@ void BigMario::Render()
 					ani = "ani-big-mario-skid";
 				}
 				else if (mario->vx <= -MARIO_RUNNING_SPEED)
-					ani = "ani-big-mario-run";
+					ani = "ani-big-mario-high-speed";
 				else
 					ani = "ani-big-mario-walk";
 				if (has_holding) {
@@ -245,6 +251,7 @@ void BigMario::Render()
 
 void BigMario::SetState(int state)
 {
+	DebugOut(L"state: %d \n", state);
 	// DIE is the end state, cannot be changed! 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 
@@ -340,7 +347,31 @@ void BigMario::SetState(int state)
 		mario->vx = 0;
 		mario->vy = 0;
 		break;
+	case MARIO_STATE_SIT:
+		if (mario->holding) {
+			return;
+		}
+		if (mario->isOnPlatform)
+		{
+			state = MARIO_STATE_IDLE;
+			mario->isSitting = true;
+			mario->vx = 0;
+			mario->vy = 0.0f;
+			//mario->position.y += MARIO_SIT_HEIGHT_ADJUST * 3;
+		}
+		break;
+
+	case MARIO_STATE_SIT_RELEASE:
+		if (mario->isSitting)
+		{
+			mario->isSitting = false;
+			state = MARIO_STATE_IDLE;
+			mario->position.y -= MARIO_SIT_HEIGHT_ADJUST * 3;
+		}
+		break;
+
 	}
+
 	mario->SetState(state);
 }
 
@@ -385,9 +416,10 @@ void BigMario::OnKeyDown(int KeyCode) {
 
 RectBox BigMario::GetBoundingBox() {
 	RectBox bounding_box = RectBox(0, 0, 0, 0);
+	int height = mario->isSitting ? MARIO_BIG_CROUCH_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
 	bounding_box.left = mario->position.x - MARIO_BIG_BBOX_WIDTH * 3 / 2;
-	bounding_box.top = mario->position.y - MARIO_BIG_BBOX_HEIGHT * 3 / 2;
+	bounding_box.top = mario->position.y - height * 3 / 2;
 	bounding_box.right = bounding_box.left + MARIO_BIG_BBOX_WIDTH * 3;
-	bounding_box.bottom = bounding_box.top + MARIO_BIG_BBOX_HEIGHT * 3;
+	bounding_box.bottom = bounding_box.top + height * 3;
 	return bounding_box;
 }

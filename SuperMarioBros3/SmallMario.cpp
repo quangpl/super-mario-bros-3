@@ -20,10 +20,16 @@ void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}*/
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		this->SetState(MARIO_STATE_WALKING_RIGHT);
+		if (game->IsKeyDown(DIK_A))
+			this->SetState(MARIO_STATE_RUNNING_RIGHT);
+		else
+			this->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		this->SetState(MARIO_STATE_WALKING_LEFT);
+		if (game->IsKeyDown(DIK_A))
+			this->SetState(MARIO_STATE_RUNNING_LEFT);
+		else
+			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
 	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(mario->GetSpeed().x) > abs(mario->maxVx)) {
