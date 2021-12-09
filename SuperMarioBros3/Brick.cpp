@@ -34,7 +34,7 @@ void CBrick::Render()
 		ani = "ani-question-block";
 	}
 	CAnimations::GetInstance()->Get(ani)->Render(this->position.x, this->position.y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CBrick::OnNoCollision(DWORD dt)
@@ -83,8 +83,8 @@ void CBrick::SetState(int state)
 	}
 }
 RectBox CBrick::GetBoundingBox() {
-	this->bounding_box.left = position.x;
-	this->bounding_box.top = position.y;
+	this->bounding_box.left = position.x - BRICK_BBOX_WIDTH/2;
+	this->bounding_box.top = position.y - BRICK_BBOX_HEIGHT/2;
 	this->bounding_box.right = this->bounding_box.left + BRICK_BBOX_WIDTH;
 	this->bounding_box.bottom = this->bounding_box.top + BRICK_BBOX_HEIGHT;
 	return this->bounding_box;
