@@ -3,11 +3,16 @@
 #include "Constants.h"
 #include "Mario.h"
 #include "Transformation.h"
+#include "Stopwatch.h"
 #include "Brick.h"
+
 #define KOOPAS_WALKING_SPEED	0.03f
 #define KOOPAS_GRAVITY	0.0018f
 #define RED_KOOPAS_SPEED_Y		0.06f
 #define KOOPAS_SHELL_RUN_SPEED 0.4f
+
+#define KOOPAS_CROUCH_TO_REPAWN_TIME 7000
+#define KOOPAS_RESPAWN_TO_REVIVAL_TIME 4000
 
 
 #define KOOPAS_BBOX_WIDTH 16*
@@ -19,6 +24,8 @@
 #define KOOPAS_STATE_DIE_MOVE		300
 #define KOOPAS_STATE_WALKING_DOWN	400
 #define KOOPAS_STATE_DIE_BY_ATTACK	999
+#define KOOPAS_STATE_RESPAWN		500
+
 
 // Green
 #define KOOPAS_ANI_WALKING_LEFT		501
@@ -43,8 +50,6 @@
 #define PARA_KOOPAS_ANI_DIE_SUPINE	514
 #define PARA_KOOPAS_ANI_DIE_SPIN	517
 
-#define KOOPAS_TIME_IDLE			8000
-#define KOOPAS_TIME_REVIVAL			1000
 
 enum KoopaType
 {
@@ -56,6 +61,8 @@ enum KoopaType
 
 class CKoopas : public CGameObject
 {
+	int shell_step = 0;
+	Stopwatch* revivalStopWatch;
 	Vec2 size = Vec2(45, 45);
 	int koopas_type;
 	LPGAMEOBJECT owner = NULL;

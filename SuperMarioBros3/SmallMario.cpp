@@ -150,7 +150,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 		switch (koopas->GetState())
 		{
-			// TODO: Improve collision framework to make it easier
+		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
 			if (mario->holding) {
 				mario->holder = koopas;

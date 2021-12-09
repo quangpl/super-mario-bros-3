@@ -3,6 +3,7 @@
 CKoopas::CKoopas() :CGameObject()
 {
 	type = Type::KOOPAS;
+	this->revivalStopWatch = new Stopwatch();
 	koopas_type = KoopaType::RedTroopa;
 	SetState(KOOPAS_STATE_WALKING);
 	this->gravity = KOOPAS_GRAVITY;
@@ -64,6 +65,16 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else {
 		vy += (KOOPAS_GRAVITY * dt);
 	}
+	DebugOut(L"koopas: %d \n", state);
+	if (state == KOOPAS_STATE_DIE_BY_ATTACK && shell_step == 0 && revivalStopWatch->Elapsed() >= KOOPAS_CROUCH_TO_REPAWN_TIME) {
+		shell_step = 1;
+		this->SetState(KOOPAS_STATE_RESPAWN);
+		revivalStopWatch->Restart();
+	}
+	if (state == KOOPAS_STATE_RESPAWN && shell_step == 1 && revivalStopWatch->Elapsed() >= KOOPAS_RESPAWN_TO_REVIVAL_TIME) {
+		SetState(KOOPAS_STATE_WALKING);
+		shell_step = 0;
+	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	//DebugOut(L"vx: %f", vx);
@@ -82,6 +93,9 @@ void CKoopas::Render()
 		break;
 	case KOOPAS_STATE_IDLE:
 		ani = "ani-red-koopa-troopa-shell-idle";
+		break;
+	case KOOPAS_STATE_RESPAWN:
+		ani = "ani-red-koopa-troopa-respawning";
 		break;
 	case KOOPAS_STATE_WALKING:
 	case KOOPAS_STATE_WALKING_DOWN:
@@ -105,6 +119,7 @@ void CKoopas::SetState(int state)
 		this->vx = KOOPAS_WALKING_SPEED;
 		break;
 	case KOOPAS_STATE_DIE_BY_ATTACK:
+		this->revivalStopWatch->Restart();
 		position.y = position.y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
 		this->vx = 0;
 		break;

@@ -153,6 +153,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		switch (koopas->GetState())
 		{
 			// TODO: Improve collision framework to make it easier
+		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
 			if (mario->holding) {
 				mario->holder = koopas;
