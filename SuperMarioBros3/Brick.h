@@ -26,11 +26,16 @@
 #define BRICK_SHIP_DISTANCE 4
 #define BRICK_REVERT_POSITION_TIME 2000
 
+enum class BrickType {
+	QuestionBrick,
+	DiamondBrick
+};
 
 class CBrick : public CGameObject
 {
 public:
 	Vec2 size;
+	BrickType brickType;
 	ObjectType reward = ObjectTypeData::QuestionCoin;
 	void OnNoCollision(DWORD dt);
 	CBrick();

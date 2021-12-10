@@ -22,6 +22,7 @@
 #include "BigMario.h"
 #include "EffectManager.h"
 #include "SmallMario.h"
+#include "Coin.h"
 
 
 class CPlayScene: public CScene

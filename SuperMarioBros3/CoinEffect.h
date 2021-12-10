@@ -3,12 +3,11 @@
 #include "Animations.h"
 #include <functional>
 
-#define COIN_RETURN_DISTANCE 60
-#define COIN_STOP_DISTANCE 35
-#define COIN_ANI_ROTATION		451
-
-#define COIN_SPEED_UP 0.13f
-#define COIN_SPEED_DOWN 0.06f
+#define COIN_RETURN_DISTANCE 180
+#define COIN_STOP_DISTANCE 100
+#define COIN_BBOX_SIZE 48
+#define COIN_SPEED_UP 0.4f
+#define COIN_SPEED_DOWN 0.18f
 
 
 #define  COIN_STATE_NORMAL		1

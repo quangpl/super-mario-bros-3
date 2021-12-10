@@ -149,6 +149,7 @@
     <ClCompile Include="BrickEffect.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraRegion.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinEffect.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CommandPoint.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="BrickEffect.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraRegion.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinEffect.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CommandPoint.h" />

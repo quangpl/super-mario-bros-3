@@ -58,6 +58,9 @@
     <Filter Include="Effects">
       <UniqueIdentifier>{04502a47-6fbd-4b9f-a852-419b76341bbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Coin">
+      <UniqueIdentifier>{c708e224-ef71-4086-8eb8-0903ea949cb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -209,6 +212,9 @@
     </ClCompile>
     <ClCompile Include="MarioGrowEffect.cpp">
       <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Coin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="MarioGrowEffect.h">
       <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Coin</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

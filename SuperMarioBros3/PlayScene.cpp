@@ -31,6 +31,9 @@ void CPlayScene::OnKeyDown(int KeyCode)
 		player->position.y = player->position.y - 50;
 		player->SetPlayerState(new BigMario());
 		break;
+	case DIK_X:
+		player->SetPosition(Vec2{ 6000,700 });
+		break;
 	default:
 		break;
 	}
@@ -114,6 +117,12 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::QuestionBlock.ToString().c_str()) == 0) {
 		AddObject(CBrick::Create(position, data), data);
 	}
+	if (strcmp(type, ObjectTypeData::Brick.ToString().c_str()) == 0) {
+		AddObject(CCoin::Create(position, COIN_STATE_BRICK), data);
+	}
+	if (strcmp(type, ObjectTypeData::Coin.ToString().c_str()) == 0) {
+		AddObject(CCoin::Create(position, COIN_STATE_NORMAL_COIN), data);
+	}
 	if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
 		AddObject(CKoopas::Create(position), data);
 	}
@@ -180,17 +189,18 @@ void CPlayScene::Render()
 	if (!player->IsDeleted()) {
 		player->Render();
 	}
+	for (auto x : CEffectManager::GetInstance()->GetAll())
+	{
+		LPEFFECT effect = x.second;
+		effect->Render();
+	}
 	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i]->IsDeleted()) {
 			continue;
 		}
 		objects[i]->Render();
 	}
-	for (auto x : CEffectManager::GetInstance()->GetAll())
-	{
-		LPEFFECT effect = x.second;
-		effect->Render();
-	}
+	
 }
 
 /*

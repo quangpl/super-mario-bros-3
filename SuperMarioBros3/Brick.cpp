@@ -13,6 +13,7 @@ CBrick* CBrick::Create(Vec2 pos, MapData& data)
 	CBrick* birck = new CBrick();
 	birck->SetPosition(Vec2(pos.x, pos.y));
 	string rewardItem = data.GetText("HiddenItem", "QuestionCoin");
+	birck->brickType = data.GetBool("AsBrick", false) ? BrickType::DiamondBrick : BrickType::QuestionBrick;
 	birck->state = BRICK_STATE_NORMAL;
 	if (rewardItem.compare(ObjectTypeData::RedMushroom.ToString()) == 0) {
 		birck->reward = ObjectTypeData::RedMushroom;
@@ -27,13 +28,15 @@ CBrick* CBrick::Create(Vec2 pos, MapData& data)
 
 void CBrick::Render()
 {
+	ani = brickType == BrickType::QuestionBrick ? "ani-question-block" : "ani-brick-time-freeze";
+
 	if (state == BRICK_STATE_HIT) {
-		ani = "ani-empty-block";
+		ani = brickType == BrickType::QuestionBrick ? "ani-empty-block" : "";
 	}
-	else {
-		ani = "ani-question-block";
+	if (ani.compare("") == 0) {
+		return;
 	}
-	CAnimations::GetInstance()->Get(ani)->Render(this->position.x, this->position.y);
+	CAnimations::GetInstance()->Get(ani)->Render(this->position.x + BRICK_BBOX_WIDTH / 2, this->position.y + BRICK_BBOX_HEIGHT / 2);
 	RenderBoundingBox();
 }
 
@@ -63,19 +66,19 @@ void CBrick::SetState(int state)
 
 		if (reward == ObjectTypeData::RedMushroom) {
 			CRedMushroom* mushroom = new CRedMushroom();
-			mushroom->SetStartY(this->position.y);
-			mushroom->SetPosition(Vec2{ this->position });
+			mushroom->SetStartY(this->position.y + BRICK_BBOX_HEIGHT / 2);
+			mushroom->SetPosition(Vec2{ this->position.x + BRICK_BBOX_WIDTH / 2,this->position.y + BRICK_BBOX_HEIGHT / 2 });
 			mushroom->SetState(UP_MUSHROOM_STATE_UP);
 			SceneManager::GetInstance()->GetActiveScene()->AddObject(mushroom);
 		}
-		/*
-		else if (this->child_item_id == BrickChildItem::Coin) {
-			CCoindEffect* coin_effect = new CCoindEffect(x, y);
-			int coin_effect_id = effect_manager->Add(coin_effect);
-			coin_effect->Start([this, coin_effect_id]() {
-				CEffectManager::GetInstance()->Delete(coin_effect_id);
+		
+		else if (reward == ObjectTypeData::QuestionCoin) {
+			CCoindEffect* coinEffect = new CCoindEffect(this->position.x, this->position.y);
+			int coinEffectId = effectManager->Add(coinEffect);
+			coinEffect->Start([this, coinEffectId]() {
+				CEffectManager::GetInstance()->Delete(coinEffectId);
 			});
-		}*/
+		}
 		break;
 	}
 	default:
@@ -83,8 +86,8 @@ void CBrick::SetState(int state)
 	}
 }
 RectBox CBrick::GetBoundingBox() {
-	this->bounding_box.left = position.x - BRICK_BBOX_WIDTH/2;
-	this->bounding_box.top = position.y - BRICK_BBOX_HEIGHT/2;
+	this->bounding_box.left = position.x;
+	this->bounding_box.top = position.y;
 	this->bounding_box.right = this->bounding_box.left + BRICK_BBOX_WIDTH;
 	this->bounding_box.bottom = this->bounding_box.top + BRICK_BBOX_HEIGHT;
 	return this->bounding_box;

@@ -1,4 +1,5 @@
 #include "BrickEffect.h"
+#include "Brick.h"
 
 CBrickEffect::CBrickEffect(float _x, float _y) : CEffect(_x, _y)
 {
@@ -7,7 +8,7 @@ CBrickEffect::CBrickEffect(float _x, float _y) : CEffect(_x, _y)
 
 void CBrickEffect::Render()
 {
-	CAnimations::GetInstance()->Get("ani-empty-block")->Render(x, y);
+	CAnimations::GetInstance()->Get("ani-empty-block")->Render(x + BRICK_BBOX_WIDTH/2, y + BRICK_BBOX_HEIGHT/2);
 }
 
 void CBrickEffect::Start(function<void()> _callback)

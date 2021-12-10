@@ -7,7 +7,7 @@ CCoindEffect::CCoindEffect(float _x, float _y) : CEffect(_x, _y)
 
 void CCoindEffect::Render()
 {
-	//CAnimations::GetInstance()->Get(COIN_ANI_ROTATION)->Render(x, y);
+	CAnimations::GetInstance()->Get("ani-coin-obtained")->Render(x + COIN_BBOX_SIZE / 2, y + COIN_BBOX_SIZE / 2);
 }
 
 void CCoindEffect::Start(function<void()> _callback)
