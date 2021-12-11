@@ -43,6 +43,10 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CKoopas*>(e->obj))
 		OnCollisionWithKoopas(e);
+	if (dynamic_cast<CTail*>(e->obj))
+	{
+		SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+	}
 }
 
 void CGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
@@ -55,7 +59,7 @@ void CGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += (this->gravity * dt);
-	if ((state == GOOMBA_STATE_DIE && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	if (((state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_BY_ATTACK) && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
@@ -72,11 +76,17 @@ int CGoomba::IsCollidable() {
 
 void CGoomba::Render()
 {
+	Vec2 transformation = { 1.0f, 1.0f };
 	ani = "ani-goomba-walk";
 
 	if (state == GOOMBA_STATE_DIE) {
 		ani = "ani-goomba-die";
 	}
+	if (state == GOOMBA_STATE_DIE_BY_ATTACK) {
+		ani = "ani-goomba-die";
+		transformation = { 1.0f, -1.0f };
+	}
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = transformation;
 	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
 	RenderBoundingBox();
 }
@@ -93,16 +103,18 @@ void CGoomba::SetState(int state)
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
+
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
-		vy = -GOOMBA_HIT_SPEED;
+		die_start = GetTickCount64();
+		vy = -GOOMBA_HIT_VY;
 		if (nx > 0)
 		{
-			vx = GOOMBA_HIT_SPEED;
+			vx = GOOMBA_HIT_VX;
 		}
 		else
 		{
-			vx = -GOOMBA_HIT_SPEED;
+			vx = -GOOMBA_HIT_VX;
 		}
 		break;
 	default:

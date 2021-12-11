@@ -31,6 +31,10 @@ void CPlayScene::OnKeyDown(int KeyCode)
 		player->position.y = player->position.y - 50;
 		player->SetPlayerState(new BigMario());
 		break;
+	case DIK_3:
+		player->position.y = player->position.y - 50;
+		player->SetPlayerState(new RaccoonMario());
+		break;
 	case DIK_X:
 		player->SetPosition(Vec2{ 6000,700 });
 		break;

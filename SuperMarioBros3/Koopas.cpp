@@ -36,6 +36,9 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0)
 	{
 		vy = 0;
+		if (state == KOOPAS_STATE_DIE_BY_HIT) {
+			vx = 0;
+		}
 	}
 	else if (e->nx != 0)
 	{
@@ -45,6 +48,10 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CBrick*>(e->obj)) {
 		OnCollisionWithBrick(e);
+	}
+	else if (dynamic_cast<CTail*>(e->obj)) {
+		transformation = Vec2{ 1.0f,-1.0f };
+		this->SetState(KOOPAS_STATE_DIE_BY_HIT);
 	}
 }
 
@@ -66,7 +73,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += (KOOPAS_GRAVITY * dt);
 	}
 	DebugOut(L"koopas: %d \n", state);
-	if (state == KOOPAS_STATE_DIE_BY_ATTACK && shell_step == 0 && revivalStopWatch->Elapsed() >= KOOPAS_CROUCH_TO_REPAWN_TIME) {
+	if ((state == KOOPAS_STATE_DIE_BY_ATTACK || state == KOOPAS_STATE_DIE_BY_HIT) && shell_step == 0 && revivalStopWatch->Elapsed() >= KOOPAS_CROUCH_TO_REPAWN_TIME) {
 		shell_step = 1;
 		this->SetState(KOOPAS_STATE_RESPAWN);
 		revivalStopWatch->Restart();
@@ -77,7 +84,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	//DebugOut(L"vx: %f", vx);
+	DebugOut(L"vy: %f", vy);
 }
 
 
@@ -85,6 +92,7 @@ void CKoopas::Render()
 {
 	switch (state)
 	{
+	case KOOPAS_STATE_DIE_BY_HIT:
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		ani = "ani-red-koopa-troopa-shell-idle";
 		break;
@@ -105,7 +113,7 @@ void CKoopas::Render()
 		break;
 	}
 
-	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(-nx, 1);
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(-nx, transformation.y);
 	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
 	RenderBoundingBox();
 }
@@ -118,10 +126,21 @@ void CKoopas::SetState(int state)
 	case KOOPAS_STATE_WALKING:
 		this->vx = KOOPAS_WALKING_SPEED;
 		break;
+	case KOOPAS_STATE_RESPAWN:
+		nx = CMario::GetInstance()->GetPosition().x < position.x ? -1 : 1;
+		transformation = Vec2{ nx * 1.0f, 1.0f };
+		break;
 	case KOOPAS_STATE_DIE_BY_ATTACK:
 		this->revivalStopWatch->Restart();
 		position.y = position.y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
 		this->vx = 0;
+		break;
+	case KOOPAS_STATE_DIE_BY_HIT:
+		this->revivalStopWatch->Restart();
+		position.y = position.y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
+		vy = -KOOPAS_HIT_VY;
+		nx = CMario::GetInstance()->GetNx();
+		vx = KOOPAS_HIT_VX * nx;
 		break;
 	case KOOPAS_STATE_DIE_MOVE:
 		position.y = position.y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;

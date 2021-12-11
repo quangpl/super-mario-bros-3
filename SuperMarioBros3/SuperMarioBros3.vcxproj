@@ -170,6 +170,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGrowEffect.cpp" />
     <ClCompile Include="MasterMario.cpp" />
+    <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RedMushRoom.cpp" />
     <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="ObjectTypeData.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stopwatch.cpp" />
+    <ClCompile Include="Tail.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="tinyXML\tinystr.cpp" />
@@ -229,6 +231,7 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGrowEffect.h" />
     <ClInclude Include="MasterMario.h" />
+    <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RedMushRoom.h" />
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="ObjectTypeData.h" />
@@ -245,6 +248,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stopwatch.h" />
+    <ClInclude Include="Tail.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileSet.h" />

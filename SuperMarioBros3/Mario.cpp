@@ -72,7 +72,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 void CMario::Render()
 {
 	this->playerState->Render();
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
@@ -98,7 +98,8 @@ void CMario::OnKeyDown(int KeyCode) {
 
 
 RectBox CMario::GetBoundingBox() {
-	return this->playerState->GetBoundingBox();
+	this->bounding_box = this->playerState->GetBoundingBox();
+	return this->bounding_box;
 }
 
 CMario* CMario::__instance = NULL;

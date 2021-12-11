@@ -20,7 +20,7 @@ public:
 	ULONGLONG transformation_start;
 	BOOLEAN isOnPlatform;
 	int coin;
-
+	bool isAttacking;
 	LPGAMEOBJECT holder = NULL;
 	bool holding;
 	CMario() : CGameObject()

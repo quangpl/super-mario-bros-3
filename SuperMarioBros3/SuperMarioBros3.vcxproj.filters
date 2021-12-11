@@ -216,6 +216,12 @@
     <ClCompile Include="Coin.cpp">
       <Filter>Coin</Filter>
     </ClCompile>
+    <ClCompile Include="RaccoonMario.cpp">
+      <Filter>Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="Tail.cpp">
+      <Filter>Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -385,6 +391,12 @@
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="RaccoonMario.h">
+      <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Tail.h">
+      <Filter>Mario</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

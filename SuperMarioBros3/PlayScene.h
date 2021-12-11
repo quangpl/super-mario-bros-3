@@ -23,6 +23,7 @@
 #include "EffectManager.h"
 #include "SmallMario.h"
 #include "Coin.h"
+#include "RaccoonMario.h"
 
 
 class CPlayScene: public CScene

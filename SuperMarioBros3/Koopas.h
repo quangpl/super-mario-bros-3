@@ -5,6 +5,10 @@
 #include "Transformation.h"
 #include "Stopwatch.h"
 #include "Brick.h"
+#include "Tail.h"
+
+#define KOOPAS_HIT_VX 0.15f
+#define KOOPAS_HIT_VY 0.5f
 
 #define KOOPAS_WALKING_SPEED	0.03f
 #define KOOPAS_GRAVITY	0.0018f
@@ -24,6 +28,8 @@
 #define KOOPAS_STATE_DIE_MOVE		300
 #define KOOPAS_STATE_WALKING_DOWN	400
 #define KOOPAS_STATE_DIE_BY_ATTACK	999
+// hit : hat tung
+#define KOOPAS_STATE_DIE_BY_HIT		1000
 #define KOOPAS_STATE_RESPAWN		500
 
 
@@ -62,6 +68,7 @@ enum KoopaType
 class CKoopas : public CGameObject
 {
 	int shell_step = 0;
+	Vec2 transformation = { 1.0f,1.0f };
 	Stopwatch* revivalStopWatch;
 	Vec2 size = Vec2(45, 45);
 	int koopas_type;

@@ -4,8 +4,11 @@
 #include "debug.h"
 #include "Timer.h"
 #include "Koopas.h"
+#include "Tail.h"
 #define GOOMBA_GRAVITY 0.0018f
-#define GOOMBA_HIT_SPEED 0.3f
+#define GOOMBA_HIT_VX 0.15f
+#define GOOMBA_HIT_VY 0.5f
+
 #define GOOMBA_BBOX_WIDTH			45
 #define GOOMBA_BBOX_HEIGHT			45
 #define GOOMBA_BBOX_HEIGHT_DIE	27
@@ -13,7 +16,7 @@
 #define RED_PARA_BBOX_WIDTH			20
 #define RED_PARA_BBOX_HEIGHT		24
 
-#define GOOMBA_DIE_TIMEOUT 500 
+#define GOOMBA_DIE_TIMEOUT 900 
 
 #define GOOMBA_WALKING_SPEED		0.05f;
 #define GOOMBA_JUMP_LOW_SPEED		0.13f;
