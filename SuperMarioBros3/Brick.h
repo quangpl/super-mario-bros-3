@@ -8,6 +8,7 @@
 #include "CoinEffect.h"
 #include "ObjectTypeData.h"
 #include "EffectManager.h"
+#include "PSwitch.h"
 #include "BrickEffect.h"
 
 #define BRICK_RETURN_DISTANCE 5
@@ -34,6 +35,7 @@ enum class BrickType {
 class CBrick : public CGameObject
 {
 public:
+	Vec2 backupPos;
 	Vec2 size;
 	BrickType brickType;
 	ObjectType reward = ObjectTypeData::QuestionCoin;

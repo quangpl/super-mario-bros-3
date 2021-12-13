@@ -33,6 +33,7 @@ public:
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
 	virtual void KeyStateHandler(){}
+	vector<CGameObject*> GetObjects() { return this->objects; }
 
 	CMario* GetPlayer() { return this->player; }
 

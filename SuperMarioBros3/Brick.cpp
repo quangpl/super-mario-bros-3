@@ -11,6 +11,7 @@ CBrick::~CBrick()
 CBrick* CBrick::Create(Vec2 pos, MapData& data)
 {
 	CBrick* birck = new CBrick();
+	birck->backupPos = pos;
 	birck->SetPosition(Vec2(pos.x, pos.y));
 	string rewardItem = data.GetText("HiddenItem", "QuestionCoin");
 	birck->brickType = data.GetBool("AsBrick", false) ? BrickType::DiamondBrick : BrickType::QuestionBrick;
@@ -20,6 +21,9 @@ CBrick* CBrick::Create(Vec2 pos, MapData& data)
 	}
 	if (rewardItem.compare(ObjectTypeData::QuestionCoin.ToString()) == 0) {
 		birck->reward = ObjectTypeData::QuestionCoin;
+	}
+	if (rewardItem.compare(ObjectTypeData::PSwitch.ToString()) == 0) {
+		birck->reward = ObjectTypeData::PSwitch;
 	}
 	return birck;
 
@@ -31,7 +35,7 @@ void CBrick::Render()
 	ani = brickType == BrickType::QuestionBrick ? "ani-question-block" : "ani-brick-time-freeze";
 
 	if (state == BRICK_STATE_HIT) {
-		ani = brickType == BrickType::QuestionBrick ? "ani-empty-block" : "";
+		ani = "ani-empty-block";
 	}
 	if (ani.compare("") == 0) {
 		return;
@@ -46,7 +50,7 @@ void CBrick::OnNoCollision(DWORD dt)
 }
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
-
+	this->position = backupPos;
 }
 
 void CBrick::SetState(int state)
@@ -71,13 +75,17 @@ void CBrick::SetState(int state)
 			mushroom->SetState(UP_MUSHROOM_STATE_UP);
 			SceneManager::GetInstance()->GetActiveScene()->AddObject(mushroom);
 		}
-		
+
 		else if (reward == ObjectTypeData::QuestionCoin) {
 			CCoindEffect* coinEffect = new CCoindEffect(this->position.x, this->position.y);
 			int coinEffectId = effectManager->Add(coinEffect);
 			coinEffect->Start([this, coinEffectId]() {
 				CEffectManager::GetInstance()->Delete(coinEffectId);
-			});
+				});
+		}
+		else if (reward == ObjectTypeData::PSwitch) {
+			PSwitch* pSwitch = new PSwitch(position);
+			SceneManager::GetInstance()->GetActiveScene()->AddObject(pSwitch);
 		}
 		break;
 	}

@@ -154,6 +154,8 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CommandPoint.cpp" />
     <ClCompile Include="DataReader.cpp" />
+    <ClCompile Include="BrokenBrickEffect.cpp" />
+    <ClCompile Include="Debris.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -170,6 +172,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGrowEffect.cpp" />
     <ClCompile Include="MasterMario.cpp" />
+    <ClCompile Include="PSwitch.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RedMushRoom.cpp" />
     <ClCompile Include="ObjectType.cpp" />
@@ -215,6 +218,8 @@
     <ClInclude Include="CommandPoint.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DataReader.h" />
+    <ClInclude Include="BrokenBrickEffect.h" />
+    <ClInclude Include="Debris.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Effect.h" />
@@ -231,6 +236,7 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGrowEffect.h" />
     <ClInclude Include="MasterMario.h" />
+    <ClInclude Include="PSwitch.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RedMushRoom.h" />
     <ClInclude Include="ObjectType.h" />

@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "SceneManager.h"
 
-#define MARIO_TAIL_WIDTH 70.0f
+#define MARIO_TAIL_WIDTH 30.0f
 #define MARIO_TAIL_BBOX_SIZE 12
 #define MARIO_TAIL_HIT_TIME 500
 class CMario;

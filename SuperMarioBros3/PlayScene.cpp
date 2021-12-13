@@ -127,15 +127,15 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::Coin.ToString().c_str()) == 0) {
 		AddObject(CCoin::Create(position, COIN_STATE_NORMAL_COIN), data);
 	}
-	if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
+	/*if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
 		AddObject(CKoopas::Create(position), data);
-	}
+	}*/
 	if (strcmp(type, ObjectTypeData::Pipe.ToString().c_str()) == 0) {
 		AddObject(CPipe::Create(position, size, data), data);
 	}
-	if (strcmp(type, ObjectTypeData::Spawner.ToString().c_str()) == 0) {
+	/*if (strcmp(type, ObjectTypeData::Spawner.ToString().c_str()) == 0) {
 		AddObject(Spawner::Create(position, data), data);
-	}
+	}*/
 }
 
 void CPlayScene::Load()
@@ -168,7 +168,7 @@ void CPlayScene::Update(DWORD dt)
 		}
 	}
 	player->Update(dt, &coObjects);
-
+	coObjects.push_back(player);
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);

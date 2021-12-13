@@ -61,6 +61,12 @@
     <Filter Include="Coin">
       <UniqueIdentifier>{c708e224-ef71-4086-8eb8-0903ea949cb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PSwitch">
+      <UniqueIdentifier>{6270a033-7f58-4c8e-9208-a7286840505f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debris">
+      <UniqueIdentifier>{0fb0b28a-64e6-498e-8e0d-38c18081d5cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -221,6 +227,15 @@
     </ClCompile>
     <ClCompile Include="Tail.cpp">
       <Filter>Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="PSwitch.cpp">
+      <Filter>PSwitch</Filter>
+    </ClCompile>
+    <ClCompile Include="BrokenBrickEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Debris.cpp">
+      <Filter>Debris</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +412,15 @@
     </ClInclude>
     <ClInclude Include="Tail.h">
       <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="PSwitch.h">
+      <Filter>PSwitch</Filter>
+    </ClInclude>
+    <ClInclude Include="BrokenBrickEffect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Debris.h">
+      <Filter>Debris</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

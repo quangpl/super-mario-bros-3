@@ -87,7 +87,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	DebugOut(L"vy: %f", vy);
 }
 
-
 void CKoopas::Render()
 {
 	switch (state)
