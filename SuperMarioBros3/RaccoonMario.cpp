@@ -13,17 +13,19 @@ RaccoonMario::RaccoonMario() :CMasterMario()
 {
 	this->tail = new CTail(mario);
 	stopwatch = new Stopwatch();
+	flyStopwatch = new Stopwatch();
 	this->tail->hitTime = MARIO_TAIL_HIT_TIME;
 	SceneManager::GetInstance()->GetActiveScene()->AddObject(this->tail);
 }
 void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	PowerCalculator(dt);
 	if (mario->isAttacking && stopwatch->Elapsed() >= TAIL_TIMEOUT) {
 		this->SetState(MARIO_STATE_RELEASE_ATTACK);
 	}
+	/*if(mario->ax >= MARIO_ACCEL_RUN_X && game->IsKeyDown(DIK_A) )*/
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
-	DebugOut(L"vx: %f\n", mario->vx);
 
 	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
 		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
@@ -34,13 +36,13 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING_RIGHT);
+			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING_LEFT);
+			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
@@ -202,6 +204,14 @@ void RaccoonMario::Render()
 		{
 			ani = "ani-raccoon-mario-hold";
 		}
+		else if (mario->isAttacking)
+		{
+			ani = "ani-raccoon-mario-spin";
+		}
+		else if (mario->GetState() == MARIO_STATE_FLY)
+		{
+			ani = "ani-raccoon-mario-fly";
+		}
 		else
 		{
 			ani = "ani-raccoon-mario-jump";
@@ -262,9 +272,29 @@ void RaccoonMario::Render()
 	//mario->RenderBoundingBox();
 }
 
+void RaccoonMario::PowerCalculator(DWORD dt) {
+	float maxRun = abs(mario->vx) > MARIO_RUNNING_SPEED * 0.85f;
+
+	if (maxRun && mario->isOnPlatform)
+	{
+		mario->SetPower(max(0.0f, min(mario->GetPower() + PMETER_UP_STEP * dt, PMETER_MAX + 0.2f)));
+	}
+	else {
+		if (flyStopwatch->IsRunning()) {
+			if (flyStopwatch->Elapsed() >= 4000) {
+				mario->SetPower(0);
+				flyStopwatch->Stop();
+			}
+		}
+		else {
+			if (mario->GetPower() > 0)
+				mario->SetPower(max(0.0f, min(mario->GetPower() - PMETER_DOWN_STEP * dt, PMETER_MAX)));
+		}
+	}
+}
+
 void RaccoonMario::SetState(int state)
 {
-	DebugOut(L"state: %d \n", state);
 	// DIE is the end state, cannot be changed! 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 
@@ -273,17 +303,10 @@ void RaccoonMario::SetState(int state)
 	case MARIO_STATE_RELEASE_RUNNING:
 		mario->ax = 0;
 		break;
-	case MARIO_STATE_RUNNING_RIGHT:
+	case MARIO_STATE_RUNNING:
 		if (mario->isSitting) break;
-		mario->maxVx = MARIO_RUNNING_SPEED;
-		mario->ax = MARIO_ACCEL_RUN_X;
-		mario->SetNx(1);
-		break;
-	case MARIO_STATE_RUNNING_LEFT:
-		if (mario->isSitting) break;
-		mario->maxVx = -MARIO_RUNNING_SPEED;
-		mario->ax = -MARIO_ACCEL_RUN_X;
-		mario->SetNx(-1);
+		mario->maxVx = mario->GetNx() * MARIO_RUNNING_SPEED;
+		mario->ax = mario->GetNx() * MARIO_ACCEL_RUN_X;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (mario->isSitting) break;
@@ -307,10 +330,16 @@ void RaccoonMario::SetState(int state)
 				mario->vy = -MARIO_JUMP_SPEED_Y;
 		}
 		break;
+	case MARIO_STATE_FLY:
 
-	case MARIO_STATE_RELEASE_JUMP:
-		if (mario->vy < 0) mario->vy += MARIO_JUMP_SPEED_Y / 2;
 		break;
+	case MARIO_STATE_FLOAT:
+		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ResetLimitEdge();
+		break;
+	case MARIO_STATE_RELEASE_JUMP:
+		//if (mario->vy < 0) mario->vy += MARIO_JUMP_SPEED_Y / 2;
+		break;
+
 	case MARIO_STATE_IDLE:
 		mario->ax = 0;
 		if (mario->vx > 0) {
@@ -345,6 +374,7 @@ void RaccoonMario::SetState(int state)
 		break;
 	case MARIO_STATE_RELEASE_ATTACK:
 		mario->isAttacking = false;
+		stopwatch->Restart();
 		break;
 	case MARIO_STATE_ATTACK:
 		if (!mario->isAttacking) {
@@ -427,7 +457,26 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 		this->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		this->SetState(MARIO_STATE_JUMP);
+		DebugOut(L"Power %f", mario->GetPower());
+		if (mario->isOnPlatform) {
+			this->SetState(MARIO_STATE_JUMP);
+		}
+		else {
+			if (mario->GetPower() >= 3) {
+				//SetState(MARIO_STATE_FLY);
+				mario->vy = -0.432f;
+				mario->isOnPlatform = false;
+				mario->startJumpPosition = mario->position.y;
+				if (!flyStopwatch->IsRunning()) {
+					flyStopwatch->Restart();
+				}
+				SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLimitEdge(Direction::Top, 0.0f);
+			}
+			else {
+				//this->SetState(MARIO_STATE_FLOAT);
+			}
+		}
+	
 		break;
 	case DIK_0:
 		this->SetState(MARIO_STATE_DIE);

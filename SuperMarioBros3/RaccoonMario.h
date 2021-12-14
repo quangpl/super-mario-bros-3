@@ -7,16 +7,20 @@
 
 #define MARIO_BIG_CROUCH_BBOX_HEIGHT 18
 #define TAIL_TIMEOUT 500
+#define PMETER_UP_STEP 0.008f
+#define	PMETER_MAX  4
+#define PMETER_DOWN_STEP 0.0016f
 class RaccoonMario : public CMasterMario
 {
 public:
 	CTail* tail;
 	Stopwatch* stopwatch;
+	Stopwatch* flyStopwatch;
 	RaccoonMario();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-
+	void PowerCalculator(DWORD dt);
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 

@@ -22,6 +22,11 @@ LPGAMEOBJECT  CMario::GetHolder() { return this->holder; }
 void  CMario::SetHolding(bool _holding) { this->holding = _holding; }
 bool  CMario::GetHolding() { return this->holding; }
 
+
+void  CMario::SetPower(float p) { this->power = p; }
+float  CMario::GetPower() { return this->power; }
+
+
 void CMario::SetPlayerState(CMasterMario* pState) {
 	// small to big
 	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState)) {

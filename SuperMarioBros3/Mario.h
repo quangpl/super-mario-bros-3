@@ -6,9 +6,12 @@ class CMasterMario;
 class CMario : public CGameObject
 {
 	static CMario* __instance;
-	
-	
+
+
 public:
+	float power;
+	float startJumpPosition;
+	RectBox moveLimitaion;
 	CMasterMario* playerState;
 	BOOLEAN isSitting;
 	float maxVx;
@@ -58,6 +61,9 @@ public:
 
 	void SetHolding(bool _holding);
 	bool GetHolding();
+
+	float GetPower();
+	void SetPower(float newPower);
 
 	virtual void OnKeyUp(int keyCode);
 	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);

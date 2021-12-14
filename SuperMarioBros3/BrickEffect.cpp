@@ -37,7 +37,6 @@ void CBrickEffect::Update(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
-	//DebugOut(L"start_y: %f, y:%f \n", start_y, y);
 	switch (state)
 	{
 	case BRICK_STATE_MOVE_UP:

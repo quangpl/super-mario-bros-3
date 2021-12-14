@@ -51,14 +51,14 @@ void CPlayScene::KeyStateHandler() {
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))
-			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING_RIGHT);
+			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
 		else
 			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
 		if (game->IsKeyDown(DIK_A))
-			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING_LEFT);
+			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
 		else
 			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_LEFT);
 	}
@@ -93,7 +93,7 @@ void CPlayScene::LoadMap() {
 	this->gameMap->SetCamera(camera);
 
 	Vec2 boundingMap = gameMap->GetBoundingBox();
-	//this->player->SetMoveLimitation(RectBox(0, -boundingMap.y, boundingMap.x, boundingMap.y));
+	this->player->moveLimitaion = RectBox(0, -boundingMap.y, boundingMap.x, boundingMap.y);
 
 	doc.Clear();
 
@@ -204,7 +204,7 @@ void CPlayScene::Render()
 		}
 		objects[i]->Render();
 	}
-	
+
 }
 
 /*

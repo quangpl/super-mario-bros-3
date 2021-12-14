@@ -32,6 +32,9 @@ public:
 	virtual CameraRegion* GetActiveRegion();
 	virtual void LoadFromTMX(TiXmlElement* data);
 
+	virtual void SetLimitEdge(Direction edge, float value);
+	virtual void ResetLimitEdge();
+
 	bool IsInCamera(CGameObject* obj);
 
 	~Camera();

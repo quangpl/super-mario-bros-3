@@ -15,8 +15,6 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
-	DebugOut(L"vx: %f\n", mario->vx);
-
 	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
 		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
 	}
@@ -26,13 +24,13 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING_RIGHT);
+			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING_LEFT);
+			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
@@ -252,7 +250,6 @@ void BigMario::Render()
 
 void BigMario::SetState(int state)
 {
-	DebugOut(L"state: %d \n", state);
 	// DIE is the end state, cannot be changed! 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 
@@ -261,17 +258,10 @@ void BigMario::SetState(int state)
 	case MARIO_STATE_RELEASE_RUNNING:
 		mario->ax = 0;
 		break;
-	case MARIO_STATE_RUNNING_RIGHT:
+	case MARIO_STATE_RUNNING:
 		if (mario->isSitting) break;
-		mario->maxVx = MARIO_RUNNING_SPEED;
-		mario->ax = MARIO_ACCEL_RUN_X;
-		mario->SetNx(1);
-		break;
-	case MARIO_STATE_RUNNING_LEFT:
-		if (mario->isSitting) break;
-		mario->maxVx = -MARIO_RUNNING_SPEED;
-		mario->ax = -MARIO_ACCEL_RUN_X;
-		mario->SetNx(-1);
+		mario->maxVx = mario->GetNx() * MARIO_RUNNING_SPEED;
+		mario->ax = mario->GetNx() * MARIO_ACCEL_RUN_X;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (mario->isSitting) break;

@@ -25,18 +25,20 @@ RectBox Camera::GetBoundingBox()
 
 void Camera::Update()
 {
-	RectBox trackingObjectBox = tracking_object->GetBoundingBox();
-	RectBox camLimitation = active_bound;
-	DebugOut(L"position %f %f \n", position.x, position.y);
-	if (abs(trackingObjectBox.left - camLimitation.left) <= size.x / 2) {
-		position.x = camLimitation.left;
-	}
-	else if (abs(trackingObjectBox.right - camLimitation.right) <= size.x / 2) {
-		position.x = camLimitation.right;
-	}
-	else {
-		position.x = trackingObjectBox.left - size.x / 2;
-	}
+	RectBox targetBound = tracking_object->GetBoundingBox();
+	float avgY = (targetBound.top + targetBound.bottom - size.y) / 2;
+
+	position.x = (targetBound.left - size.x / 2);
+	position.y = min(avgY + size.y / 4, max(position.y, avgY - size.y / 4));
+
+	Vec2 camSize = GetCamSize();
+	RectBox camBound = GetBoundingBox();
+	RectBox camLimit = active_bound;
+
+	if (camBound.left < camLimit.left) position.x = camLimit.left;
+	if (camBound.top < camLimit.top) position.y = camLimit.top;
+	if (camBound.right > camLimit.right) position.x = camLimit.right - camSize.x;
+	if (camBound.bottom > camLimit.bottom) position.y = camLimit.bottom - camSize.y;
 }
 void Camera::ActiveRegion(int id)
 {
@@ -52,7 +54,30 @@ CameraRegion* Camera::GetActiveRegion()
 	return regions[active_region_id];
 }
 
+void Camera::SetLimitEdge(Direction edge, float value)
+{
+	reset = 0;
+	switch (edge)
+	{
+	case Direction::Left:
+		active_bound.left = value;
+		break;
+	case Direction::Top:
+		active_bound.top = value;
+		break;
+	case Direction::Right:
+		active_bound.right = value;
+		break;
+	case Direction::Bottom:
+		active_bound.bottom = value;
+		break;
+	}
+}
 
+void Camera::ResetLimitEdge()
+{
+	if (!reset) reset = 1;
+}
 void Camera::LoadFromTMX(TiXmlElement* config)
 {
 	int startId = 0;

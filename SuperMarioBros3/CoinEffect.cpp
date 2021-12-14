@@ -36,7 +36,6 @@ void CCoindEffect::Update(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
-	//DebugOut(L"start_y: %f, y:%f \n", start_y, y);
 	switch (state)
 	{
 	case  COIN_STATE_MOVE_UP:

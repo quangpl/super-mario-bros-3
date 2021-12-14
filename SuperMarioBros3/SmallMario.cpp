@@ -21,13 +21,13 @@ void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING_RIGHT);
+			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING_LEFT);
+			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
@@ -263,17 +263,10 @@ void SmallMario::SetState(int state)
 	case MARIO_STATE_RELEASE_RUNNING:
 		mario->ax = 0;
 		break;
-	case MARIO_STATE_RUNNING_RIGHT:
+	case MARIO_STATE_RUNNING:
 		if (mario->isSitting) break;
-		mario->maxVx = MARIO_RUNNING_SPEED;
-		mario->ax = MARIO_ACCEL_RUN_X;
-		mario->SetNx(1);
-		break;
-	case MARIO_STATE_RUNNING_LEFT:
-		if (mario->isSitting) break;
-		mario->maxVx = -MARIO_RUNNING_SPEED;
-		mario->ax = -MARIO_ACCEL_RUN_X;
-		mario->SetNx(-1);
+		mario->maxVx = mario->GetNx() * MARIO_RUNNING_SPEED;
+		mario->ax = mario->GetNx() * MARIO_ACCEL_RUN_X;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (mario->isSitting) break;
