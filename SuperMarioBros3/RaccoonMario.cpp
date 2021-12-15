@@ -37,7 +37,7 @@ void RaccoonMario::KeyboardHandler() {
 			this->SetState(MARIO_STATE_IDLE);
 		}
 		else {
-			if (mario->vy > 0 && game->IsKeyDown(DIK_S) && !mario->isJumping) {
+			if (mario->vy > 0 && game->IsKeyDown(DIK_S)) {
 				this->SetState(MARIO_STATE_FLOAT);
 			}
 		}
@@ -210,13 +210,13 @@ void RaccoonMario::Render()
 		{
 			ani = "ani-raccoon-mario-fall";
 		}
-		if (mario->GetState() == MARIO_STATE_FLOAT)
-		{
-			ani = "ani-raccoon-mario-float";
-		}
 		if (mario->isJumping == true)
 		{
 			ani = "ani-raccoon-mario-jump";
+		}
+		if (mario->GetState() == MARIO_STATE_FLOAT)
+		{
+			ani = "ani-raccoon-mario-float";
 		}
 	}
 	else
