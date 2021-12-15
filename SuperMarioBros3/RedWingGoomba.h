@@ -69,7 +69,6 @@ protected:
 	virtual void Render();
 
 	virtual int IsCollidable();
-	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 	virtual RectBox GetBoundingBox();
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);

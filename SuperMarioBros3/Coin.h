@@ -27,8 +27,6 @@ public:
 	void Switch();
 	virtual void Render();
 	virtual int IsCollidable();
-	virtual int IsBlocking();
-
 	virtual RectBox GetBoundingBox();
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;

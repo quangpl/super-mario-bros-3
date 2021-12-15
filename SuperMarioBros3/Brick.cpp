@@ -22,6 +22,9 @@ CBrick* CBrick::Create(Vec2 pos, MapData& data)
 	if (rewardItem.compare(ObjectTypeData::QuestionCoin.ToString()) == 0) {
 		birck->reward = ObjectTypeData::QuestionCoin;
 	}
+	if (rewardItem.compare(ObjectTypeData::RaccoonLeaf.ToString()) == 0) {
+		birck->reward = ObjectTypeData::RaccoonLeaf;
+	}
 	if (rewardItem.compare(ObjectTypeData::PSwitch.ToString()) == 0) {
 		birck->reward = ObjectTypeData::PSwitch;
 	}
@@ -57,6 +60,8 @@ void CBrick::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state) {
+	case BRICK_STATE_BROKEN:
+		// need implement
 	case BRICK_STATE_HIT:
 	{
 		isDeleted = true;
@@ -82,6 +87,10 @@ void CBrick::SetState(int state)
 			coinEffect->Start([this, coinEffectId]() {
 				CEffectManager::GetInstance()->Delete(coinEffectId);
 				});
+		}
+		else if (reward == ObjectTypeData::RaccoonLeaf) {
+			MarioLeaf* leaf = new MarioLeaf(position);
+			SceneManager::GetInstance()->GetActiveScene()->AddObject(leaf);
 		}
 		else if (reward == ObjectTypeData::PSwitch) {
 			PSwitch* pSwitch = new PSwitch(position);

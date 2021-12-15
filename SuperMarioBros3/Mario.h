@@ -46,10 +46,10 @@ public:
 
 	int IsCollidable();
 
-	int IsBlocking();
-
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnHasCollisionOnY(int jetY);
+	void OnHasCollisionOnX(int jetX);
 
 	void StartUntouchable();
 

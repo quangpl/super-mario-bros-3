@@ -60,10 +60,6 @@ int CMario::IsCollidable()
 	return (state != MARIO_STATE_DIE);
 }
 
-int CMario::IsBlocking()
-{
-	return (state != MARIO_STATE_DIE && untouchable == 0);
-}
 void CMario::OnNoCollision(DWORD dt)
 {
 	this->playerState->OnNoCollision(dt);
@@ -72,6 +68,22 @@ void CMario::OnNoCollision(DWORD dt)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	this->playerState->OnCollisionWith(e);
+}
+
+void CMario::OnHasCollisionOnY(int jetY)
+{
+	if (jetY < 0) {
+		DebugOut(L"isOnPlatform = %d\n", isOnPlatform);
+		isOnPlatform = true;
+	}
+	else {
+		isOnPlatform = false;
+	}
+}
+
+void CMario::OnHasCollisionOnX(int jetX)
+{
+	DebugOut(L"Has Coll on X\n");
 }
 
 void CMario::Render()

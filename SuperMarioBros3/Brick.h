@@ -10,6 +10,7 @@
 #include "EffectManager.h"
 #include "PSwitch.h"
 #include "BrickEffect.h"
+#include "MarioLeaf.h"
 
 #define BRICK_RETURN_DISTANCE 5
 #define BRICK_ANI_NORMAL		702

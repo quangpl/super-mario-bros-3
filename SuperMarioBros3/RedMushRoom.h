@@ -32,7 +32,6 @@ protected:
 	virtual void Render();
 
 	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual bool CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy);
@@ -42,6 +41,5 @@ public:
 	virtual void SetState(int state);
 	bool GetEatable() { return this->eatable; }
 	void SetEatable(bool _eatable) {  this->eatable = _eatable; }
-
 	void SetStartY(float _start_y) { this->start_y = _start_y; }
 };

@@ -39,11 +39,6 @@ int PSwitch::IsCollidable()
 	return true;
 }
 
-int PSwitch::IsBlocking()
-{
-	return true;
-}
-
 void PSwitch::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (e->ny > 0 && dynamic_cast<CMario*>(e->obj))
 	{

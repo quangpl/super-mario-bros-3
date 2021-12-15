@@ -67,6 +67,9 @@
     <Filter Include="Debris">
       <UniqueIdentifier>{0fb0b28a-64e6-498e-8e0d-38c18081d5cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioLeaf">
+      <UniqueIdentifier>{b5f35d52-a380-4cdb-9128-fd6ee4674cf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="Debris.cpp">
       <Filter>Debris</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioLeaf.cpp">
+      <Filter>MarioLeaf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +427,9 @@
     </ClInclude>
     <ClInclude Include="Debris.h">
       <Filter>Debris</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioLeaf.h">
+      <Filter>MarioLeaf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

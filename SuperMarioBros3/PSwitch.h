@@ -19,6 +19,5 @@ public:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	virtual int IsCollidable();
-	virtual int IsBlocking();
 	virtual void SetState(int state);
 };

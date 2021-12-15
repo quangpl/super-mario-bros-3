@@ -69,11 +69,6 @@ int CCoin::IsCollidable() {
 	return 1;
 }
 
-int CCoin::IsBlocking() {
-	return isSwitching ? 0 : 1;
-}
-
-
 void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (this->isDeleted == false && dynamic_cast<CTail*>(e->obj)) {

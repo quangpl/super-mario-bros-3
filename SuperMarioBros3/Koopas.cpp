@@ -31,7 +31,7 @@ CKoopas* CKoopas::Create(Vec2 pos) {
 
 void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
+	if (e->obj->CanThrough(this, e->nx, e->ny)) return;
 	if (dynamic_cast<CKoopas*>(e->obj)) return;
 	if (e->ny != 0)
 	{

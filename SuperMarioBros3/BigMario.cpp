@@ -46,7 +46,7 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable = 0;
 	}
 
-	mario->isOnPlatform = false;
+	//mario->isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 }
@@ -59,13 +59,13 @@ void BigMario::OnNoCollision(DWORD dt)
 
 void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->obj->IsBlocking())
+	if (e->ny != 0 && !e->obj->CanThrough(mario, e->nx, e->ny))
 	{
 		mario->vy = 0;
 		if (e->ny < 0) mario->isOnPlatform = true;
 	}
 	else
-		if (e->nx != 0 && e->obj->IsBlocking())
+		if (e->nx != 0 && !e->obj->CanThrough(mario, e->nx, e->ny))
 		{
 			mario->vx = 0;
 		}

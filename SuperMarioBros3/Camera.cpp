@@ -8,7 +8,7 @@ Camera::Camera()
 
 Camera::Camera(Vec2 size)
 {
-	this->position = Vec2(100, 850);
+	//this->position = Vec2(100, 850);
 	this->size = size;
 }
 
@@ -34,6 +34,16 @@ void Camera::Update()
 	Vec2 camSize = GetCamSize();
 	RectBox camBound = GetBoundingBox();
 	RectBox camLimit = active_bound;
+
+	if (reset == 1) {
+		RectBox originalBound = regions[active_region_id]->GetBoundary();
+		if (camBound.left >= originalBound.left && camBound.right <= originalBound.right
+			&& camBound.top >= originalBound.top && camBound.bottom <= originalBound.bottom)
+		{
+			camLimit = active_bound = originalBound;
+			reset = 2;
+		}
+	}
 
 	if (camBound.left < camLimit.left) position.x = camLimit.left;
 	if (camBound.top < camLimit.top) position.y = camLimit.top;

@@ -36,7 +36,7 @@ bool CRedMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float 
 
 void CRedMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
+	if (e->obj->CanThrough(this, e->nx, e->ny)) return;
 	if (e->nx != 0)
 	{
 		vx = -vx;

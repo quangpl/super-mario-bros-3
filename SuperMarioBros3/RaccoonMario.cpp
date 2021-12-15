@@ -58,7 +58,7 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable = 0;
 	}
 
-	mario->isOnPlatform = false;
+	//mario->isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 }
@@ -71,13 +71,13 @@ void RaccoonMario::OnNoCollision(DWORD dt)
 
 void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->obj->IsBlocking())
+	if (e->ny != 0 && !e->obj->CanThrough(mario, e->nx, e->ny))
 	{
 		mario->vy = 0;
 		if (e->ny < 0) mario->isOnPlatform = true;
 	}
 	else
-		if (e->nx != 0 && e->obj->IsBlocking())
+		if (e->nx != 0 && !e->obj->CanThrough(mario, e->nx, e->ny))
 		{
 			mario->vx = 0;
 		}
@@ -194,6 +194,7 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 void RaccoonMario::Render()
 {
 	bool has_holding = mario->holder != NULL;
+
 	if (!mario->isOnPlatform)
 	{
 		if (abs(mario->ax) == MARIO_ACCEL_RUN_X)
@@ -269,6 +270,7 @@ void RaccoonMario::Render()
 	// TODO: Need improve with Effect
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
+	DebugOut(L"Power %f \n", mario->GetPower());
 	//mario->RenderBoundingBox();
 }
 
@@ -457,15 +459,15 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 		this->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		DebugOut(L"Power %f", mario->GetPower());
+		DebugOut(L"Power %f \n", mario->GetPower());
 		if (mario->isOnPlatform) {
 			this->SetState(MARIO_STATE_JUMP);
 		}
 		else {
 			if (mario->GetPower() >= 3) {
-				//SetState(MARIO_STATE_FLY);
+				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;
-				mario->isOnPlatform = false;
+				//mario->isOnPlatform = false;
 				mario->startJumpPosition = mario->position.y;
 				if (!flyStopwatch->IsRunning()) {
 					flyStopwatch->Restart();
