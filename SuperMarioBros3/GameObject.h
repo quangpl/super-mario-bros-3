@@ -72,9 +72,9 @@ public:
 	// When collision with an object has been detected (triggered by CCollision::Process)
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 
-	virtual void OnHasCollisionOnX(int jetX) {};
+	virtual void OnBlockingOnX(int jetX) {};
 
-	virtual void OnHasCollisionOnY(int jetY) {};
+	virtual void OnBlockingOnY(int jetY) {};
 
 	~CGameObject();
 	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);

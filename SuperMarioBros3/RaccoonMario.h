@@ -10,6 +10,8 @@
 #define PMETER_UP_STEP 0.008f
 #define	PMETER_MAX  4
 #define PMETER_DOWN_STEP 0.0016f
+#define MARIO_FLOATING_SPEED 0.021f
+
 class RaccoonMario : public CMasterMario
 {
 public:
@@ -24,6 +26,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
+	virtual void KeyboardHandler();
 
 	virtual void OnKeyUp(int keyCode);
 

@@ -61,7 +61,7 @@ public:
 
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-
+	virtual void KeyboardHandler();
 	virtual void OnKeyUp(int keyCode);
 	virtual void OnKeyDown(int keyCode);
 	virtual RectBox GetBoundingBox();

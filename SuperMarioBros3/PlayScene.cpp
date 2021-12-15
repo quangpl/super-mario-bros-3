@@ -43,27 +43,7 @@ void CPlayScene::OnKeyDown(int KeyCode)
 	}
 }
 void CPlayScene::KeyStateHandler() {
-	LPGAME game = CGame::GetInstance();
-	CMario* mario = this->player;
-	if (game->IsKeyDown(DIK_Z)) {
-		mario->SetHolding(true);
-	}
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-		if (game->IsKeyDown(DIK_A))
-			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
-		else
-			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_RIGHT);
-	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-		if (game->IsKeyDown(DIK_A))
-			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
-		else
-			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_LEFT);
-	}
-	else
-		mario->GetPlayerState()->SetState(MARIO_STATE_IDLE);
+	
 }
 
 void CPlayScene::OnKeyUp(int KeyCode)

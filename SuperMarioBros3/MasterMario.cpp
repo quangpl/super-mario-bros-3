@@ -15,6 +15,7 @@ CMasterMario::CMasterMario()
 
 void CMasterMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	this->KeyboardHandler();
 	//mario->Update(dt, coObjects);
 }
 
@@ -22,7 +23,30 @@ void CMasterMario::OnNoCollision(DWORD dt)
 {
 
 }
-
+void CMasterMario::KeyboardHandler() {
+	LPGAME game = CGame::GetInstance();
+	if (game->IsKeyDown(DIK_Z)) {
+		mario->SetHolding(true);
+	}
+	if (game->IsKeyDown(DIK_RIGHT))
+	{
+		if (game->IsKeyDown(DIK_A))
+			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
+		else
+			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_RIGHT);
+	}
+	else if (game->IsKeyDown(DIK_LEFT))
+	{
+		if (game->IsKeyDown(DIK_A))
+			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
+		else
+			mario->GetPlayerState()->SetState(MARIO_STATE_WALKING_LEFT);
+	}
+	else
+	{
+		mario->GetPlayerState()->SetState(MARIO_STATE_IDLE);
+	}
+}
 void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 

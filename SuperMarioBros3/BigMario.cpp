@@ -13,6 +13,7 @@ BigMario::BigMario() :CMasterMario()
 }
 void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CMasterMario::KeyboardHandler();
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
 	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {

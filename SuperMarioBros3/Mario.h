@@ -23,6 +23,7 @@ public:
 	ULONGLONG transformation_start;
 	BOOLEAN isOnPlatform;
 	int coin;
+	bool isJumping;
 	bool isAttacking;
 	LPGAMEOBJECT holder = NULL;
 	bool holding;
@@ -48,8 +49,8 @@ public:
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnHasCollisionOnY(int jetY);
-	void OnHasCollisionOnX(int jetX);
+	void OnBlockingOnY(int jetY);
+	void OnBlockingOnX(int jetX);
 
 	void StartUntouchable();
 

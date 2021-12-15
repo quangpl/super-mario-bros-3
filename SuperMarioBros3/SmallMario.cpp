@@ -8,6 +8,7 @@ SmallMario::SmallMario() : CMasterMario()
 
 void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CMasterMario::KeyboardHandler();
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
 

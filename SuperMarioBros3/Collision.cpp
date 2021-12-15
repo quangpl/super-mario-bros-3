@@ -319,11 +319,11 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		objSrc->SetPosition(Vec2{ x, y });
 
 		if (jet.x != 0) {
-			objSrc->OnHasCollisionOnX(jet.x);
+			objSrc->OnBlockingOnX(jet.x);
 		}
 
 		if (jet.y != 0) {
-			objSrc->OnHasCollisionOnY(jet.y);
+			objSrc->OnBlockingOnY(jet.y);
 		}
 
 		for (LPCOLLISIONEVENT e : coEvents)

@@ -17,22 +17,8 @@ RaccoonMario::RaccoonMario() :CMasterMario()
 	this->tail->hitTime = MARIO_TAIL_HIT_TIME;
 	SceneManager::GetInstance()->GetActiveScene()->AddObject(this->tail);
 }
-void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	PowerCalculator(dt);
-	if (mario->isAttacking && stopwatch->Elapsed() >= TAIL_TIMEOUT) {
-		this->SetState(MARIO_STATE_RELEASE_ATTACK);
-	}
-	/*if(mario->ax >= MARIO_ACCEL_RUN_X && game->IsKeyDown(DIK_A) )*/
-	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
-	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
 
-	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
-	}
-	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
-	}*/
+void RaccoonMario::KeyboardHandler() {
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (game->IsKeyDown(DIK_A))
@@ -46,6 +32,36 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
+	else {
+		if (mario->isOnPlatform) {
+			this->SetState(MARIO_STATE_IDLE);
+		}
+		else {
+			if (mario->vy > 0 && game->IsKeyDown(DIK_S)) {
+				this->SetState(MARIO_STATE_FLOAT);
+			}
+		}
+	}
+}
+
+void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	this->KeyboardHandler();
+	PowerCalculator(dt);
+	if (mario->isAttacking && stopwatch->Elapsed() >= TAIL_TIMEOUT) {
+		this->SetState(MARIO_STATE_RELEASE_ATTACK);
+	}
+	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
+	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
+
+	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
+		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
+	}
+	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
+		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
+	}*/
+	
+
 	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(mario->GetSpeed().x) > abs(mario->maxVx)) {
 		mario->SetVelocityX(mario->maxVx);
@@ -197,28 +213,62 @@ void RaccoonMario::Render()
 
 	if (!mario->isOnPlatform)
 	{
-		if (abs(mario->ax) == MARIO_ACCEL_RUN_X)
-		{
-			ani = "ani-raccoon-mario-speed-up";
-		}
-		else if (has_holding)
-		{
-			ani = "ani-raccoon-mario-hold";
-		}
-		else if (mario->isAttacking)
-		{
-			ani = "ani-raccoon-mario-spin";
-		}
-		else if (mario->GetState() == MARIO_STATE_FLY)
+		if (flyStopwatch->IsRunning())
 		{
 			ani = "ani-raccoon-mario-fly";
 		}
-		else
+		if (mario->vy > 0)
+		{
+			ani = "ani-raccoon-mario-fall";
+		}
+		if (mario->GetState() == MARIO_STATE_FLOAT)
+		{
+			ani = "ani-raccoon-mario-float";
+		}
+		if (mario->isJumping == true)
 		{
 			ani = "ani-raccoon-mario-jump";
 		}
 	}
 	else
+	{
+		if (mario->vx == 0)
+		{
+			ani = "ani-raccoon-mario-idle";
+			if (has_holding) {
+				ani = "ani-raccoon-mario-hold-idle";
+			}
+		}
+		else if (mario->vx > 0)
+		{
+			if (mario->ax < 0)
+			{
+				mario->SetNx(1);
+				ani = "ani-raccoon-mario-skid";
+			}
+			else if (mario->vx >= MARIO_RUNNING_SPEED)
+				ani = "ani-raccoon-mario-speed-up";
+			else
+				ani = "ani-raccoon-mario-walk";
+			if (has_holding) {
+				ani = "ani-raccoon-mario-hold";
+			}
+		}
+		else // vx < 0
+		{
+			if (mario->ax > 0)
+			{
+				mario->SetNx(-1);
+				ani = "ani-raccoon-mario-skid";
+			}
+			else if (mario->vx <= -MARIO_RUNNING_SPEED)
+				ani = "ani-raccoon-mario-speed-up";
+			else
+				ani = "ani-raccoon-mario-walk";
+			if (has_holding) {
+				ani = "ani-raccoon-mario-hold";
+			}
+		}
 		if (mario->isSitting)
 		{
 			ani = "ani-raccoon-mario-crouch";
@@ -227,46 +277,11 @@ void RaccoonMario::Render()
 		{
 			ani = "ani-raccoon-mario-spin";
 		}
-		else
-			if (mario->vx == 0)
-			{
-				ani = "ani-raccoon-mario-idle";
-				if (has_holding) {
-					ani = "ani-raccoon-mario-hold-idle";
-				}
-			}
-			else if (mario->vx > 0)
-			{
-				if (mario->ax < 0)
-				{
-					mario->SetNx(1);
-					ani = "ani-raccoon-mario-skid";
-				}
-				else if (mario->vx >= MARIO_RUNNING_SPEED)
-					ani = "ani-raccoon-mario-speed-up";
-				else
-					ani = "ani-raccoon-mario-walk";
-				if (has_holding) {
-					ani = "ani-raccoon-mario-hold";
-				}
-			}
-			else // vx < 0
-			{
-				if (mario->ax > 0)
-				{
-					mario->SetNx(-1);
-					ani = "ani-raccoon-mario-skid";
-				}
-				else if (mario->vx <= -MARIO_RUNNING_SPEED)
-					ani = "ani-raccoon-mario-speed-up";
-				else
-					ani = "ani-raccoon-mario-walk";
-				if (has_holding) {
-					ani = "ani-raccoon-mario-hold";
-				}
-			}
+	}
 
-	if (ani.compare("ani") == 0) ani = "ani-raccoon-mario-idle";
+
+	if (ani.compare("") == 0) ani = "ani-raccoon-mario-idle";
+
 	// TODO: Need improve with Effect
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
@@ -330,13 +345,14 @@ void RaccoonMario::SetState(int state)
 				mario->vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else
 				mario->vy = -MARIO_JUMP_SPEED_Y;
+			mario->isJumping = true;
 		}
 		break;
 	case MARIO_STATE_FLY:
-
 		break;
 	case MARIO_STATE_FLOAT:
 		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ResetLimitEdge();
+		mario->vy = MARIO_FLOATING_SPEED;
 		break;
 	case MARIO_STATE_RELEASE_JUMP:
 		//if (mario->vy < 0) mario->vy += MARIO_JUMP_SPEED_Y / 2;
@@ -464,10 +480,10 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 			this->SetState(MARIO_STATE_JUMP);
 		}
 		else {
+			mario->isJumping = false;
 			if (mario->GetPower() >= 3) {
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;
-				//mario->isOnPlatform = false;
 				mario->startJumpPosition = mario->position.y;
 				if (!flyStopwatch->IsRunning()) {
 					flyStopwatch->Restart();
@@ -475,10 +491,9 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 				SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLimitEdge(Direction::Top, 0.0f);
 			}
 			else {
-				//this->SetState(MARIO_STATE_FLOAT);
+				this->SetState(MARIO_STATE_FLOAT);
 			}
 		}
-	
 		break;
 	case DIK_0:
 		this->SetState(MARIO_STATE_DIE);
