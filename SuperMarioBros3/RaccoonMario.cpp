@@ -37,7 +37,7 @@ void RaccoonMario::KeyboardHandler() {
 			this->SetState(MARIO_STATE_IDLE);
 		}
 		else {
-			if (mario->vy > 0 && game->IsKeyDown(DIK_S)) {
+			if (mario->vy > 0 && game->IsKeyDown(DIK_S) && !mario->isJumping) {
 				this->SetState(MARIO_STATE_FLOAT);
 			}
 		}
@@ -54,15 +54,6 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
 
-	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
-	}
-	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
-	}*/
-	
-
-	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(mario->GetSpeed().x) > abs(mario->maxVx)) {
 		mario->SetVelocityX(mario->maxVx);
 	};
@@ -73,8 +64,6 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable_start = 0;
 		mario->untouchable = 0;
 	}
-
-	//mario->isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 }
@@ -273,7 +262,7 @@ void RaccoonMario::Render()
 		{
 			ani = "ani-raccoon-mario-crouch";
 		}
-		else if (mario->isAttacking)
+		 if (mario->isAttacking)
 		{
 			ani = "ani-raccoon-mario-spin";
 		}
@@ -480,8 +469,8 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 			this->SetState(MARIO_STATE_JUMP);
 		}
 		else {
-			mario->isJumping = false;
 			if (mario->GetPower() >= 3) {
+			mario->isJumping = false;
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;
 				mario->startJumpPosition = mario->position.y;

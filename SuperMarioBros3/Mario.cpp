@@ -49,6 +49,19 @@ CMasterMario* CMario::GetPlayerState() {
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	// Limit moving area
+	RectBox currentStateBBox = playerState->GetBoundingBox();
+	float stateWidth = currentStateBBox.right - currentStateBBox.left;
+	float stateHeight = currentStateBBox.top - currentStateBBox.bottom;
+
+	if (position.x <= moveLimitaion.left + stateWidth / 2) {
+		position.x = moveLimitaion.left + stateWidth / 2;
+	}
+
+	else if (position.x >= moveLimitaion.right - stateWidth / 2) {
+		position.x = moveLimitaion.right - stateWidth / 2;
+	}
+
 	if (isDeleted) {
 		return;
 	}

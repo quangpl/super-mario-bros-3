@@ -43,7 +43,7 @@ void CPlayScene::OnKeyDown(int KeyCode)
 	}
 }
 void CPlayScene::KeyStateHandler() {
-	
+
 }
 
 void CPlayScene::OnKeyUp(int KeyCode)
