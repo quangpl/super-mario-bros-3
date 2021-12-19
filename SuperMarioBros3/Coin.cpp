@@ -79,6 +79,9 @@ void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
 		this->isDeleted = true;
 	}
 }
+bool CCoin::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	return state == COIN_STATE_NORMAL_COIN ? true : false;
+}
 RectBox CCoin::GetBoundingBox() {
 	this->bounding_box.left = position.x;
 	this->bounding_box.top = position.y;

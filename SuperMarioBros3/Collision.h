@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utils.h"
+#include "RectBox.h"
 
 using namespace std;
 
@@ -46,6 +47,7 @@ class CCollision
 {
 	static CCollision* __instance;
 public: 
+	bool CheckAABB(RectBox o1, RectBox o2);
 	static void SweptAABB(
 		float ml,			// move left 
 		float mt,			// move top
@@ -75,6 +77,6 @@ public:
 	Vec2 GetClampDistance(DWORD dt, LPGAMEOBJECT objSrc, vector<LPCOLLISIONEVENT> coEvents, Vec2& jet);
 
 	void Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-
+	
 	static CCollision* GetInstance();
 };

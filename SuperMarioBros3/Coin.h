@@ -28,6 +28,7 @@ public:
 	virtual void Render();
 	virtual int IsCollidable();
 	virtual RectBox GetBoundingBox();
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;
 	void SetState(int state);

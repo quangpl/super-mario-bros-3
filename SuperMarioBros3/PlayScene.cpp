@@ -27,6 +27,12 @@ void CPlayScene::OnKeyDown(int KeyCode)
 	case DIK_A:
 		this->camera->position.x = this->camera->position.x - 70;
 		break;
+	case DIK_W:
+		this->camera->position.y = this->camera->position.y + 70;
+		break;
+	case DIK_Q:
+		this->camera->position.y = this->camera->position.y - 70;
+		break;
 	case DIK_2:
 		player->position.y = player->position.y - 50;
 		player->SetPlayerState(new BigMario());
@@ -110,6 +116,12 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	/*if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
 		AddObject(CKoopas::Create(position), data);
 	}*/
+	if (strcmp(type, ObjectTypeData::BeginPortal.ToString().c_str()) == 0) {
+		AddObject(new BeginPortal(position, size, data), data);
+	}
+	if (strcmp(type, ObjectTypeData::EndPortal.ToString().c_str()) == 0) {
+		AddObject(new EndPortal(position, size, data), data);
+	}
 	if (strcmp(type, ObjectTypeData::Pipe.ToString().c_str()) == 0) {
 		AddObject(CPipe::Create(position, size, data), data);
 	}

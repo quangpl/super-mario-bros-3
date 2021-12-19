@@ -287,6 +287,10 @@ Vec2 CCollision::GetClampDistance(DWORD dt, LPGAMEOBJECT objSrc, vector<LPCOLLIS
 	return Vec2(min_tx * mdx, min_ty * mdy);
 }
 
+bool CCollision::CheckAABB(RectBox o1, RectBox o2) {
+	return !(o1.right <= o2.left || o1.left >= o2.right || o1.top >= o2.bottom || o1.bottom <= o2.top);
+}
+
 /*
 *  Simple/Sample collision framework
 *  NOTE: Student might need to improve this based on game logic

@@ -846,7 +846,7 @@
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:4},{&quot;x&quot;:26,&quot;y&quot;:5}]"/>
    </properties>
   </object>
-  <object id="330" type="BeginPortal" x="6760" y="474.5" width="17" height="100.5">
+  <object id="330" type="BeginPortal" x="6723" y="474.5" width="90" height="100.5">
    <properties>
     <property name="CameraRegion" type="int" value="1"/>
     <property name="DestinationX" type="float" value="6284.33"/>

@@ -70,6 +70,9 @@
     <Filter Include="MarioLeaf">
       <UniqueIdentifier>{b5f35d52-a380-4cdb-9128-fd6ee4674cf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Portal">
+      <UniqueIdentifier>{cf173404-7e40-4f33-b3b8-36c3e8114362}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -242,6 +245,12 @@
     </ClCompile>
     <ClCompile Include="MarioLeaf.cpp">
       <Filter>MarioLeaf</Filter>
+    </ClCompile>
+    <ClCompile Include="BeginPortal.cpp">
+      <Filter>Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="EndPortal.cpp">
+      <Filter>Portal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +439,12 @@
     </ClInclude>
     <ClInclude Include="MarioLeaf.h">
       <Filter>MarioLeaf</Filter>
+    </ClInclude>
+    <ClInclude Include="BeginPortal.h">
+      <Filter>Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="EndPortal.h">
+      <Filter>Portal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

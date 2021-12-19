@@ -262,20 +262,22 @@ void RaccoonMario::Render()
 		{
 			ani = "ani-raccoon-mario-crouch";
 		}
-		 if (mario->isAttacking)
+		if (mario->isAttacking)
 		{
 			ani = "ani-raccoon-mario-spin";
+		}
+		if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
+			ani = "ani-raccoon-mario-idle-front";
 		}
 	}
 
 
 	if (ani.compare("") == 0) ani = "ani-raccoon-mario-idle";
 
-	// TODO: Need improve with Effect
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
 	DebugOut(L"Power %f \n", mario->GetPower());
-	//mario->RenderBoundingBox();
+	mario->RenderBoundingBox();
 }
 
 void RaccoonMario::PowerCalculator(DWORD dt) {
@@ -422,7 +424,6 @@ void RaccoonMario::SetState(int state)
 			//mario->position.y += MARIO_SIT_HEIGHT_ADJUST * 3;
 		}
 		break;
-
 	case MARIO_STATE_SIT_RELEASE:
 		if (mario->isSitting)
 		{
@@ -470,7 +471,7 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 		}
 		else {
 			if (mario->GetPower() >= 3) {
-			mario->isJumping = false;
+				mario->isJumping = false;
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;
 				mario->startJumpPosition = mario->position.y;

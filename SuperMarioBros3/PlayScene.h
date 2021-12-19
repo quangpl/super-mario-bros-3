@@ -23,6 +23,8 @@
 #include "EffectManager.h"
 #include "SmallMario.h"
 #include "Coin.h"
+#include "BeginPortal.h"
+#include "EndPortal.h"
 #include "RaccoonMario.h"
 
 

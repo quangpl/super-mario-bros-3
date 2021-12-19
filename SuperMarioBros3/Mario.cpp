@@ -66,6 +66,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 	this->playerState->Update(dt, coObjects);
+	DebugOut(L"Mario pos-y %f \n", position.y);
 }
 
 int CMario::IsCollidable()

@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BeginPortal.cpp" />
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickEffect.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EndPortal.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -208,6 +210,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
+    <ClInclude Include="BeginPortal.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickEffect.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EndPortal.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObject.h" />
