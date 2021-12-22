@@ -73,6 +73,9 @@
     <Filter Include="Portal">
       <UniqueIdentifier>{cf173404-7e40-4f33-b3b8-36c3e8114362}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{74c4455c-e48d-409e-9ed2-9e59153fe2e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -251,6 +254,15 @@
     </ClCompile>
     <ClCompile Include="EndPortal.cpp">
       <Filter>Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerMeter.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HubObjects.cpp">
+      <Filter>HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +457,15 @@
     </ClInclude>
     <ClInclude Include="EndPortal.h">
       <Filter>Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerMeter.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HubObjects.h">
+      <Filter>HUD</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

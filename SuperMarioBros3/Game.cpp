@@ -169,7 +169,6 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	pD3DDevice->RSSetState(g_pRasterState);
 
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
-
 	return;
 }
 
@@ -453,6 +452,9 @@ void CGame::ProcessKeyboard()
 #define GAME_FILE_SECTION_TEXTURES 3
 
 
+Hud* CGame::GetHUD() {
+	return this->hud;
+}
 
 void CGame::LoadResources() {
 	TiXmlDocument doc("Resource/GameData.xml");
@@ -476,6 +478,11 @@ void CGame::LoadResources() {
 		for (TiXmlElement* node = animations->FirstChildElement("Animation"); node != nullptr; node = node->NextSiblingElement("Animation")) {
 			CAnimations::GetInstance()->Import(node->Attribute("path"));
 		}
+		Vec2 hudPosition;
+		TiXmlElement* hudNode = root->FirstChildElement("GameContent")->FirstChildElement("Hud");
+		hudNode->QueryFloatAttribute("left", &hudPosition.x);
+		hudNode->QueryFloatAttribute("top", &hudPosition.y);
+		hud = new Hud(hudNode->Attribute("path"), hudPosition, Vec2(769, 142));
 
 		TiXmlElement* scenes = root->FirstChildElement("GameContent")->FirstChildElement("Scenes");
 

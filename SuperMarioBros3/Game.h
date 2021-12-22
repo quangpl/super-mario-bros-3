@@ -4,6 +4,7 @@
 #include <d3dx10.h>
 #include <unordered_map>
 #include "Transformation.h"
+#include "Hud.h"
 using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
@@ -23,6 +24,7 @@ using namespace std;
 */
 class CGame
 {
+	Hud* hud;
 	static CGame* __instance;
 	HWND hWnd;									// Window handle
 	int backBufferWidth = 0;					// Backbuffer width & height, will be set during Direct3D initialization
@@ -80,8 +82,7 @@ public:
 	void SetPointSamplerState();
 
 	void LoadResources();
-
-
+	Hud* GetHUD();
 	~CGame();
 };
 typedef CGame* LPGAME;

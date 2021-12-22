@@ -66,7 +66,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 	this->playerState->Update(dt, coObjects);
-	DebugOut(L"Mario pos-y %f \n", position.y);
+	DebugOut(L"Mario power %f \n", this->GetPower());
 }
 
 int CMario::IsCollidable()
@@ -77,7 +77,6 @@ int CMario::IsCollidable()
 void CMario::OnNoCollision(DWORD dt)
 {
 	isOnPlatform = false;
-	DebugOut(L"isOnPlatform : No");
 	this->playerState->OnNoCollision(dt);
 }
 
@@ -90,7 +89,6 @@ void CMario::OnBlockingOnY(int jetY)
 {
 
 	if (jetY < 0) {
-		DebugOut(L"isOnPlatform Yes");
 		isOnPlatform = true;
 		isJumping = false;
 	}
@@ -98,7 +96,6 @@ void CMario::OnBlockingOnY(int jetY)
 
 void CMario::OnBlockingOnX(int jetX)
 {
-	DebugOut(L"Has Coll on X\n");
 }
 
 void CMario::Render()

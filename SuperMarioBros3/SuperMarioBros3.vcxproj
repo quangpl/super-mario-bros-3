@@ -167,6 +167,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HubObjects.cpp" />
+    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="MarioGrowEffect.cpp" />
     <ClCompile Include="MarioLeaf.cpp" />
     <ClCompile Include="MasterMario.cpp" />
+    <ClCompile Include="PowerMeter.cpp" />
     <ClCompile Include="PSwitch.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RedMushRoom.cpp" />
@@ -234,6 +237,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HubObjects.h" />
+    <ClInclude Include="Hud.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="Layer.h" />
@@ -242,6 +247,7 @@
     <ClInclude Include="MarioGrowEffect.h" />
     <ClInclude Include="MarioLeaf.h" />
     <ClInclude Include="MasterMario.h" />
+    <ClInclude Include="PowerMeter.h" />
     <ClInclude Include="PSwitch.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RedMushRoom.h" />

@@ -72,7 +72,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else {
 		vy += (KOOPAS_GRAVITY * dt);
 	}
-	DebugOut(L"koopas: %d \n", state);
 	if ((state == KOOPAS_STATE_DIE_BY_ATTACK || state == KOOPAS_STATE_DIE_BY_HIT) && shell_step == 0 && revivalStopWatch->Elapsed() >= KOOPAS_CROUCH_TO_REPAWN_TIME) {
 		shell_step = 1;
 		this->SetState(KOOPAS_STATE_RESPAWN);
@@ -84,7 +83,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	DebugOut(L"vy: %f", vy);
 }
 
 void CKoopas::Render()

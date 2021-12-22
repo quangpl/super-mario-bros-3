@@ -37,7 +37,6 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 #include "Mario.h"
 #include "Brick.h"
 #include "Goomba.h"
-
 #include "SampleKeyEventHandler.h"
 
 #include "AssetIDs.h"
@@ -69,6 +68,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void Update(DWORD dt)
 {
 	SceneManager::GetInstance()->GetActiveScene()->Update(dt);
+	CGame::GetInstance()->GetHUD()->Update(dt);
 }
 
 /*
@@ -84,13 +84,14 @@ void Render()
 	ID3DX10Sprite* spriteHandler = g->GetSpriteHandler();
 
 	pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
-
 	spriteHandler->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
 	SceneManager::GetInstance()->GetActiveScene()->Render();
+
+	g->GetHUD()->Render();
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
 }

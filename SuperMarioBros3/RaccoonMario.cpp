@@ -276,7 +276,6 @@ void RaccoonMario::Render()
 
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
-	DebugOut(L"Power %f \n", mario->GetPower());
 	mario->RenderBoundingBox();
 }
 
@@ -465,12 +464,11 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 		this->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		DebugOut(L"Power %f \n", mario->GetPower());
 		if (mario->isOnPlatform) {
 			this->SetState(MARIO_STATE_JUMP);
 		}
 		else {
-			if (mario->GetPower() >= 3) {
+			if (mario->GetPower() >= 6) {
 				mario->isJumping = false;
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;
