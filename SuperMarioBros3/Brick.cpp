@@ -89,7 +89,7 @@ void CBrick::SetState(int state)
 				});
 		}
 		else if (reward == ObjectTypeData::RaccoonLeaf) {
-			MarioLeaf* leaf = new MarioLeaf(position);
+			MarioLeaf* leaf = new MarioLeaf(position + Vec2(2,-30));
 			SceneManager::GetInstance()->GetActiveScene()->AddObject(leaf);
 		}
 		else if (reward == ObjectTypeData::PSwitch) {

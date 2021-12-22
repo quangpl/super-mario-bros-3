@@ -13,7 +13,9 @@ MarioLeaf::~MarioLeaf()
 }
 
 
-
+bool MarioLeaf::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	return true;
+}
 void MarioLeaf::Render()
 {
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetPosition();
@@ -25,7 +27,6 @@ void MarioLeaf::Render()
 
 void MarioLeaf::OnNoCollision(DWORD dt)
 {
-
 }
 void MarioLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
@@ -60,11 +61,10 @@ void MarioLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 	}
 
 	vy = min(vy + gravity * dt, LEAF_FALLING_VEL);
+	position.x += vx * dt;
+	position.y += vy * dt;
 }
 
-void MarioLeaf::SetState(int state)
-{
-}
 RectBox MarioLeaf::GetBoundingBox() {
 	this->bounding_box.left = position.x;
 	this->bounding_box.top = position.y;

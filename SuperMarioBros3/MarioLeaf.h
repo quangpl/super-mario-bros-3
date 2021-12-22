@@ -9,21 +9,21 @@
 
 #define LEAF_SIZE 45
 #define  LEAF_GROWUP_SPEED  0.0012f
-#define LEAF_GRAVITY  0.0012f
+#define LEAF_GRAVITY  0.001f
 #define LEAF_REVEAL_DISTANCE 72 //48 * 1.5f
-#define LEAF_REVEAL_FORCE 0.03f
-#define  LEAF_FALLING_VEL 0.065f
+#define LEAF_REVEAL_FORCE 0.02f
+#define  LEAF_FALLING_VEL 0.05f
 
 class MarioLeaf : public CGameObject
 {
 public:
 	int fallingStep = 0;
 	Vec2 startingPos;
-	void OnNoCollision(DWORD dt);
+	virtual void OnNoCollision(DWORD dt);
 	MarioLeaf(Vec2 pos);
 	~MarioLeaf();
 	virtual void Render();
 	virtual RectBox GetBoundingBox();
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;
-	void SetState(int state);
 };
