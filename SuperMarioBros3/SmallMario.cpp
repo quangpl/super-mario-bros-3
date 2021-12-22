@@ -1,5 +1,7 @@
 #include "SmallMario.h"
 #include "BigMario.h"
+#include "RaccoonMario.h"
+#include "MarioLeaf.h"
 
 SmallMario::SmallMario() : CMasterMario()
 {
@@ -144,6 +146,11 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			mario->SetPlayerState(new BigMario());
 			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 		}
+	}
+	else if (dynamic_cast<MarioLeaf*>(e->obj))
+	{
+		mario->SetPlayerState(new RaccoonMario());
+		e->obj->SetDeleted(true);
 	}
 	else if (dynamic_cast<CKoopas*>(e->obj))
 	{
