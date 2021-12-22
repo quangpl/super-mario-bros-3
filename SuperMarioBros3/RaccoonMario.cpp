@@ -20,6 +20,9 @@ RaccoonMario::RaccoonMario() :CMasterMario()
 
 void RaccoonMario::KeyboardHandler() {
 	CGame* game = CGame::GetInstance();
+	if (game->IsKeyDown(DIK_Z)) {
+		mario->SetHolding(true);
+	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (game->IsKeyDown(DIK_A))
 			this->SetState(MARIO_STATE_RUNNING);
