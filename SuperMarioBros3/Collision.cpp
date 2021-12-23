@@ -186,7 +186,7 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 	{
 		LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDests->at(i));
 
-		if (e->WasCollided() == 1)
+		if (e->WasCollided() == 1 && !e->obj->IsDeleted())
 			temp.push_back(e);
 		else 
 			delete e;

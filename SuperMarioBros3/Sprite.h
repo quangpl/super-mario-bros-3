@@ -22,6 +22,7 @@ public:
 	CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPTEXTURE texture);
 
 	virtual void Draw(float x, float y, Transformation& transform, float alpha);
+	virtual void DrawWithoutCamera(float x, float y, Transformation& transform, float alpha);
 };
 
 typedef CSprite* LPSPRITE;

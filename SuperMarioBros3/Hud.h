@@ -1,8 +1,11 @@
 #pragma once
 #include "Utils.h"
 #include "PowerMeter.h"
+#include "Transformation.h"
+
 class Hud
 {
+	Transformation trans;
 	PowerMeter* powerMeter = NULL;
 public:
 	void LoadFromTmx(string tmxPath);

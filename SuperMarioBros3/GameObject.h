@@ -61,6 +61,8 @@ public:
 	virtual void OnGoingToCamera();
 	virtual void OnLeavingCamera();
 
+	Vec2 GetSize();
+
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die
 	//

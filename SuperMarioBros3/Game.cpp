@@ -188,12 +188,12 @@ void CGame::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, RECT r,
 {
 	if (texture == NULL) return;
 
-	RECT viewport;
-	UINT id = 1;
-	this->pD3DDevice->RSGetScissorRects(&id, &viewport);
+	//RECT viewport;
+	//UINT id = 1;
+	//this->pD3DDevice->RSGetScissorRects(&id, &viewport);
 
-	x += viewport.left;
-	y += viewport.top;
+	//x += viewport.left;
+	//y += viewport.top;
 
 	int spriteWidth = 0;
 	int spriteHeight = 0;

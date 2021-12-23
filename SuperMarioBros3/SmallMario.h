@@ -6,8 +6,8 @@
 #include "Koopas.h"
 #include "MasterMario.h"
 
-#define MARIO_SMALL_BBOX_WIDTH  13
-#define MARIO_SMALL_BBOX_HEIGHT 12
+#define MARIO_SMALL_BBOX_WIDTH  12
+#define MARIO_SMALL_BBOX_HEIGHT 15
 class CMasterMario;
 class SmallMario : public CMasterMario
 {

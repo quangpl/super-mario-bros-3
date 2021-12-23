@@ -22,19 +22,19 @@ void PowerMeter::Render()
 	for (int i = 1; i < 7; i++)
 	{
 		if (i > level) {
-			CSprites::GetInstance()->Get("spr-arrow-1")->Draw(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
+			CSprites::GetInstance()->Get("spr-arrow-1")->DrawWithoutCamera(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
 		}
 		else {
-			CSprites::GetInstance()->Get("spr-arrow-0")->Draw(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
+			CSprites::GetInstance()->Get("spr-arrow-0")->DrawWithoutCamera(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
 		}
 		begin += width;
 	}
 
 	width = CSprites::GetInstance()->Get("spr-p-icon-0")->width;
 	if (level == 7 && (dt / 50) % 2) {
-		CSprites::GetInstance()->Get("spr-p-icon-0")->Draw(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
+		CSprites::GetInstance()->Get("spr-p-icon-0")->DrawWithoutCamera(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
 	}
 	else {
-		CSprites::GetInstance()->Get("spr-p-icon-1")->Draw(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
+		CSprites::GetInstance()->Get("spr-p-icon-1")->DrawWithoutCamera(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
 	}
 }
