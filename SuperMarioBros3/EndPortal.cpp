@@ -50,17 +50,18 @@ void EndPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	bool hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
 
 	if (!hasMario) return;
-
+	mario->vx = 0;
+	mario->vy = 0;
 	if (direction == Direction::Top || direction == Direction::Bottom) {
 		RectBox bbox = mario->GetBoundingBox();
 		float marioWidth = bbox.right - bbox.left;
 		mario->position.x = this->bounding_box.left - (marioWidth - size.x) / 2;
-		mario->SetState(MARIO_STATE_WARP_VERTICAL);
+		mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 		if (direction == Direction::Top) {
-			mario->position.y = mario->position.y + 1;
+			mario->position.y = mario->position.y + 2;
 		}
 		else {
-			mario->position.y = mario->position.y - 1;
+			mario->position.y = mario->position.y - 2;
 		}
 	}
 	
