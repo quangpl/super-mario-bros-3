@@ -53,8 +53,7 @@ void PSwitch::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 
 void PSwitch::SetState(int state)
 {
-	CGameObject::SetState(state);
-	if (state == PSWITCH_STATE_PRESSED) {
+	if (state == PSWITCH_STATE_PRESSED && this->state != PSWITCH_STATE_PRESSED) {
 		this->position.y = this->position.y + 30;
 		vy = 1;
 		vector<CGameObject*> gameObjects = SceneManager::GetInstance()->GetActiveScene()->GetObjects();
@@ -66,6 +65,7 @@ void PSwitch::SetState(int state)
 			}
 		}
 	}
+	CGameObject::SetState(state);
 }
 RectBox PSwitch::GetBoundingBox() {
 	int height = state == PSWITCH_STATE_NORMAL ? PSWITCH_SIZE : PSWITCH_SIZE - 30;

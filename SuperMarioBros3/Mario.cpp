@@ -13,7 +13,7 @@
 #include "SmallMario.h"
 #include "BigMario.h"
 #include "MarioGrowEffect.h"
-
+#include "PSwitch.h"
 
 void CMario::StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 void CMario::SetHolder(LPGAMEOBJECT _holder) { this->holder = _holder; }
@@ -82,6 +82,9 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<PSwitch*>(e->obj) && e->ny < 0) {
+		e->obj->SetState(PSWITCH_STATE_PRESSED);
+	}
 	this->playerState->OnCollisionWith(e);
 }
 

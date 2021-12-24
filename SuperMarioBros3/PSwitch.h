@@ -2,7 +2,7 @@
 #include "Animations.h"
 #include "GameObject.h"
 #include "Brick.h"
-#define PSWITCH_SIZE 48
+#define PSWITCH_SIZE 45
 
 #define PSWITCH_STATE_NORMAL 1
 #define PSWITCH_STATE_PRESSED 2

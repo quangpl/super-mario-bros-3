@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "GameObject.h"
 
+
 class CMasterMario;
 
 class CMario : public CGameObject
