@@ -47,9 +47,8 @@ void CTail::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 	this->position = this->owner->GetPosition();
 	this->SetNx(owner->GetNx() * attackNx);
 	RectBox marioBbox = owner->GetBoundingBox();
-
-	this->position.x = (marioBbox.left + marioBbox.right) / 2; // centralize the tail with mario
-
+	this->position.x = owner->position.x - MARIO_TAIL_BBOX_SIZE / 2; // centralize the tail with mario
+	this->position.y = owner->position.y + MARIO_TAIL_BBOX_SIZE/2; 
 	if (stopwatch->Elapsed() <= hitTime / 2) {
 		attackNx = owner->GetNx();
 	}
@@ -66,8 +65,8 @@ void CTail::SetState(int state)
 
 }
 RectBox CTail::GetBoundingBox() {
-	this->bounding_box.left = position.x + MARIO_TAIL_BBOX_SIZE / 2;
-	this->bounding_box.top = position.y + MARIO_TAIL_BBOX_SIZE / 2;
+	this->bounding_box.left = position.x;
+	this->bounding_box.top = position.y;
 	this->bounding_box.right = this->bounding_box.left + MARIO_TAIL_BBOX_SIZE;
 	this->bounding_box.bottom = this->bounding_box.top + MARIO_TAIL_BBOX_SIZE;
 	return this->bounding_box;

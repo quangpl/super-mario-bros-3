@@ -279,7 +279,7 @@ void RaccoonMario::Render()
 
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
-	mario->RenderBoundingBox();
+	//mario->RenderBoundingBox();
 }
 
 void RaccoonMario::PowerCalculator(DWORD dt) {
