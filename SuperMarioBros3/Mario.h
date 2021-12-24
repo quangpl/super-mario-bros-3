@@ -1,6 +1,11 @@
 ﻿#pragma once
 #include "GameObject.h"
 
+enum MarioLevel {
+	Small = 0,
+	Big,
+	Raccoon
+};
 
 class CMasterMario;
 
@@ -10,6 +15,7 @@ class CMario : public CGameObject
 
 
 public:
+	int level;
 	float power;
 	float startJumpPosition;
 	RectBox moveLimitaion;
@@ -63,6 +69,9 @@ public:
 
 	void SetHolding(bool _holding);
 	bool GetHolding();
+
+	void SetLevel(int level);
+	int GetLevel();
 
 	float GetPower();
 	void SetPower(float newPower);

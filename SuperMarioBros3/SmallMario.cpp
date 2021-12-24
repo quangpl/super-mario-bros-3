@@ -5,7 +5,7 @@
 
 SmallMario::SmallMario() : CMasterMario()
 {
-	this->level = MarioLevel::Small;
+	mario->SetLevel(MarioLevel::Small);
 }
 
 void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

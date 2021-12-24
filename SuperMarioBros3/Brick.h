@@ -43,6 +43,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	CBrick();
 	~CBrick();
+	void GenerateRewardByMarioLevel();
 	virtual void Render();
 	virtual RectBox GetBoundingBox();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;

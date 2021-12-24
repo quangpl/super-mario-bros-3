@@ -11,7 +11,7 @@
 
 BigMario::BigMario() :CMasterMario()
 {
-	this->level = MarioLevel::Big;
+	 mario->SetLevel(MarioLevel::Big);
 }
 void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

@@ -1,5 +1,5 @@
 #include "Brick.h"
-
+#include "Mario.h"
 CBrick::CBrick() {
 }
 
@@ -55,7 +55,36 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
 	this->position = backupPos;
 }
-
+void CBrick::GenerateRewardByMarioLevel() {
+	int marioLevel = CMario::GetInstance()->GetLevel();
+	switch (marioLevel)
+	{
+	case MarioLevel::Small:
+	{
+		CRedMushroom* mushroom = new CRedMushroom();
+		mushroom->SetStartY(this->position.y + BRICK_BBOX_HEIGHT / 2);
+		mushroom->SetPosition(Vec2{ this->position.x + BRICK_BBOX_WIDTH / 2,this->position.y + BRICK_BBOX_HEIGHT / 2 });
+		mushroom->SetState(UP_MUSHROOM_STATE_UP);
+		SceneManager::GetInstance()->GetActiveScene()->AddObject(mushroom);
+		break;
+	}
+	case MarioLevel::Big:
+	{
+		MarioLeaf* leaf = new MarioLeaf(position + Vec2(2, 0));
+		SceneManager::GetInstance()->GetActiveScene()->AddObject(leaf);
+		break;
+	}
+	default:
+		// For Raccoon temporary
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CCoindEffect* coinEffect = new CCoindEffect(this->position.x, this->position.y);
+		int coinEffectId = effectManager->Add(coinEffect);
+		coinEffect->Start([this, coinEffectId]() {
+			CEffectManager::GetInstance()->Delete(coinEffectId);
+			});
+		break;
+	}
+}
 void CBrick::SetState(int state)
 {
 	CGameObject::SetState(state);
@@ -73,28 +102,19 @@ void CBrick::SetState(int state)
 			CEffectManager::GetInstance()->Delete(effectId);
 			});
 
-		if (reward == ObjectTypeData::RedMushroom) {
-			CRedMushroom* mushroom = new CRedMushroom();
-			mushroom->SetStartY(this->position.y + BRICK_BBOX_HEIGHT / 2);
-			mushroom->SetPosition(Vec2{ this->position.x + BRICK_BBOX_WIDTH / 2,this->position.y + BRICK_BBOX_HEIGHT / 2 });
-			mushroom->SetState(UP_MUSHROOM_STATE_UP);
-			SceneManager::GetInstance()->GetActiveScene()->AddObject(mushroom);
-		}
-
-		else if (reward == ObjectTypeData::QuestionCoin) {
+		if (reward == ObjectTypeData::QuestionCoin) {
 			CCoindEffect* coinEffect = new CCoindEffect(this->position.x, this->position.y);
 			int coinEffectId = effectManager->Add(coinEffect);
 			coinEffect->Start([this, coinEffectId]() {
 				CEffectManager::GetInstance()->Delete(coinEffectId);
 				});
 		}
-		else if (reward == ObjectTypeData::RaccoonLeaf) {
-			MarioLeaf* leaf = new MarioLeaf(position + Vec2(2,0));
-			SceneManager::GetInstance()->GetActiveScene()->AddObject(leaf);
-		}
 		else if (reward == ObjectTypeData::PSwitch) {
 			PSwitch* pSwitch = new PSwitch(position);
 			SceneManager::GetInstance()->GetActiveScene()->AddObject(pSwitch);
+		}
+		else if (reward == ObjectTypeData::RaccoonLeaf || reward == ObjectTypeData::RedMushroom) {
+			GenerateRewardByMarioLevel();
 		}
 		break;
 	}
