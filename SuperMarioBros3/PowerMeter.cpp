@@ -31,7 +31,7 @@ void PowerMeter::Render()
 	}
 
 	width = CSprites::GetInstance()->Get("spr-p-icon-0")->width;
-	if (level == 7 && (dt / 50) % 2) {
+	if (level == 7 && dt % 2 == 0) {
 		CSprites::GetInstance()->Get("spr-p-icon-0")->DrawWithoutCamera(begin + width / 2, position.y + size.y / 2, trans, 1.0f);
 	}
 	else {
