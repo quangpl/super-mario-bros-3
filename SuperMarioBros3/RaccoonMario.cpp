@@ -12,6 +12,7 @@
 RaccoonMario::RaccoonMario() :CMasterMario()
 {
 	this->tail = new CTail(mario);
+	this->level = MarioLevel::Raccoon;
 	stopwatch = new Stopwatch();
 	flyStopwatch = new Stopwatch();
 	this->tail->hitTime = MARIO_TAIL_HIT_TIME;

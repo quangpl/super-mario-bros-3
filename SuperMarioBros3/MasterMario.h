@@ -48,6 +48,11 @@
 
 #define MARIO_MIN_HIGH_JUMP_HEIGHT 97
 
+enum MarioLevel {
+	Small = 0,
+	Big,
+	Raccoon
+};
 
 class CMario;
 
@@ -56,6 +61,7 @@ class CMasterMario
 {
 public:
 	string ani;
+	int level;
 	CMario* mario;
 	CMasterMario();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

@@ -6,10 +6,12 @@
 #include "SceneManager.h"
 #include "SmallMario.h"
 #include "BigMario.h"
+#include "MarioLeaf.h"
+#include "RaccoonMario.h"
 
 BigMario::BigMario() :CMasterMario()
 {
-
+	this->level = MarioLevel::Big;
 }
 void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -95,6 +97,11 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 				}
 			}
 		}
+	}
+	else if (dynamic_cast<MarioLeaf*>(e->obj))
+	{
+		mario->SetPlayerState(new RaccoonMario());
+		e->obj->SetDeleted(true);
 	}
 	else if (dynamic_cast<CRedWingGoomba*>(e->obj))
 	{
