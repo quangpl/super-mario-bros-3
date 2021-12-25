@@ -52,7 +52,14 @@ void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
 }
+void CMasterMario::PowerCalculator(DWORD dt) {
+	float maxRun = abs(mario->vx) > MARIO_RUNNING_SPEED * 0.85f;
 
+	if (maxRun && mario->isOnPlatform)
+		mario->SetPower(max(0.0f, min(mario->GetPower() + PMETER_UP_STEP * dt, PMETER_MAX + 1)));
+	else if (mario->GetPower() > 0)
+		mario->SetPower(max(0.0f, min(mario->GetPower() - PMETER_DOWN_STEP * dt, PMETER_MAX)));
+}
 void CMasterMario::Render()
 {
 

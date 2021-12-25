@@ -7,9 +7,8 @@
 
 #define MARIO_BIG_CROUCH_BBOX_HEIGHT 18
 #define TAIL_TIMEOUT 500
-#define PMETER_UP_STEP 0.008f
-#define	PMETER_MAX  7 // TODO: it will be best if solve deviation issue
-#define PMETER_DOWN_STEP 0.0016f
+
+
 #define MARIO_FLOATING_SPEED 0.021f
 
 class RaccoonMario : public CMasterMario

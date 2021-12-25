@@ -50,6 +50,9 @@
 #define MARIO_MIN_HIGH_JUMP_HEIGHT 97
 
 #define MARIO_RUN_DRAG 0.0016366f
+#define PMETER_DOWN_STEP 0.0016f
+#define PMETER_UP_STEP 0.008f
+#define	PMETER_MAX  7 // TODO: it will be best if solve deviation issue
 
 class CMario;
 
@@ -68,5 +71,6 @@ public:
 	virtual void KeyboardHandler();
 	virtual void OnKeyUp(int keyCode);
 	virtual void OnKeyDown(int keyCode);
+	void PowerCalculator(DWORD dt);
 	virtual RectBox GetBoundingBox();
 };
