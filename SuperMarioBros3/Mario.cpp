@@ -70,7 +70,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 	this->playerState->Update(dt, coObjects);
-	DebugOut(L"Mario power %f \n", this->GetPower());
 }
 
 int CMario::IsCollidable()

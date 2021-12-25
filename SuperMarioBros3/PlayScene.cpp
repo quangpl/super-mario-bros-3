@@ -21,17 +21,9 @@ void CPlayScene::OnKeyDown(int KeyCode)
 	// FIXME: Just for development
 	switch (KeyCode)
 	{
-	case DIK_D:
-		this->camera->position.x = this->camera->position.x + 70;
-		break;
-	case DIK_A:
-		this->camera->position.x = this->camera->position.x - 70;
-		break;
-	case DIK_W:
-		this->camera->position.y = this->camera->position.y + 70;
-		break;
-	case DIK_Q:
-		this->camera->position.y = this->camera->position.y - 70;
+	case DIK_1:
+		player->position.y = player->position.y - 50;
+		player->SetPlayerState(new SmallMario());
 		break;
 	case DIK_2:
 		player->position.y = player->position.y - 50;

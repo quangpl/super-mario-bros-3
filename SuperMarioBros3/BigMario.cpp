@@ -18,26 +18,6 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CMasterMario::KeyboardHandler();
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
-	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
-	}
-	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
-	}*/
-	CGame* game = CGame::GetInstance();
-	if (game->IsKeyDown(DIK_RIGHT)) {
-		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING);
-		else
-			this->SetState(MARIO_STATE_WALKING_RIGHT);
-	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
-		if (game->IsKeyDown(DIK_A))
-			this->SetState(MARIO_STATE_RUNNING);
-		else
-			this->SetState(MARIO_STATE_WALKING_LEFT);
-	}
-	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(mario->GetSpeed().x) > abs(mario->maxVx)) {
 		mario->SetVelocityX(mario->maxVx);
 	};
@@ -48,8 +28,6 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable_start = 0;
 		mario->untouchable = 0;
 	}
-
-	//mario->isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 }
@@ -190,70 +168,47 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 void BigMario::Render()
 {
 	bool has_holding = mario->holder != NULL;
+
 	if (!mario->isOnPlatform)
 	{
-		if (abs(mario->ax) == MARIO_ACCEL_RUN_X)
-		{
-			ani = "ani-big-mario-high-speed";
-		}
-		else if (has_holding)
-		{
-			ani = "ani-big-mario-hold";
-		}
-		else
-		{
-			ani = "ani-big-mario-jump";
-		}
+		ani = "ani-big-mario-jump";
 	}
 	else
-		if (mario->isSitting)
+	{
+		if (mario->vx == 0)
 		{
-			ani = "ani-big-mario-crouch";
+			ani = "ani-big-mario-idle";
 		}
-		else
-			if (mario->vx == 0)
-			{
-				ani = "ani-big-mario-idle";
-				if (has_holding) {
-					ani = "ani-big-mario-hold-idle";
-				}
+		else {
+			ani = "ani-big-mario-walk";
+			if (abs(mario->vx) >= MARIO_RUNNING_SPEED) {
+				ani = "ani-big-mario-high-speed";
 			}
-			else if (mario->vx > 0)
+			if (mario->vx * mario->ax < 0)// trai dau
 			{
-				if (mario->ax < 0)
-				{
-					mario->SetNx(1);
-					ani = "ani-big-mario-skid";
-				}
-				else if (mario->vx >= MARIO_RUNNING_SPEED)
-					ani = "ani-big-mario-high-speed";
-				else
-					ani = "ani-big-mario-walk";
-				if (has_holding) {
-					ani = "ani-big-mario-hold";
-				}
-			}
-			else // vx < 0
-			{
-				if (mario->ax > 0)
-				{
-					mario->SetNx(-1);
-					ani = "ani-big-mario-skid";
-				}
-				else if (mario->vx <= -MARIO_RUNNING_SPEED)
-					ani = "ani-big-mario-high-speed";
-				else
-					ani = "ani-big-mario-walk";
-				if (has_holding) {
-					ani = "ani-big-mario-hold";
-				}
+				mario->SetNx(mario->vx > 0 ? 1 : -1);
+				ani = "ani-big-mario-skid";
 			}
 
-	if (ani.compare("ani") == 0) ani = "ani-big-mario-idle";
-	// TODO: Need improve with Effect
+		}
+	}
+
+	if (has_holding)
+	{
+		ani = mario->vx == 0 ? "ani-big-mario-hold-idle" : "ani-big-mario-hold";
+	}
+	if (mario->isSitting)
+	{
+		ani = "ani-big-mario-crouch";
+	}
+	if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
+		ani = "ani-big-mario-idle-front";
+	}
+
+	if (ani.compare("") == 0) ani = "ani-big-mario-idle";
+
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
-	mario->RenderBoundingBox();
 }
 
 void BigMario::SetState(int state)

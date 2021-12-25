@@ -57,7 +57,9 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
-	e->obj->SetState(BRICK_STATE_BROKEN);
+	if (state == KOOPAS_STATE_DIE_MOVE) {
+		e->obj->SetState(BRICK_STATE_BROKEN);
+	}
 }
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

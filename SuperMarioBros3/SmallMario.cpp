@@ -15,12 +15,7 @@ void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);
 
 
-	/*if (position.x <= move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.left + MARIO_BIG_BBOX_WIDTH / 2;
-	}
-	else if (position.x >= move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2) {
-		position.x = move_limitation.right - MARIO_BIG_BBOX_WIDTH / 2;
-	}*/
+
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (game->IsKeyDown(DIK_A))
@@ -34,7 +29,6 @@ void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			this->SetState(MARIO_STATE_WALKING_LEFT);
 	}
-	//DebugOut(L"Mario vx: %f \n", vx);
 	if (abs(mario->GetSpeed().x) > abs(mario->maxVx)) {
 		mario->SetVelocityX(mario->maxVx);
 	};
@@ -46,7 +40,6 @@ void SmallMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable = 0;
 	}
 
-	//mario->isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 }
@@ -189,70 +182,43 @@ void SmallMario::Render()
 		return;
 	}
 	bool has_holding = mario->holder != NULL;
+
 	if (!mario->isOnPlatform)
 	{
-		if (abs(mario->ax) == MARIO_ACCEL_RUN_X)
-		{
-			ani = "ani-small-mario-high-jump";
-		}
-		else if (has_holding)
-		{
-			ani = "ani-small-mario-hold";
-		}
-		else
-		{
-			ani = "ani-small-mario-jump";
-		}
+		ani = "ani-small-mario-jump";
 	}
 	else
-		if (mario->isSitting)
+	{
+		if (mario->vx == 0)
 		{
 			ani = "ani-small-mario-idle";
 		}
-		else
-			if (mario->vx == 0)
-			{
-				ani = "ani-small-mario-idle";
-				if (has_holding) {
-					ani = "ani-small-mario-hold";
-				}
+		else {
+			ani = "ani-small-mario-walk";
+			if (abs(mario->vx) >= MARIO_RUNNING_SPEED) {
+				ani = "ani-small-mario-run";
 			}
-			else if (mario->vx > 0)
+			if (mario->vx * mario->ax < 0)// trai dau
 			{
-				if (mario->ax < 0)
-				{
-					mario->SetNx(1);
-					ani = "ani-small-mario-skid";
-				}
-				else if (mario->GetSpeed().x >= MARIO_RUNNING_SPEED)
-					ani = "ani-small-mario-run";
-				else
-					ani = "ani-small-mario-walk";
-				if (has_holding) {
-					ani = "ani-small-mario-hold";
-				}
-			}
-			else // vx < 0
-			{
-				if (mario->ax > 0)
-				{
-					mario->SetNx(-1);
-					ani = "ani-small-mario-skid";
-				}
-				else if (mario->GetSpeed().x <= -MARIO_RUNNING_SPEED)
-					ani = "ani-small-mario-run";
-				else
-					ani = "ani-small-mario-walk";
-				if (has_holding) {
-					ani = "ani-small-mario-hold";
-				}
+				mario->SetNx(mario->vx > 0 ? 1 : -1);
+				ani = "ani-small-mario-skid";
 			}
 
-	if (ani.compare("ani") == 0) ani = "ani-small-mario-idle";
-	// TODO: Need improve with Effect
-	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2{ mario->GetNx() * 1.0f, 1.0f };
+		}
+	}
+
+	if (has_holding)
+	{
+		ani = mario->vx == 0 ? "ani-small-mario-hold-idle" : "ani-small-mario-hold";
+	}
+	if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
+		ani = "ani-small-mario-idle-front";
+	}
+
+	if (ani.compare("") == 0) ani = "ani-small-mario-idl";
+
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
-	mario->RenderBoundingBox();
 }
 
 void SmallMario::SetState(int state)

@@ -16,6 +16,7 @@ CMasterMario::CMasterMario()
 void CMasterMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->KeyboardHandler();
+	
 	//mario->Update(dt, coObjects);
 }
 

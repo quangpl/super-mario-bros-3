@@ -50,6 +50,7 @@ void RaccoonMario::KeyboardHandler() {
 
 void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	int keyDirection = CGame::GetInstance()->IsKeyDown(DIK_LEFT) ? -1 : 1;
 	this->KeyboardHandler();
 	PowerCalculator(dt);
 	if (mario->isAttacking && stopwatch->Elapsed() >= TAIL_TIMEOUT) {
@@ -68,7 +69,6 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable_start = 0;
 		mario->untouchable = 0;
 	}
-
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 }
 
@@ -206,6 +206,10 @@ void RaccoonMario::Render()
 
 	if (!mario->isOnPlatform)
 	{
+		if (mario->isJumping == true)
+		{
+			ani = "ani-raccoon-mario-jump";
+		}
 		if (flyStopwatch->IsRunning())
 		{
 			ani = "ani-raccoon-mario-fly";
@@ -213,10 +217,6 @@ void RaccoonMario::Render()
 		if (mario->vy > 0)
 		{
 			ani = "ani-raccoon-mario-fall";
-		}
-		if (mario->isJumping == true)
-		{
-			ani = "ani-raccoon-mario-jump";
 		}
 		if (mario->GetState() == MARIO_STATE_FLOAT)
 		{
@@ -228,46 +228,29 @@ void RaccoonMario::Render()
 		if (mario->vx == 0)
 		{
 			ani = "ani-raccoon-mario-idle";
-			if (has_holding) {
-				ani = "ani-raccoon-mario-hold-idle";
-			}
 		}
-		else if (mario->vx > 0)
-		{
-			if (mario->ax < 0)
+		else {
+			ani = "ani-raccoon-mario-walk";
+			if (abs(mario->vx) >= MARIO_RUNNING_SPEED) {
+				ani = "ani-raccoon-mario-speed-up";
+			}
+			if (mario->vx * mario->ax < 0)// trai dau
 			{
-				mario->SetNx(1);
+				mario->SetNx(mario->vx > 0 ? 1 : -1);
 				ani = "ani-raccoon-mario-skid";
 			}
-			else if (mario->vx >= MARIO_RUNNING_SPEED)
-				ani = "ani-raccoon-mario-speed-up";
-			else
-				ani = "ani-raccoon-mario-walk";
-			if (has_holding) {
-				ani = "ani-raccoon-mario-hold";
-			}
-		}
-		else // vx < 0
-		{
-			if (mario->ax > 0)
-			{
-				mario->SetNx(-1);
-				ani = "ani-raccoon-mario-skid";
-			}
-			else if (mario->vx <= -MARIO_RUNNING_SPEED)
-				ani = "ani-raccoon-mario-speed-up";
-			else
-				ani = "ani-raccoon-mario-walk";
-			if (has_holding) {
-				ani = "ani-raccoon-mario-hold";
-			}
-		}
-		if (mario->isSitting)
-		{
-			ani = "ani-raccoon-mario-crouch";
+			
 		}
 	}
-	
+
+	if (has_holding)
+	{
+		ani = mario->vx == 0 ? "ani-raccoon-mario-hold-idle" : "ani-raccoon-mario-hold";
+	}
+	if (mario->isSitting)
+	{
+		ani = "ani-raccoon-mario-crouch";
+	}
 	if (mario->isAttacking)
 	{
 		ani = "ani-raccoon-mario-spin";
@@ -280,7 +263,6 @@ void RaccoonMario::Render()
 
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(mario->GetNx() * 1.0f, 1.0f);
 	CAnimations::GetInstance()->Get(ani)->Render(mario->position.x, mario->position.y);
-	//mario->RenderBoundingBox();
 }
 
 void RaccoonMario::PowerCalculator(DWORD dt) {
@@ -354,6 +336,7 @@ void RaccoonMario::SetState(int state)
 
 	case MARIO_STATE_IDLE:
 		mario->ax = 0;
+		DebugOut(L"MARIO_STATE_IDLE \n");
 		if (mario->vx > 0) {
 			mario->vx = mario->vx - MARIO_DECREASE_SPEED;
 			if (mario->vx < 0)
