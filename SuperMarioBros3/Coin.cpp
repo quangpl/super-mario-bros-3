@@ -1,6 +1,8 @@
 #include "Coin.h"
 #include "Tail.h"
 #include "Mario.h"
+#include "Koopas.h"
+
 CCoin::CCoin() {
 	switchStopWatch = new Stopwatch();
 }
@@ -73,6 +75,11 @@ void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (this->isDeleted == false && dynamic_cast<CTail*>(e->obj)) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		this->isDeleted = true;
+	}
+	if (this->isDeleted == false && dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
+		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		e->obj->SetNx(-e->obj->GetNx());
 		this->isDeleted = true;
 	}
 	if (state == COIN_STATE_NORMAL_COIN && this->isDeleted == false && dynamic_cast<CMario*>(e->obj)) {

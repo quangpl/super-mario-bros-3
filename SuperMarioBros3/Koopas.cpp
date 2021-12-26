@@ -43,7 +43,6 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		nx = -nx;
-		vx = nx * abs(vx);
 	}
 
 	if (dynamic_cast<CBrick*>(e->obj)) {
@@ -64,6 +63,7 @@ void CKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	vx = nx * abs(vx);
 	// Switch case for each owner type
 	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
 		CMario* mario = dynamic_cast<CMario*>(this->owner);
@@ -123,7 +123,7 @@ void CKoopas::SetState(int state)
 	switch (state)
 	{
 	case KOOPAS_STATE_WALKING:
-		this->vx = KOOPAS_WALKING_SPEED;
+		this->vx = nx * KOOPAS_WALKING_SPEED;
 		break;
 	case KOOPAS_STATE_RESPAWN:
 		nx = CMario::GetInstance()->GetPosition().x < position.x ? -1 : 1;
@@ -143,7 +143,7 @@ void CKoopas::SetState(int state)
 		break;
 	case KOOPAS_STATE_DIE_MOVE:
 		position.y = position.y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
-		nx = CMario::GetInstance()->GetNx();
+		//nx = CMario::GetInstance()->GetNx();
 		this->SetVelocityX(nx * KOOPAS_SHELL_RUN_SPEED);
 		break;
 	default:

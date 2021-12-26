@@ -336,7 +336,6 @@ void RaccoonMario::SetState(int state)
 
 	case MARIO_STATE_IDLE:
 		mario->ax = 0;
-		DebugOut(L"MARIO_STATE_IDLE \n");
 		if (mario->vx > 0) {
 			mario->vx = mario->vx - MARIO_DECREASE_SPEED;
 			if (mario->vx < 0)
