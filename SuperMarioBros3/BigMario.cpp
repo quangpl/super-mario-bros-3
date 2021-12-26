@@ -35,8 +35,8 @@ void BigMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void BigMario::OnNoCollision(DWORD dt)
 {
-	mario->position.x += mario->GetSpeed().x * dt;
-	mario->position.y += mario->GetSpeed().y * dt;
+	mario->position.x += (float)mario->GetSpeed().x * dt;
+	mario->position.y += (float)mario->GetSpeed().y * dt;
 }
 
 void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)

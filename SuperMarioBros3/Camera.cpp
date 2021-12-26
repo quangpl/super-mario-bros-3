@@ -28,8 +28,8 @@ void Camera::Update()
 	RectBox targetBound = tracking_object->GetBoundingBox();
 	float avgY = (targetBound.top + targetBound.bottom - size.y) / 2;
 
-	position.x = (targetBound.left - size.x / 2);
-	position.y = min(avgY + size.y / 4, max(position.y, avgY - size.y / 4));
+	position.x = (float)(targetBound.left - size.x / 2);
+	position.y = (float)min(avgY + size.y / 4, max(position.y, avgY - size.y / 4));
 
 	Vec2 camSize = GetCamSize();
 	RectBox camBound = GetBoundingBox();

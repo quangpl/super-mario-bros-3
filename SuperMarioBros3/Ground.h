@@ -8,8 +8,10 @@ class CGround :public CGameObject
 	int width;
 	int height;
 	Vec2 size;
+	bool fullBlock = false;
 public:
-	static CGround* Create(Vec2 position, Vec2 size);
+	// fullBlock : va cham 4 mat
+	static CGround* Create(Vec2 position, Vec2 size, bool fullBlock);
 	bool interact;
 	virtual void Render();
 	CGround();
