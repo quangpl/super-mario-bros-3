@@ -32,7 +32,6 @@ CKoopas* CKoopas::Create(Vec2 pos) {
 void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->obj->CanThrough(this, e->nx, e->ny)) return;
-	if (dynamic_cast<CKoopas*>(e->obj)) return;
 	if (e->ny != 0)
 	{
 		vy = 0;
@@ -49,6 +48,10 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBrick(e);
 	}
 	else if (dynamic_cast<CTail*>(e->obj)) {
+		transformation = Vec2{ 1.0f,-1.0f };
+		this->SetState(KOOPAS_STATE_DIE_BY_HIT);
+	}
+	else if (dynamic_cast<CKoopas*>(e->obj)) {
 		transformation = Vec2{ 1.0f,-1.0f };
 		this->SetState(KOOPAS_STATE_DIE_BY_HIT);
 	}
