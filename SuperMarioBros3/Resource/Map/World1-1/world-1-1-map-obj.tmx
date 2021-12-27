@@ -846,7 +846,7 @@
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:4},{&quot;x&quot;:26,&quot;y&quot;:5}]"/>
    </properties>
   </object>
-  <object id="330" type="BeginPortal" x="6723" y="474.5" width="90" height="100.5">
+  <object id="330" type="BeginPortal" x="6759" y="474.5" width="15.3333" height="100.5">
    <properties>
     <property name="CameraRegion" type="int" value="1"/>
     <property name="DestinationX" type="float" value="6284.33"/>
@@ -855,7 +855,7 @@
     <property name="Grid" value="[{&quot;x&quot;:25,&quot;y&quot;:1},{&quot;x&quot;:26,&quot;y&quot;:1}]"/>
    </properties>
   </object>
-  <object id="331" type="EndPortal" x="6913.42" y="1152" width="92.9167" height="96">
+  <object id="331" type="EndPortal" x="6955" y="1153" width="10.0834" height="94">
    <properties>
     <property name="Direction" type="int" value="2"/>
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:3},{&quot;x&quot;:26,&quot;y&quot;:4}]"/>

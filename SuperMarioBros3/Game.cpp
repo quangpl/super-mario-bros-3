@@ -397,6 +397,9 @@ void CGame::InitKeyboard()
 
 void CGame::ProcessKeyboard()
 {
+	if (this->enableKeyboard == false) {
+		return;
+	}
 	HRESULT hr;
 
 	// Collect all key states first
@@ -504,6 +507,23 @@ void CGame::LoadResources() {
 		doc.Clear();
 	}
 }
+
+void CGame::EnableKeyboard()
+{
+	this->enableKeyboard = true;
+}
+
+void CGame::DisableKeyboard()
+{
+	this->enableKeyboard = false;
+}
+
+bool CGame::IsEnableKeyBoard()
+{
+	return this->enableKeyboard;
+}
+
+
 
 CGame::~CGame()
 {

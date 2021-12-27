@@ -29,7 +29,7 @@ class CGame
 	HWND hWnd;									// Window handle
 	int backBufferWidth = 0;					// Backbuffer width & height, will be set during Direct3D initialization
 	int backBufferHeight = 0;
-
+	bool enableKeyboard = true;
 	ID3D10Device* pD3DDevice = NULL;
 	IDXGISwapChain* pSwapChain = NULL;
 	ID3D10RenderTargetView* pRenderTargetView = NULL;
@@ -64,6 +64,11 @@ public:
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
+
+	void EnableKeyboard();
+	void DisableKeyboard();
+
+	bool IsEnableKeyBoard();
 
 
 	ID3D10Device* GetDirect3DDevice() { return this->pD3DDevice; }

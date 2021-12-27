@@ -452,7 +452,7 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 			this->SetState(MARIO_STATE_JUMP);
 		}
 		else {
-			if (mario->GetPower() >= PMETER_MAX - 0.25) {
+			if (mario->GetPower() >= PMETER_MAX - 0.3) {
 				mario->isJumping = false;
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;

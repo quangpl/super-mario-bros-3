@@ -55,8 +55,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	bool hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
 	CGame* game = CGame::GetInstance();
 	if (!hasMario) { return; }
-	/*mario->vx = 0;
-	mario->vy = 0;*/
+
 	if (isMoving == false) {
 		if (direction == Direction::Top && game->IsKeyDown(DIK_DOWN)) {
 			mario->vx = 0;
@@ -64,22 +63,25 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 			RectBox bbox = mario->GetBoundingBox();
 			float marioWidth = bbox.right - bbox.left;
-			mario->position.x = this->position.x - (marioWidth - size.x) / 2;
+			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
 			isMoving = true;
 		}
 		if (direction == Direction::Bottom && game->IsKeyDown(DIK_UP)) {
 			mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 			RectBox bbox = mario->GetBoundingBox();
 			float marioWidth = bbox.right - bbox.left;
-			mario->position.x = this->position.x - (marioWidth - size.x) / 2;
+			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
 			isMoving = true;
 		}
 	}
 	else {
 		if (direction == Direction::Top || direction == Direction::Bottom) {
+			CGame::GetInstance()->DisableKeyboard();
+			mario->vx = 0;
+			mario->vy = 0;
 			RectBox bbox = mario->GetBoundingBox();
 			float marioWidth = bbox.right - bbox.left;
-			mario->position.x = this->position.x - (marioWidth - size.x) / 2;
+			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
 
 			if (direction == Direction::Top) {
 				mario->position.y = mario->position.y + 1;
@@ -94,7 +96,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 						passenger->SetPosition(destination);
 						SceneManager::GetInstance()->GetActiveScene()->AddObject(passenger);
 					}
-
+					CGame::GetInstance()->EnableKeyboard();
 					SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ActiveRegion(cameraRegionId);
 				}
 			}
