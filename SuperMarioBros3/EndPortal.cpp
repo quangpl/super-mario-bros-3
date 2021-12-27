@@ -50,8 +50,8 @@ void EndPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	bool hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
 
 	if (!hasMario) return;
-	mario->vx = 0;
-	mario->vy = 0;
+	/*mario->vx = 0;
+	mario->vy = 0;*/
 	if (direction == Direction::Top || direction == Direction::Bottom) {
 		RectBox bbox = mario->GetBoundingBox();
 		float marioWidth = bbox.right - bbox.left;

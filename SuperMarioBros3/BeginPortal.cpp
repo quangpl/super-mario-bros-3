@@ -55,8 +55,8 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	bool hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
 	CGame* game = CGame::GetInstance();
 	if (!hasMario) { return; }
-	mario->vx = 0;
-	mario->vy = 0;
+	/*mario->vx = 0;
+	mario->vy = 0;*/
 	if (isMoving == false) {
 		if (direction == Direction::Top && game->IsKeyDown(DIK_DOWN)) {
 			mario->vx = 0;
