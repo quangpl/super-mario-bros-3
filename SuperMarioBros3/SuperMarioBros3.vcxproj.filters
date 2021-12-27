@@ -267,6 +267,9 @@
     <ClCompile Include="MarioDamagedEffect.cpp">
       <Filter>Effects</Filter>
     </ClCompile>
+    <ClCompile Include="GoombaDieEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -471,6 +474,9 @@
       <Filter>HUD</Filter>
     </ClInclude>
     <ClInclude Include="MarioDamagedEffect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="GoombaDieEffect.h">
       <Filter>Effects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -32,7 +32,12 @@ void CRedWingGoomba::OnNoCollision(DWORD dt)
 	position.x += vx * dt;
 	position.y += vy * dt;
 };
-
+bool CRedWingGoomba::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	if (this->GetState() == GOOMBA_STATE_DIE || this->GetState() == GOOMBA_STATE_DIE_BY_ATTACK) {
+		return true;
+	}
+	return false;
+}
 void CRedWingGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny != 0)

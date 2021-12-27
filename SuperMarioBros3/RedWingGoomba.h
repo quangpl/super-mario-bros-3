@@ -73,6 +73,8 @@ protected:
 	virtual RectBox GetBoundingBox();
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
+
 public:
 	CRedWingGoomba();
 	static CRedWingGoomba* Create(Vec2 position);

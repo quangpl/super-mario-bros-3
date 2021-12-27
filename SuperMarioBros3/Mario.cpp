@@ -53,6 +53,7 @@ CMasterMario* CMario::GetPlayerState() {
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	DebugOut(L"dt: %d\n", dt);
 	// Limit moving area
 	RectBox currentStateBBox = playerState->GetBoundingBox();
 	float stateWidth = currentStateBBox.right - currentStateBBox.left;

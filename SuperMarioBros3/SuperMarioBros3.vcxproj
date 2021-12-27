@@ -166,6 +166,7 @@
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="GoombaDieEffect.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HubObjects.cpp" />
     <ClCompile Include="Hud.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
+    <ClInclude Include="GoombaDieEffect.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HubObjects.h" />
     <ClInclude Include="Hud.h" />

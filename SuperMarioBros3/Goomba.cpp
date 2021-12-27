@@ -1,4 +1,6 @@
 #include "Goomba.h"
+#include "GoombaDieEffect.h"
+
 CGoomba::CGoomba() :CGameObject()
 {
 	this->gravity = GOOMBA_GRAVITY;
@@ -59,11 +61,11 @@ void CGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += (this->gravity * dt);
-	if (((state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_BY_ATTACK) && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	/*if (((state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_BY_ATTACK) && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
-	}
+	}*/
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -80,7 +82,14 @@ void CGoomba::Render()
 	ani = "ani-goomba-walk";
 
 	if (state == GOOMBA_STATE_DIE) {
-		ani = "ani-goomba-die";
+		this->SetDeleted(true);
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CGoombaDieEffect* goombaDieEffect = new CGoombaDieEffect(this->position, this->GetNx());
+		int effectId = effectManager->Add(goombaDieEffect);
+		goombaDieEffect->Start([this, effectId]() {
+			CEffectManager::GetInstance()->Delete(effectId);
+
+			});
 	}
 	if (state == GOOMBA_STATE_DIE_BY_ATTACK) {
 		ani = "ani-goomba-die";
@@ -103,7 +112,6 @@ void CGoomba::SetState(int state)
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = nx * GOOMBA_WALKING_SPEED;
-
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
 		die_start = GetTickCount64();
