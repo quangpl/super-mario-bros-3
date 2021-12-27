@@ -71,6 +71,7 @@ public:
 	virtual void KeyboardHandler();
 	virtual void OnKeyUp(int keyCode);
 	virtual void OnKeyDown(int keyCode);
+	virtual void OnDamaged();
 	void PowerCalculator(DWORD dt);
 	virtual RectBox GetBoundingBox();
 };

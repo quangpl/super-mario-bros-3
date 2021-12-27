@@ -82,8 +82,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			{
 				if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					this->OnDamaged();
 				}
 			}
 		}
@@ -113,8 +112,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			if (redWingGoomba->GetState() != GOOMBA_STATE_DIE && redWingGoomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
+				this->OnDamaged();
 			}
 		}
 	}
@@ -164,8 +162,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			else {
 				if (mario->untouchable == 0)
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					this->OnDamaged();
 				}
 			}
 			break;

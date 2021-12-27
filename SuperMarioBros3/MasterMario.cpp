@@ -7,6 +7,10 @@
 #include "Koopas.h"
 #include "debug.h"
 #include "Mario.h"
+#include "SmallMario.h"
+#include "BigMario.h"
+#include "MarioDamagedEffect.h"
+
 
 CMasterMario::CMasterMario()
 {
@@ -16,7 +20,7 @@ CMasterMario::CMasterMario()
 void CMasterMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->KeyboardHandler();
-	
+
 	//mario->Update(dt, coObjects);
 }
 
@@ -73,7 +77,35 @@ void CMasterMario::SetState(int state)
 void CMasterMario::OnKeyUp(int KeyCode) {
 
 }
-
+void CMasterMario::OnDamaged() {
+	if (mario->GetLevel() == MarioLevel::Small) {
+		this->SetState(MARIO_STATE_DIE);
+		return;
+	}
+	else {
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CMarioDamagedEffect* marioDamagedEffect = new CMarioDamagedEffect(mario->position, mario->GetNx());
+		int effectId = effectManager->Add(marioDamagedEffect);
+		mario->SetDeleted(true);
+		marioDamagedEffect->Start([this, effectId]() {
+			mario->SetDeleted(false);
+			CEffectManager::GetInstance()->Delete(effectId);
+			switch (mario->GetLevel())
+			{
+			case MarioLevel::Big:
+				mario->StartUntouchable();
+				mario->SetPlayerState(new SmallMario());
+				break;
+			case MarioLevel::Raccoon:
+				mario->StartUntouchable();
+				mario->SetPlayerState(new BigMario());
+				break;
+			default:
+				break;
+			}
+			});
+	}
+}
 void CMasterMario::OnKeyDown(int KeyCode) {
 }
 

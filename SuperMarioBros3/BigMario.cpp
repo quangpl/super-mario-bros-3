@@ -71,8 +71,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			{
 				if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 				{
-					mario->StartUntouchable();
-					mario->SetPlayerState(new SmallMario());
+					this->OnDamaged();
 				}
 			}
 		}
@@ -107,8 +106,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			if (redWingGoomba->GetState() != GOOMBA_STATE_DIE && redWingGoomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 			{
-				mario->StartUntouchable();
-				mario->SetPlayerState(new SmallMario());
+				this->OnDamaged();
 			}
 		}
 	}
@@ -156,8 +154,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			else {
 				if (mario->untouchable == 0)
 				{
-					mario->StartUntouchable();
-					mario->SetPlayerState(new SmallMario());
+					this->OnDamaged();
 				}
 			}
 			break;

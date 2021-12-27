@@ -264,6 +264,9 @@
     <ClCompile Include="HubObjects.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="MarioDamagedEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -466,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="HubObjects.h">
       <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioDamagedEffect.h">
+      <Filter>Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
