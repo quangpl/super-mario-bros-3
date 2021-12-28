@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Direction.h"
 #include "MapData.h"
+#define MARIO_TRANSPORT_PACE 1.1f
 
 class EndPortal :
     public CGameObject

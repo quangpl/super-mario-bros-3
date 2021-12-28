@@ -6,7 +6,7 @@
 #define PORTAL_STATE_IDLE 1
 #define PORTAL_STATE_TRANSPORT 2
 #define PORTAL_STATE_DROP 3
-
+#define MARIO_TRANSPORT_PACE 1.1f
 class BeginPortal :
     public CGameObject
 {

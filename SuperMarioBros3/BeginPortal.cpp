@@ -84,7 +84,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
 
 			if (direction == Direction::Top) {
-				mario->position.y = mario->position.y + 1;
+				mario->position.y = mario->position.y + MARIO_TRANSPORT_PACE;
 
 				RectBox bbox = this->GetBoundingBox();
 				RectBox marioBBox = mario->GetBoundingBox();
@@ -101,7 +101,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 				}
 			}
 			else {
-				mario->position.y = mario->position.y - 1;
+				mario->position.y = mario->position.y - MARIO_TRANSPORT_PACE;
 				RectBox bbox = this->GetBoundingBox();
 				RectBox marioBBox = mario->GetBoundingBox();
 				if (marioBBox.bottom + 10 > bbox.top) {
