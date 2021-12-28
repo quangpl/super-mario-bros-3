@@ -328,7 +328,7 @@ void RaccoonMario::SetState(int state)
 		mario->vy = MARIO_FLOATING_SPEED;
 		break;
 	case MARIO_STATE_RELEASE_JUMP:
-		//if (mario->vy < 0) mario->vy += MARIO_JUMP_SPEED_Y / 2;
+		if (mario->vy < 0) mario->vy += MARIO_JUMP_SPEED_Y / 2;
 		break;
 
 	case MARIO_STATE_IDLE:

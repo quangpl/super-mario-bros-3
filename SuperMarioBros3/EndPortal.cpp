@@ -60,10 +60,10 @@ void EndPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		mario->position.x = this->bounding_box.left + (marioWidth - size.x) / 2;
 		mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 		if (direction == Direction::Top) {
-			mario->position.y = mario->position.y + 2;
+			mario->position.y = mario->position.y + 1.1;
 		}
 		else {
-			mario->position.y = mario->position.y - 2;
+			mario->position.y = mario->position.y - 1.1;
 		}
 	}
 	
