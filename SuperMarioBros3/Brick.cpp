@@ -37,7 +37,7 @@ void CBrick::Render()
 {
 	ani = brickType == BrickType::QuestionBrick ? "ani-question-block" : "ani-brick-time-freeze";
 
-	if (state == BRICK_STATE_HIT) {
+	if (state == BRICK_STATE_HIT || state == BRICK_STATE_BROKEN) {
 		ani = "ani-empty-block";
 	}
 	if (ani.compare("") == 0) {

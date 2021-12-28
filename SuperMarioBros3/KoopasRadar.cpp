@@ -46,7 +46,6 @@ void CKoopasRadar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	if (turnBack) {
-		DebugOut(L"No Overlapp \n");
 		this->owner->vx = -this->owner->vx;
 		this->owner->SetNx(-this->owner->GetNx());
 	}
