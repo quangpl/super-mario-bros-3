@@ -26,8 +26,8 @@ public:
 	~CCoin();
 	void Switch();
 	virtual void Render();
-	virtual int IsCollidable();
 	virtual RectBox GetBoundingBox();
+	virtual int IsCollidable();
 	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;

@@ -45,6 +45,9 @@ public:
 	~CBrick();
 	void GenerateRewardByMarioLevel();
 	virtual void Render();
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual int IsCollidable();
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	virtual RectBox GetBoundingBox();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) override;
 	void SetState(int state);

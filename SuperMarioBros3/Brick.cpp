@@ -1,5 +1,7 @@
 #include "Brick.h"
 #include "Mario.h"
+#include "Tail.h"
+#include "BrokenBrickEffect.h"
 CBrick::CBrick() {
 }
 
@@ -51,9 +53,18 @@ void CBrick::OnNoCollision(DWORD dt)
 {
 
 }
+void CBrick::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CTail*>(e->obj) && this->GetState() != BRICK_STATE_HIT) {
+		this->SetState(BRICK_STATE_HIT);
+		if (brickType == BrickType::DiamondBrick) {
+			CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		}
+	}
+}
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
 	this->position = backupPos;
+	CCollision::GetInstance()->Process(this, dt, objects);
 }
 void CBrick::GenerateRewardByMarioLevel() {
 	int marioLevel = CMario::GetInstance()->GetLevel();
@@ -121,11 +132,21 @@ void CBrick::SetState(int state)
 	default:
 		break;
 	}
+
 }
+
 RectBox CBrick::GetBoundingBox() {
 	this->bounding_box.left = position.x;
 	this->bounding_box.top = position.y;
 	this->bounding_box.right = this->bounding_box.left + BRICK_BBOX_WIDTH;
 	this->bounding_box.bottom = this->bounding_box.top + BRICK_BBOX_HEIGHT;
 	return this->bounding_box;
+}
+
+int CBrick::IsCollidable() {
+	return 1;
+}
+
+bool CBrick::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	return false;
 }
