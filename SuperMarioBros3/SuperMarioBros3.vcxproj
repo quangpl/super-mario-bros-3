@@ -171,6 +171,7 @@
     <ClCompile Include="HubObjects.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="Koopas.cpp" />
+    <ClCompile Include="KoopasRadar.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapData.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Hud.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Koopas.h" />
+    <ClInclude Include="KoopasRadar.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="Mario.h" />

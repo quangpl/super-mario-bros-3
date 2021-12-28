@@ -57,6 +57,18 @@ void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
 }
+void CMasterMario::OnKickShell(CKoopas *koopas) {
+	CEffectManager* effectManager = CEffectManager::GetInstance();
+	CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
+	int effectId = effectManager->Add(marioKickShellEffect);
+	mario->SetDeleted(true);
+	marioKickShellEffect->Start([this, effectId, koopas]() {
+		mario->SetDeleted(false);
+		CEffectManager::GetInstance()->Delete(effectId);
+		koopas->SetNx(mario->GetNx());
+		koopas->SetState(KOOPAS_STATE_DIE_MOVE);
+		});
+}
 void CMasterMario::OnReleaseHolding() {
 	mario->holding = false;
 	if (mario->holder != NULL) {

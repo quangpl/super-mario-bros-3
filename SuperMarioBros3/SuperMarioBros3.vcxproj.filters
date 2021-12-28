@@ -273,6 +273,9 @@
     <ClCompile Include="MarioKickShellEffect.cpp">
       <Filter>Effects</Filter>
     </ClCompile>
+    <ClCompile Include="KoopasRadar.cpp">
+      <Filter>Koopas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -484,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="MarioKickShellEffect.h">
       <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopasRadar.h">
+      <Filter>Koopas</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

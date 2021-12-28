@@ -144,7 +144,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 				koopas->SetOwner(mario);
 				return;
 			}
-			koopas->SetState(KOOPAS_STATE_DIE_MOVE);
+			this->OnKickShell(koopas);
 			break;
 		default:
 			if (e->ny < 0) {

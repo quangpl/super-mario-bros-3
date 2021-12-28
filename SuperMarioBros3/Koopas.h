@@ -80,11 +80,11 @@ protected:
 	virtual int IsCollidable() { return 1; };
 	virtual void OnNoCollision(DWORD dt);
 
-	virtual RectBox GetBoundingBox();
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 
 public:
+	virtual RectBox GetBoundingBox();
 	CKoopas();
 	virtual void SetState(int state);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Koopas.h"
 #define MARIO_WALKING_SPEED		0.27f
 #define MARIO_RUNNING_SPEED		0.48f
 
@@ -76,5 +77,6 @@ public:
 	virtual void OnDamaged();
 	void PowerCalculator(DWORD dt);
 	void OnReleaseHolding();
+	void OnKickShell(CKoopas *koopas);
 	virtual RectBox GetBoundingBox();
 };

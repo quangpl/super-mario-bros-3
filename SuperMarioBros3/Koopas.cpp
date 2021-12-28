@@ -1,5 +1,5 @@
 #include "Koopas.h"
-
+#include "KoopasRadar.h"
 CKoopas::CKoopas() :CGameObject()
 {
 	type = Type::KOOPAS;
@@ -7,6 +7,8 @@ CKoopas::CKoopas() :CGameObject()
 	koopas_type = KoopaType::RedTroopa;
 	SetState(KOOPAS_STATE_WALKING);
 	this->gravity = KOOPAS_GRAVITY;
+	CKoopasRadar* radar = new CKoopasRadar(this);
+	SceneManager::GetInstance()->GetActiveScene()->AddObject(radar);
 }
 
 RectBox CKoopas::GetBoundingBox() {

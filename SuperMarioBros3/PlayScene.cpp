@@ -34,6 +34,10 @@ void CPlayScene::OnKeyDown(int KeyCode)
 		player->SetPlayerState(new RaccoonMario());
 		break;
 	case DIK_X:
+		//player->SetPosition(Vec2{ 6000,700 });
+		player->SetPosition(Vec2{ 1692,880 });
+		break;
+	case DIK_Y:
 		player->SetPosition(Vec2{ 6000,700 });
 		break;
 	default:
@@ -90,9 +94,9 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size, true), data);
 	}
-	if (strcmp(type, ObjectTypeData::CommandPoint.ToString().c_str()) == 0) {
+	/*if (strcmp(type, ObjectTypeData::CommandPoint.ToString().c_str()) == 0) {
 		AddObject(CCommandPoint::Create(position, data), data);
-	}
+	}*/
 	if (strcmp(type, ObjectTypeData::GhostBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size, false), data);
 	}

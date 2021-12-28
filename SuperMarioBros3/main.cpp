@@ -165,12 +165,14 @@ int Run()
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
 		DWORD dt = (DWORD)(now - frameStart);
-		dt = 16; // s = v't + 1/2at2 , v'=0
+		dt = 8; // s = v't + 1/2at2 , v'=0
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
 			CGame::GetInstance()->ProcessKeyboard();
-			Update(dt);
+			for (int i = 0; i < 2; i++) {
+				Update(dt); // 16/2 = 8 -> balance with game render 
+			}
 			Render();
 		}
 		else
