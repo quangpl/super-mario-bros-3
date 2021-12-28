@@ -283,16 +283,7 @@ void BigMario::SetState(int state)
 		mario->holding = true;
 		break;
 	case MARIO_STATE_RELEASE_HOLDING:
-		mario->holding = false;
-		if (mario->holder != NULL) {
-			if (dynamic_cast<CKoopas*>(mario->holder)) {
-				CKoopas* koopas = dynamic_cast<CKoopas*>(mario->holder);
-				koopas->SetOwner(NULL);
-				koopas->SetNx(mario->GetNx());
-				koopas->SetState(KOOPAS_STATE_DIE_MOVE);
-			}
-			mario->holder = NULL;
-		}
+		this->OnReleaseHolding();
 		break;
 	case MARIO_STATE_TRANSFORM_SMALL_TO_BIG:
 		//transformation_start = GetTickCount64();

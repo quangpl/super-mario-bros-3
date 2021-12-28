@@ -10,6 +10,7 @@
 #include "SmallMario.h"
 #include "BigMario.h"
 #include "MarioDamagedEffect.h"
+#include "MarioKickShellEffect.h"
 
 
 CMasterMario::CMasterMario()
@@ -55,6 +56,26 @@ void CMasterMario::KeyboardHandler() {
 void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
+}
+void CMasterMario::OnReleaseHolding() {
+	mario->holding = false;
+	if (mario->holder != NULL) {
+		if (dynamic_cast<CKoopas*>(mario->holder)) {
+			CEffectManager* effectManager = CEffectManager::GetInstance();
+			CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
+			int effectId = effectManager->Add(marioKickShellEffect);
+			mario->SetDeleted(true);
+			marioKickShellEffect->Start([this, effectId]() {
+				mario->SetDeleted(false);
+				CEffectManager::GetInstance()->Delete(effectId);
+				CKoopas* koopas = dynamic_cast<CKoopas*>(mario->holder);
+				koopas->SetOwner(NULL);
+				koopas->SetNx(mario->GetNx());
+				koopas->SetState(KOOPAS_STATE_DIE_MOVE);
+				mario->holder = NULL;
+				});
+		}
+	}
 }
 void CMasterMario::PowerCalculator(DWORD dt) {
 	float maxRun = abs(mario->vx) > MARIO_RUNNING_SPEED * 0.85f;

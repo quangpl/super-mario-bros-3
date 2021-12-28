@@ -7,6 +7,7 @@
 #include "SmallMario.h"
 #include "BigMario.h"
 #include "RaccoonMario.h"
+#include "MarioKickShellEffect.h"
 
 
 RaccoonMario::RaccoonMario() :CMasterMario()
@@ -70,6 +71,7 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable = 0;
 	}
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
+	DebugOut(L"Power: %f", mario->GetPower());
 }
 
 void RaccoonMario::OnNoCollision(DWORD dt)
@@ -236,7 +238,7 @@ void RaccoonMario::Render()
 				mario->SetNx(mario->vx > 0 ? 1 : -1);
 				ani = "ani-raccoon-mario-skid";
 			}
-			
+
 		}
 	}
 
@@ -379,16 +381,7 @@ void RaccoonMario::SetState(int state)
 		}
 		break;
 	case MARIO_STATE_RELEASE_HOLDING:
-		mario->holding = false;
-		if (mario->holder != NULL) {
-			if (dynamic_cast<CKoopas*>(mario->holder)) {
-				CKoopas* koopas = dynamic_cast<CKoopas*>(mario->holder);
-				koopas->SetOwner(NULL);
-				koopas->SetNx(mario->GetNx());
-				koopas->SetState(KOOPAS_STATE_DIE_MOVE);
-			}
-			mario->holder = NULL;
-		}
+		this->OnReleaseHolding();
 		break;
 	case MARIO_STATE_TRANSFORM_SMALL_TO_BIG:
 		//transformation_start = GetTickCount64();
@@ -454,7 +447,7 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 			this->SetState(MARIO_STATE_JUMP);
 		}
 		else {
-			if (mario->GetPower() >= PMETER_MAX - 0.3) {
+			if (mario->GetPower() >= PMETER_MAX - 0.35) {
 				mario->isJumping = false;
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;

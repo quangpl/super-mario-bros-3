@@ -70,7 +70,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Switch case for each owner type
 	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
 		CMario* mario = dynamic_cast<CMario*>(this->owner);
-		int marioDirection = mario->GetSpeed().x > 0 ? 1 : -1;
+		int marioDirection = mario->GetNx();
 		position.x = this->owner->GetPosition().x + marioDirection * (mario->GetBoundingBox().right - mario->GetBoundingBox().left);
 		position.y = this->owner->GetPosition().y;
 	}

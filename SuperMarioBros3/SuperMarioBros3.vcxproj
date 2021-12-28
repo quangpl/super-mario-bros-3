@@ -177,6 +177,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioDamagedEffect.cpp" />
     <ClCompile Include="MarioGrowEffect.cpp" />
+    <ClCompile Include="MarioKickShellEffect.cpp" />
     <ClCompile Include="MarioLeaf.cpp" />
     <ClCompile Include="MasterMario.cpp" />
     <ClCompile Include="PowerMeter.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioDamagedEffect.h" />
     <ClInclude Include="MarioGrowEffect.h" />
+    <ClInclude Include="MarioKickShellEffect.h" />
     <ClInclude Include="MarioLeaf.h" />
     <ClInclude Include="MasterMario.h" />
     <ClInclude Include="PowerMeter.h" />

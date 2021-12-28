@@ -34,6 +34,7 @@
 #define MARIO_STATE_FLY	1000
 #define MARIO_STATE_FLOAT	1001
 
+
 #define MARIO_STATE_WARP_NONE 1100
 #define MARIO_STATE_WARP_VERTICAL 1101
 #define MARIO_STATE_WARP_HORIZONTAL 1102
@@ -70,8 +71,10 @@ public:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void KeyboardHandler();
 	virtual void OnKeyUp(int keyCode);
+
 	virtual void OnKeyDown(int keyCode);
 	virtual void OnDamaged();
 	void PowerCalculator(DWORD dt);
+	void OnReleaseHolding();
 	virtual RectBox GetBoundingBox();
 };
