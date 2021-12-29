@@ -56,6 +56,7 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	PowerCalculator(dt);
 	if (mario->isAttacking && stopwatch->Elapsed() >= TAIL_TIMEOUT) {
 		this->SetState(MARIO_STATE_RELEASE_ATTACK);
+		mario->isAttacking = false;
 	}
 	mario->SetVelocityX(mario->GetSpeed().x + mario->ax * dt);
 	mario->SetVelocityY(mario->GetSpeed().y + mario->ay * dt);

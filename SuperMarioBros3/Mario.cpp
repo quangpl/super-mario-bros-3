@@ -14,6 +14,7 @@
 #include "BigMario.h"
 #include "MarioGrowEffect.h"
 #include "PSwitch.h"
+#include "RaccoonMario.h"
 
 void CMario::StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 void CMario::SetHolder(LPGAMEOBJECT _holder) { this->holder = _holder; }
@@ -32,9 +33,8 @@ float  CMario::GetPower() { return this->power; }
 
 
 void CMario::SetPlayerState(CMasterMario* pState) {
-	// small to big
 	this->isAttacking = false;
-	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState)) {
+	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState) || dynamic_cast<BigMario*>(this->playerState) && dynamic_cast<RaccoonMario*>(pState)) {
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CMarioGrowEffect* marioGrowEffect = new CMarioGrowEffect(position, this->nx);
 		int effectId = effectManager->Add(marioGrowEffect);
