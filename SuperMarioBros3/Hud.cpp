@@ -6,7 +6,7 @@
 Hud::Hud(string tmxPath, Vec2 pos, Vec2 size)
 {
 	powerMeter = new PowerMeter();
-
+	this->position = pos;
 	this->LoadFromTmx(tmxPath);
 }
 
@@ -28,11 +28,11 @@ void Hud::Render()
 
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
-			blackSprite->DrawWithoutCamera(j * widthBox + widthBox / 2, 579 + widthBox * (i+1) + widthBox / 2, trans, 1.0f);
+			//blackSprite->DrawWithoutCamera(j * widthBox + widthBox / 2, 579 + widthBox * (i + 1) + widthBox / 2, trans, 1.0f);
 		}
 	}
+	CSprites::GetInstance()->Get("spr-hud-0")->DrawWithoutCamera(280, 630, trans, 1.0f);
 	powerMeter->Render();
-
 }
 
 

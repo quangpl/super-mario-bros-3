@@ -181,6 +181,7 @@
     <ClCompile Include="MarioKickShellEffect.cpp" />
     <ClCompile Include="MarioLeaf.cpp" />
     <ClCompile Include="MasterMario.cpp" />
+    <ClCompile Include="Piranha.cpp" />
     <ClCompile Include="PowerMeter.cpp" />
     <ClCompile Include="PSwitch.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="MarioKickShellEffect.h" />
     <ClInclude Include="MarioLeaf.h" />
     <ClInclude Include="MasterMario.h" />
+    <ClInclude Include="Piranha.h" />
     <ClInclude Include="PowerMeter.h" />
     <ClInclude Include="PSwitch.h" />
     <ClInclude Include="RaccoonMario.h" />

@@ -11,11 +11,17 @@ CGameObject* Spawner::GetSpawnObject()
 	if (type.compare(ObjectTypeData::Goomba.ToString()) == 0) {
 		return (CGoomba::Create(position));
 	}
-	else if (type.compare(ObjectTypeData::RedGoomba.ToString()) == 0) {
+	if (type.compare(ObjectTypeData::RedGoomba.ToString()) == 0) {
 		return (CRedWingGoomba::Create(position));
 	}
-	else if (type.compare(ObjectTypeData::RedKoopas.ToString()) == 0) {
+	if (type.compare(ObjectTypeData::RedGoomba.ToString()) == 0) {
+		return (CRedWingGoomba::Create(position));
+	}
+	if (type.compare(ObjectTypeData::RedKoopas.ToString()) == 0) {
 		return (CKoopas::Create(position));
+	}
+	if (type.compare(ObjectTypeData::Piranha.ToString()) == 0) {
+		return (new Piranha(position));
 	}
 	else {
 		return NULL;

@@ -6,6 +6,7 @@
 #include "ObjectTypeData.h"
 #include "SceneManager.h"
 #include "RedWingGoomba.h"
+#include "Piranha.h"
 
 class Spawner :
 	public CGameObject

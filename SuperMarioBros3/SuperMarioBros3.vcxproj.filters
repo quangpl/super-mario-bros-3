@@ -76,6 +76,9 @@
     <Filter Include="HUD">
       <UniqueIdentifier>{74c4455c-e48d-409e-9ed2-9e59153fe2e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Piranha">
+      <UniqueIdentifier>{c8c1785e-2ab6-41da-b564-1bb10096705a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -275,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="KoopasRadar.cpp">
       <Filter>Koopas</Filter>
+    </ClCompile>
+    <ClCompile Include="Piranha.cpp">
+      <Filter>Piranha</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +496,9 @@
     </ClInclude>
     <ClInclude Include="KoopasRadar.h">
       <Filter>Koopas</Filter>
+    </ClInclude>
+    <ClInclude Include="Piranha.h">
+      <Filter>Piranha</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

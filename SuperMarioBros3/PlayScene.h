@@ -26,7 +26,7 @@
 #include "BeginPortal.h"
 #include "EndPortal.h"
 #include "RaccoonMario.h"
-
+#include "Piranha.h"
 
 class CPlayScene: public CScene
 {	

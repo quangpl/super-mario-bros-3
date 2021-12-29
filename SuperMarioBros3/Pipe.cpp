@@ -3,6 +3,7 @@
 CPipe::CPipe()
 {
 	this->type = Type::PIPE;
+	zIndex = 10;
 }
 
 void CPipe::Render()
