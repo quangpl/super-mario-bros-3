@@ -21,14 +21,12 @@ void Hud::Render()
 	LPSPRITE blackSprite = CSprites::GetInstance()->Get("spr-black-box");
 	float width = 769;
 	float widthBox = 30;
-
-
 	int col = (int)(width / widthBox);
 	int row = 3;
 
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
-			//blackSprite->DrawWithoutCamera(j * widthBox + widthBox / 2, 579 + widthBox * (i + 1) + widthBox / 2, trans, 1.0f);
+			blackSprite->DrawWithoutCamera(j * widthBox + widthBox / 2, 579 + widthBox * (i + 1) + widthBox / 2, trans, 1.0f);
 		}
 	}
 	CSprites::GetInstance()->Get("spr-hud-0")->DrawWithoutCamera(280, 630, trans, 1.0f);

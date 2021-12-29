@@ -8,7 +8,7 @@
 #include "BigMario.h"
 #include "RaccoonMario.h"
 #include "MarioKickShellEffect.h"
-
+#include "GreenKoopas.h"
 
 RaccoonMario::RaccoonMario() :CMasterMario()
 {
@@ -82,6 +82,7 @@ void RaccoonMario::OnNoCollision(DWORD dt)
 
 void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	CMasterMario::OnCollisionWith(e);
 	if (e->ny != 0 && !e->obj->CanThrough(mario, e->nx, e->ny))
 	{
 		mario->vy = 0;
@@ -169,6 +170,36 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CKoopas*>(e->obj))
 	{
 		CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
+		switch (koopas->GetState())
+		{
+			// TODO: Improve collision framework to make it easier
+		case KOOPAS_STATE_RESPAWN:
+		case KOOPAS_STATE_DIE_BY_ATTACK:
+			if (mario->holding) {
+				mario->holder = koopas;
+				this->SetState(MARIO_STATE_HOLDING);
+				koopas->SetOwner(mario);
+				return;
+			}
+			this->OnKickShell(koopas);
+			break;
+		default:
+			if (e->ny < 0) {
+				mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
+				koopas->SetState(KOOPAS_STATE_DIE_BY_ATTACK);
+			}
+			else {
+				if (mario->untouchable == 0)
+				{
+					this->OnDamaged();
+				}
+			}
+			break;
+		}
+	}
+	else if (dynamic_cast<GreenKoopas*>(e->obj))
+	{
+	GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(e->obj);
 		switch (koopas->GetState())
 		{
 			// TODO: Improve collision framework to make it easier

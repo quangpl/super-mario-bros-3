@@ -22,6 +22,7 @@
 #define VECTOR_0 Vec2(0, 0)
 #endif // !VEC0
 #include <D3DX10math.h>
+#define PI_CONSTANT 3.14
 
 typedef D3DXVECTOR2 Vec2;
 using namespace std;
@@ -30,3 +31,4 @@ vector<string> split(string line, string delimeter = "\t");
 wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
+

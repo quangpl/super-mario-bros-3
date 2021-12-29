@@ -1,6 +1,6 @@
 #include "Goomba.h"
 #include "GoombaDieEffect.h"
-
+#include "GreenKoopas.h"
 CGoomba::CGoomba() :CGameObject()
 {
 	this->gravity = GOOMBA_GRAVITY;
@@ -43,7 +43,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 
-	if (dynamic_cast<CKoopas*>(e->obj))
+	if (dynamic_cast<CKoopas*>(e->obj) || dynamic_cast<GreenKoopas*>(e->obj))
 		OnCollisionWithKoopas(e);
 	if (dynamic_cast<CTail*>(e->obj))
 	{

@@ -2,6 +2,7 @@
 #include "Tail.h"
 #include "Mario.h"
 #include "Koopas.h"
+#include "GreenKoopas.h"
 
 CCoin::CCoin() {
 	switchStopWatch = new Stopwatch();
@@ -78,6 +79,11 @@ void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
 		this->isDeleted = true;
 	}
 	if (this->isDeleted == false && dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
+		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		e->obj->SetNx(-e->obj->GetNx());
+		this->isDeleted = true;
+	}
+	if (this->isDeleted == false && dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
 		e->obj->SetNx(-e->obj->GetNx());
 		this->isDeleted = true;

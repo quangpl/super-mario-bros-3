@@ -27,6 +27,8 @@
 #include "EndPortal.h"
 #include "RaccoonMario.h"
 #include "Piranha.h"
+#include "Venus.h"
+#include "GreenKoopas.h"
 
 class CPlayScene: public CScene
 {	

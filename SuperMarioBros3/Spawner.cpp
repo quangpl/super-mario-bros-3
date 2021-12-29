@@ -17,6 +17,18 @@ CGameObject* Spawner::GetSpawnObject()
 	if (type.compare(ObjectTypeData::RedGoomba.ToString()) == 0) {
 		return (CRedWingGoomba::Create(position));
 	}
+	if (type.compare(ObjectTypeData::Venus.ToString()) == 0) {
+		return (new Venus(position, VenusType::GreenVenus));
+	}
+	if (type.compare(ObjectTypeData::Venus.ToString()) == 0) {
+		return (new Venus(position, VenusType::RedVenus));
+	}
+	if (type.compare(ObjectTypeData::Koopas.ToString()) == 0) {
+		return  GreenKoopas::Create(position, false);
+	}
+	if (type.compare(ObjectTypeData::KoopasJumping.ToString()) == 0) {
+		return  GreenKoopas::Create(position, true);
+	}
 	if (type.compare(ObjectTypeData::RedKoopas.ToString()) == 0) {
 		return (CKoopas::Create(position));
 	}

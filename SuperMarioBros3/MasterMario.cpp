@@ -11,7 +11,8 @@
 #include "BigMario.h"
 #include "MarioDamagedEffect.h"
 #include "MarioKickShellEffect.h"
-
+#include "GreenKoopas.h"
+#include "Fireball.h"
 
 CMasterMario::CMasterMario()
 {
@@ -55,9 +56,13 @@ void CMasterMario::KeyboardHandler() {
 }
 void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<Fireball*>(e->obj)) {
+		this->OnDamaged();
+		e->obj->SetDeleted(true);
+	}
 
 }
-void CMasterMario::OnKickShell(CKoopas *koopas) {
+void CMasterMario::OnKickShell(CGameObject *koopas) {
 	CEffectManager* effectManager = CEffectManager::GetInstance();
 	CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
 	int effectId = effectManager->Add(marioKickShellEffect);
@@ -81,6 +86,21 @@ void CMasterMario::OnReleaseHolding() {
 				mario->SetDeleted(false);
 				CEffectManager::GetInstance()->Delete(effectId);
 				CKoopas* koopas = dynamic_cast<CKoopas*>(mario->holder);
+				koopas->SetOwner(NULL);
+				koopas->SetNx(mario->GetNx());
+				koopas->SetState(KOOPAS_STATE_DIE_MOVE);
+				mario->holder = NULL;
+				});
+		}
+		if (dynamic_cast<GreenKoopas*>(mario->holder)) {
+			CEffectManager* effectManager = CEffectManager::GetInstance();
+			CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
+			int effectId = effectManager->Add(marioKickShellEffect);
+			mario->SetDeleted(true);
+			marioKickShellEffect->Start([this, effectId]() {
+				mario->SetDeleted(false);
+				CEffectManager::GetInstance()->Delete(effectId);
+				GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(mario->holder);
 				koopas->SetOwner(NULL);
 				koopas->SetNx(mario->GetNx());
 				koopas->SetState(KOOPAS_STATE_DIE_MOVE);

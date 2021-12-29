@@ -77,6 +77,6 @@ public:
 	virtual void OnDamaged();
 	void PowerCalculator(DWORD dt);
 	void OnReleaseHolding();
-	void OnKickShell(CKoopas *koopas);
+	void OnKickShell(CGameObject *koopas);
 	virtual RectBox GetBoundingBox();
 };

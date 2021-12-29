@@ -1,4 +1,5 @@
 #include "RedWingGoomba.h"
+#include "GreenKoopas.h"
 
 CRedWingGoomba* CRedWingGoomba::Create(Vec2 position) {
 	CRedWingGoomba* goomba = new CRedWingGoomba();
@@ -50,7 +51,7 @@ void CRedWingGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 
-	if (dynamic_cast<CKoopas*>(e->obj))
+	if (dynamic_cast<CKoopas*>(e->obj) || dynamic_cast<GreenKoopas*>(e->obj))
 		OnCollisionWithKoopas(e);
 	else if (dynamic_cast<CTail*>(e->obj))
 	{

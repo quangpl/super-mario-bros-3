@@ -79,6 +79,9 @@
     <Filter Include="Piranha">
       <UniqueIdentifier>{c8c1785e-2ab6-41da-b564-1bb10096705a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Venus">
+      <UniqueIdentifier>{4ad6df97-3cda-4a80-9050-9556d19dbde3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -281,6 +284,15 @@
     </ClCompile>
     <ClCompile Include="Piranha.cpp">
       <Filter>Piranha</Filter>
+    </ClCompile>
+    <ClCompile Include="Venus.cpp">
+      <Filter>Venus</Filter>
+    </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>Venus</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenKoopas.cpp">
+      <Filter>Koopas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -499,6 +511,15 @@
     </ClInclude>
     <ClInclude Include="Piranha.h">
       <Filter>Piranha</Filter>
+    </ClInclude>
+    <ClInclude Include="Venus.h">
+      <Filter>Venus</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>Venus</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenKoopas.h">
+      <Filter>Koopas</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

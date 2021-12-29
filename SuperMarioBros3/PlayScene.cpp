@@ -94,6 +94,18 @@ void CPlayScene::LoadObjects(const char* type, Vec2 position, Vec2 size, MapData
 	if (strcmp(type, ObjectTypeData::SolidBlock.ToString().c_str()) == 0) {
 		AddObject(CGround::Create(position, size, true), data);
 	}
+	if (strcmp(type, ObjectTypeData::Venus.ToString().c_str()) == 0) {
+		AddObject(new Venus(position, VenusType::GreenVenus));
+	}
+	if (strcmp(type, ObjectTypeData::RedVenus.ToString().c_str()) == 0) {
+		AddObject(new Venus(position, VenusType::RedVenus));
+	}
+	if (strcmp(type, ObjectTypeData::Koopas.ToString().c_str()) == 0) {
+		AddObject(GreenKoopas::Create(position, false), data);
+	}
+	if (strcmp(type, ObjectTypeData::KoopasJumping.ToString().c_str()) == 0) {
+		AddObject(GreenKoopas::Create(position, true), data);
+	}
 	/*if (strcmp(type, ObjectTypeData::CommandPoint.ToString().c_str()) == 0) {
 		AddObject(CCommandPoint::Create(position, data), data);
 	}*/

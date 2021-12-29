@@ -162,11 +162,13 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EndPortal.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GoombaDieEffect.cpp" />
+    <ClCompile Include="GreenKoopas.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HubObjects.cpp" />
     <ClCompile Include="Hud.cpp" />
@@ -209,6 +211,7 @@
     <ClCompile Include="tinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="tinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Venus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -237,11 +240,13 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EndPortal.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GoombaDieEffect.h" />
+    <ClInclude Include="GreenKoopas.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HubObjects.h" />
     <ClInclude Include="Hud.h" />
@@ -285,6 +290,7 @@
     <ClInclude Include="tinyXML\tinyxml.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Venus.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

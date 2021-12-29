@@ -7,6 +7,8 @@
 #include "SceneManager.h"
 #include "RedWingGoomba.h"
 #include "Piranha.h"
+#include "Venus.h"
+#include "GreenKoopas.h"
 
 class Spawner :
 	public CGameObject
