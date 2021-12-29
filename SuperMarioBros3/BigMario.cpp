@@ -137,9 +137,9 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 		switch (koopas->GetState())
 		{
-			// TODO: Improve collision framework to make it easier
-		case KOOPAS_STATE_RESPAWN:
+ 		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
+		case KOOPAS_STATE_DIE_BY_HIT:
 			if (mario->holding) {
 				mario->holder = koopas;
 				this->SetState(MARIO_STATE_HOLDING);
@@ -171,6 +171,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			// TODO: Improve collision framework to make it easier
 		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
+		case KOOPAS_STATE_DIE_BY_HIT:
 			if (mario->holding) {
 				mario->holder = koopas;
 				this->SetState(MARIO_STATE_HOLDING);

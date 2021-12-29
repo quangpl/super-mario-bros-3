@@ -147,6 +147,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
+		case KOOPAS_STATE_DIE_BY_HIT:
 			if (mario->holding) {
 				mario->holder = koopas;
 				this->SetState(MARIO_STATE_HOLDING);
@@ -176,6 +177,7 @@ void SmallMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
+		case KOOPAS_STATE_DIE_BY_HIT:
 			if (mario->holding) {
 				mario->holder = koopas;
 				this->SetState(MARIO_STATE_HOLDING);
