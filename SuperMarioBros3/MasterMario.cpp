@@ -34,11 +34,12 @@ void CMasterMario::OnNoCollision(DWORD dt)
 }
 void CMasterMario::KeyboardHandler() {
 	LPGAME game = CGame::GetInstance();
-	if (game->IsKeyDown(DIK_Z)) {
+	if (game->IsKeyDown(DIK_A)) {
 		mario->SetHolding(true);
 	}
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
+		mario->SetNx(1);
 		if (game->IsKeyDown(DIK_A))
 			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
 		else
@@ -46,6 +47,7 @@ void CMasterMario::KeyboardHandler() {
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
+		mario->SetNx(-1);
 		if (game->IsKeyDown(DIK_A))
 			mario->GetPlayerState()->SetState(MARIO_STATE_RUNNING);
 		else

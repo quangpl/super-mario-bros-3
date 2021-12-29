@@ -22,16 +22,18 @@ RaccoonMario::RaccoonMario() :CMasterMario()
 
 void RaccoonMario::KeyboardHandler() {
 	CGame* game = CGame::GetInstance();
-	if (game->IsKeyDown(DIK_Z)) {
+	if (game->IsKeyDown(DIK_A)) {
 		mario->SetHolding(true);
 	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
+		mario->SetNx(1);
 		if (game->IsKeyDown(DIK_A))
 			this->SetState(MARIO_STATE_RUNNING);
 		else
 			this->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
+		mario->SetNx(-1);
 		if (game->IsKeyDown(DIK_A))
 			this->SetState(MARIO_STATE_RUNNING);
 		else
@@ -455,11 +457,14 @@ void RaccoonMario::OnKeyUp(int KeyCode) {
 		this->SetState(MARIO_STATE_RELEASE_JUMP);
 		break;
 	case DIK_A:
+		if (mario->GetHolding()) {
+			this->SetState(MARIO_STATE_RELEASE_HOLDING);
+		}
 		this->SetState(MARIO_STATE_RELEASE_RUNNING);
 		break;
-	case DIK_Z:
+	/*case DIK_Z:
 		this->SetState(MARIO_STATE_RELEASE_HOLDING);
-		break;
+		break;*/
 	case DIK_DOWN:
 		this->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
@@ -496,7 +501,7 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 	case DIK_0:
 		this->SetState(MARIO_STATE_DIE);
 		break;
-	case DIK_C:
+	case DIK_A:
 		this->SetState(MARIO_STATE_ATTACK);
 		break;
 	case DIK_R: // reset

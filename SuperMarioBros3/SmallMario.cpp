@@ -344,11 +344,14 @@ void SmallMario::OnKeyUp(int KeyCode) {
 		this->SetState(MARIO_STATE_RELEASE_JUMP);
 		break;
 	case DIK_A:
+		if (mario->GetHolding()) {
+			this->SetState(MARIO_STATE_RELEASE_HOLDING);
+		}
 		this->SetState(MARIO_STATE_RELEASE_RUNNING);
 		break;
-	case DIK_Z:
+	/*case DIK_Z:
 		this->SetState(MARIO_STATE_RELEASE_HOLDING);
-		break;
+		break;*/
 	case DIK_DOWN:
 		this->SetState(MARIO_STATE_SIT_RELEASE);
 		break;

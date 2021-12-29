@@ -68,7 +68,7 @@ void GreenKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void GreenKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
-	if (state == KOOPAS_STATE_DIE_MOVE) {
+	if (state == KOOPAS_STATE_DIE_MOVE && e->obj->GetState() != BRICK_STATE_BROKEN) {
 		e->obj->SetState(BRICK_STATE_BROKEN);
 	}
 }
@@ -82,7 +82,7 @@ void GreenKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Switch case for each owner type
 	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
 		CMario* mario = dynamic_cast<CMario*>(this->owner);
-		int marioDirection = mario->GetNx();
+		int marioDirection = mario->vx > 0 ? 1 : -1;
 		position.x = this->owner->GetPosition().x + marioDirection * (mario->GetBoundingBox().right - mario->GetBoundingBox().left);
 		position.y = this->owner->GetPosition().y;
 	}
