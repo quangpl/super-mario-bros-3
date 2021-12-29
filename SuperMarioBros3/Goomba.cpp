@@ -61,11 +61,6 @@ void CGoomba::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += (this->gravity * dt);
-	/*if (((state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_BY_ATTACK) && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
-	{
-		isDeleted = true;
-		return;
-	}*/
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }

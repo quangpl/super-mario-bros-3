@@ -53,9 +53,9 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		transformation = Vec2{ 1.0f,-1.0f };
 		this->SetState(KOOPAS_STATE_DIE_BY_HIT);
 	}
-	else if (dynamic_cast<CKoopas*>(e->obj)) {
+	else if (dynamic_cast<CKoopas*>(e->obj) && this->state == KOOPAS_STATE_DIE_MOVE) {
 		transformation = Vec2{ 1.0f,-1.0f };
-		this->SetState(KOOPAS_STATE_DIE_BY_HIT);
+		e->obj->SetState(KOOPAS_STATE_DIE_BY_HIT);
 	}
 }
 
