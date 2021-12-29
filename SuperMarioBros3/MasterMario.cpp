@@ -13,6 +13,8 @@
 #include "MarioKickShellEffect.h"
 #include "GreenKoopas.h"
 #include "Fireball.h"
+#include "Piranha.h"
+#include "Venus.h"
 
 CMasterMario::CMasterMario()
 {
@@ -59,6 +61,9 @@ void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<Fireball*>(e->obj)) {
 		this->OnDamaged();
 		e->obj->SetDeleted(true);
+	}
+	if (dynamic_cast<Piranha*>(e->obj) || dynamic_cast<Venus*>(e->obj)) {
+		this->OnDamaged();
 	}
 
 }
