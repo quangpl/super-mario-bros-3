@@ -33,6 +33,7 @@ float  CMario::GetPower() { return this->power; }
 
 void CMario::SetPlayerState(CMasterMario* pState) {
 	// small to big
+	this->isAttacking = false;
 	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState)) {
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CMarioGrowEffect* marioGrowEffect = new CMarioGrowEffect(position, this->nx);
