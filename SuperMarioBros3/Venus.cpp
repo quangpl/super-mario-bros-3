@@ -1,6 +1,6 @@
 #include "Venus.h"
 #include "Mario.h"
-
+#include "Tail.h"
 Venus::Venus(Vec2 _pos, int type) :CGameObject()
 {
 	this->shootStopwatch = new Stopwatch();
@@ -36,7 +36,9 @@ void Venus::OnNoCollision(DWORD dt)
 
 void Venus::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-
+	if (dynamic_cast<CTail*>(e->obj)) {
+		this->SetDeleted(true);
+	}
 }
 
 

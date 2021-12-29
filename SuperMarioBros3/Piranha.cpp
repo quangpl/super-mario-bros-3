@@ -1,5 +1,8 @@
 #include "Piranha.h"
 #include "Mario.h"
+#include "Tail.h"
+#include "EffectManager.h"
+#include "MarioDamagedEffect.h"
 
 Piranha::Piranha(Vec2 _pos) :CGameObject()
 {
@@ -13,8 +16,8 @@ Piranha::Piranha(Vec2 _pos) :CGameObject()
 
 
 RectBox Piranha::GetBoundingBox() {
-	this->bounding_box.left = position.x ;
-	this->bounding_box.top = position.y ;
+	this->bounding_box.left = position.x;
+	this->bounding_box.top = position.y;
 	this->bounding_box.right = this->bounding_box.left + PIRANHA_SIZE_X;
 	this->bounding_box.bottom = this->bounding_box.top + PIRANHA_SIZE_Y;
 	return this->bounding_box;
@@ -28,7 +31,9 @@ void Piranha::OnNoCollision(DWORD dt)
 
 void Piranha::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	
+	if (dynamic_cast<CTail*>(e->obj)) {
+		this->SetDeleted(true);
+	}
 }
 
 
@@ -116,7 +121,7 @@ void Piranha::TrackPlayerPosition()
 
 void Piranha::Render()
 {
-	CAnimations::GetInstance()->Get("ani-green-piranha-plant-attack")->Render(position.x + PIRANHA_SIZE_X/2, position.y+ PIRANHA_SIZE_Y/2);
+	CAnimations::GetInstance()->Get("ani-green-piranha-plant-attack")->Render(position.x + PIRANHA_SIZE_X / 2, position.y + PIRANHA_SIZE_Y / 2);
 	RenderBoundingBox();
 }
 
