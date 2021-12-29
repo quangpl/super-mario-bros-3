@@ -332,9 +332,6 @@ void BigMario::SetState(int state)
 		{
 			state = MARIO_STATE_IDLE;
 			mario->isSitting = true;
-			mario->vx = 0;
-			mario->vy = 0.0f;
-			//mario->position.y += MARIO_SIT_HEIGHT_ADJUST * 3;
 		}
 		break;
 
