@@ -1,6 +1,8 @@
 #include "Venus.h"
 #include "Mario.h"
 #include "Tail.h"
+#include "MarioDamagedEffect.h"
+
 Venus::Venus(Vec2 _pos, int type) :CGameObject()
 {
 	this->shootStopwatch = new Stopwatch();
@@ -38,6 +40,20 @@ void Venus::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CTail*>(e->obj)) {
 		this->SetDeleted(true);
+		// disable fireball
+
+		for (Fireball* fireball : fireballs)
+		{
+			fireball->active = false;
+			fireball->SetDeleted(true);
+		}
+
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CMarioDamagedEffect* damagedEffect = new CMarioDamagedEffect(this->position, this->GetNx());
+		int effectId = effectManager->Add(damagedEffect);
+		damagedEffect->Start([this, effectId]() {
+			CEffectManager::GetInstance()->Delete(effectId);
+			});
 	}
 }
 
