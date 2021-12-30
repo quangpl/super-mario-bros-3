@@ -4,6 +4,11 @@ CPipe::CPipe()
 {
 	this->type = Type::PIPE;
 	zIndex = 10;
+	this->body = NULL;
+	this->head = NULL;
+	this->direction = Direction::Top;
+	this->length = 0;
+	this->lengthOfPiece = 0;
 }
 
 void CPipe::Render()
@@ -13,26 +18,26 @@ void CPipe::Render()
 	{
 	case Direction::Left:
 		head->Draw(position.x + horizontalPeiceSize.x / 2, position.y + horizontalPeiceSize.y / 2, trans, 1.0f);
-		for (int i = position.x + lengthOfPiece; i < position.x + size.x - 1; i += lengthOfPiece) {
+		for (float i = position.x + lengthOfPiece; i < position.x + size.x - 1; i += lengthOfPiece) {
 			body->Draw(i + horizontalPeiceSize.x / 2, position.y + horizontalPeiceSize.y / 2, trans, 1.0f);
 		}
 		break;
 
 	case Direction::Right:
 		head->Draw(position.x + size.x - lengthOfPiece + horizontalPeiceSize.x / 2, position.y + horizontalPeiceSize.y / 2, trans, 1.0f);
-		for (int i = position.x; i < position.x + size.x - lengthOfPiece - 1; i += lengthOfPiece) {
+		for (float i = position.x; i < position.x + size.x - lengthOfPiece - 1; i += lengthOfPiece) {
 			body->Draw(i + horizontalPeiceSize.x / 2, position.y + horizontalPeiceSize.y / 2, trans, 1.0f);
 		}
 		break;
 	case Direction::Bottom:
 		head->Draw(position.x + verticalPeiceSize.x / 2, position.y + size.y - lengthOfPiece + verticalPeiceSize.y / 2, trans, 1.0f);
-		for (int i = position.y; i < position.y + size.y - lengthOfPiece - 1; i += lengthOfPiece) {
+		for (float i = position.y; i < position.y + size.y - lengthOfPiece - 1; i += lengthOfPiece) {
 			body->Draw(position.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans, 1.0f);
 		}
 		break;
 	case Direction::Top:
 		head->Draw(position.x + verticalPeiceSize.x / 2, position.y + verticalPeiceSize.y / 2, trans, 1.0f);
-		for (int i = position.y + lengthOfPiece; i < position.y + size.y - 1; i += lengthOfPiece) {
+		for (float i = position.y + lengthOfPiece; i < position.y + size.y - 1; i += lengthOfPiece) {
 			body->Draw(position.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans, 1.0f);
 		}
 		break;

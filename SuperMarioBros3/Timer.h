@@ -11,6 +11,7 @@ public:
 	CTimer(int duration) {
 		this->duration = duration;
 		start = 0;
+		is_running = false;
 	}
 
 	void Start() {

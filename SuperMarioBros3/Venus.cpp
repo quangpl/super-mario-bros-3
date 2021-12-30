@@ -12,7 +12,7 @@ Venus::Venus(Vec2 _pos, int type) :CGameObject()
 	this->type = type;
 	zIndex = 8;
 	SetState(VENUS_STATE_DISPLAY);
-	for (int i = 0; i < 1; i++) { // num of fireball
+	for (int i = 0; i < 2; i++) { // num of fireball
 		Fireball* ball = new Fireball();
 		ball->SetDeleted(true);
 		fireballs.push_back(ball);
@@ -113,15 +113,24 @@ void Venus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		for (Fireball* fireball : fireballs)
 		{
-			fireball->SetDeleted(false);
-			fireball->Shoot(GetBoundingBox(), nx);
-			Vec2 fireballPosition = fireball->GetPosition();
+			if (!fireball->active) {
+				if (fireball->spawned) {
+					fireball->active = true;
+				}
+				fireball->SetDeleted(false);
+				fireball->Shoot(GetBoundingBox(), nx);
+				Vec2 fireballPosition = fireball->GetPosition();
 
-			RectBox cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+				RectBox cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
 
-			if (fireballPosition.x >= cam.left && fireballPosition.y >= cam.top && fireballPosition.x <= cam.right && fireballPosition.y <= cam.bottom) {
-				SceneManager::GetInstance()->GetActiveScene()->AddObject(fireball);
-				break;
+				if (fireballPosition.x >= cam.left && fireballPosition.y >= cam.top && fireballPosition.x <= cam.right && fireballPosition.y <= cam.bottom) {
+					if (!fireball->spawned) {
+						SceneManager::GetInstance()->GetActiveScene()->AddObject(fireball);
+						fireball->spawned = true;
+						fireball->active = true;
+					}
+					break;
+				}
 			}
 		}
 	}
@@ -184,7 +193,7 @@ void Venus::Render()
 		break;
 	}
 
-	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale.x = -nx;
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale.x = (float)-nx;
 	CAnimations::GetInstance()->Get(ani)->Render(position.x + VENUS_SIZE_X / 2, position.y + VENUS_SIZE_Y / 2);
 	RenderBoundingBox();
 }

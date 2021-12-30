@@ -12,7 +12,7 @@ void Stopwatch::Start()
 	if (!isRunning)
 	{
 		isRunning = true;
-		startTime = GetTickCount64();
+		startTime = (DWORD) GetTickCount64();
 	}
 }
 
@@ -20,7 +20,7 @@ void Stopwatch::Stop()
 {
 	if (isRunning)
 	{
-		DWORD endTime = GetTickCount64();
+		DWORD endTime = (DWORD)GetTickCount64();
 		DWORD elapsedPeriod = endTime - startTime;
 		elapsed += elapsedPeriod;
 		isRunning = false;
@@ -30,7 +30,7 @@ void Stopwatch::Stop()
 void Stopwatch::Reset()
 {
 	elapsed = 0;
-	startTime = GetTickCount64();
+	startTime = (DWORD)GetTickCount64();
 	isRunning = false;
 }
 
@@ -56,7 +56,7 @@ long Stopwatch::GetElapsedTime()
 
 	if (isRunning)
 	{
-		DWORD currentTime = GetTickCount64();
+		DWORD currentTime = (DWORD)GetTickCount64();
 		long currentElapsed = currentTime - startTime;
 		timeElapsed += currentElapsed;
 	}

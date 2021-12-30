@@ -40,7 +40,7 @@ void Debris::Render(int runTime, int totalTime, D3DXCOLOR overlay)
 	ani->GetTransform()->Position.x = position.x - cam.x + DEBRIS_SIZE / 2;
 	ani->GetTransform()->Position.y = position.y - cam.y + DEBRIS_SIZE / 2;
 
-	ani->Render(runTime, totalTime);
+	ani->Render((float)runTime, (float)totalTime);
 }
 
 RectBox Debris::GetBoundingBox()

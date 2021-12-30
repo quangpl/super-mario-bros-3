@@ -117,7 +117,7 @@ void CKoopas::Render()
 		break;
 	}
 
-	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2(-nx, transformation.y);
+	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = Vec2((float)-nx, transformation.y);
 	CAnimations::GetInstance()->Get(ani)->Render(position.x, position.y);
 	RenderBoundingBox();
 }

@@ -9,6 +9,7 @@ CPlayScene::CPlayScene()
 	this->player = CMario::GetInstance();
 	this->player->SetPlayerState(new SmallMario());
 	key_handler = new CSampleKeyHandler(this);
+	gameMap = NULL;
 }
 
 
@@ -201,7 +202,7 @@ void CPlayScene::Render()
 		LPEFFECT effect = x.second;
 		effect->Render();
 	}
-	for (int i = 0; i < objects.size(); i++) {
+	for (int i = 0; i < (int)objects.size(); i++) {
 		if (objects[i]->IsDeleted()) {
 			continue;
 		}

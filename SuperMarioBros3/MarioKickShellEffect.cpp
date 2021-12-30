@@ -1,8 +1,10 @@
 #include "MarioKickShellEffect.h"
 #include "MasterMario.h"
+#include "MarioGrowEffect.h"
 
 CMarioKickShellEffect::CMarioKickShellEffect(Vec2 pos, int _nx) : CEffect(pos.x, pos.y)
 {
+	this->startTime = 0;
 	this->nx = _nx;
 }
 
@@ -30,7 +32,7 @@ void CMarioKickShellEffect::Render()
 
 void CMarioKickShellEffect::Update(DWORD dt)
 {
-	if (state == MARIO_KICK_SHELL_EFFECT_RUNNING && GetTickCount64() - startTime >= STOP_TIMEOUT) {
+	if (state == MARIO_KICK_SHELL_EFFECT_RUNNING && GetTickCount64() - startTime >= 100) {
 		this->callback();
 	}
 }

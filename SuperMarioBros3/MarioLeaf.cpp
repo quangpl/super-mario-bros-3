@@ -19,7 +19,7 @@ bool MarioLeaf::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float
 void MarioLeaf::Render()
 {
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetPosition();
-	CAnimations::GetInstance()->Get("ani-super-leaf-red")->GetTransform()->Scale.x = -nx;
+	CAnimations::GetInstance()->Get("ani-super-leaf-red")->GetTransform()->Scale.x = (float)-nx;
 	CAnimations::GetInstance()->Get("ani-super-leaf-red")->GetTransform()->Position = GetPosition() - cam + Vec2{ LEAF_SIZE ,LEAF_SIZE } / 2;
 	CAnimations::GetInstance()->Get("ani-super-leaf-red")->Render(position.x, position.y);
 	RenderBoundingBox();

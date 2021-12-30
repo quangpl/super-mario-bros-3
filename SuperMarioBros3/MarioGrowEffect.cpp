@@ -2,6 +2,7 @@
 
 CMarioGrowEffect::CMarioGrowEffect(Vec2 pos, int _nx) : CEffect(pos.x, pos.y)
 {
+	startTime = 0;
 	this->nx = _nx;
 }
 
@@ -22,6 +23,6 @@ void CMarioGrowEffect::Update(DWORD dt)
 void CMarioGrowEffect::Start(function<void()> _callback)
 {
 	state = MARIO_GROW_UP_EFFECT_RUNNING;
-	startTime = GetTickCount64();
+	startTime = (DWORD)GetTickCount64();
 	this->callback = _callback;
 }

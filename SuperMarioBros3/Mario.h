@@ -17,7 +17,6 @@ class CMario : public CGameObject
 public:
 	int level;
 	float power;
-	float startJumpPosition;
 	RectBox moveLimitaion;
 	CMasterMario* playerState;
 	BOOLEAN isSitting;
@@ -27,15 +26,17 @@ public:
 
 	int untouchable;
 	ULONGLONG untouchable_start;
-	ULONGLONG transformation_start;
 	BOOLEAN isOnPlatform;
 	int coin;
 	bool isJumping;
 	bool isAttacking;
-	LPGAMEOBJECT holder = NULL;
+	LPGAMEOBJECT holder;
 	bool holding;
 	CMario() : CGameObject()
 	{
+		this->power = 0;
+		this->level = MarioLevel::Small;
+		this->playerState = NULL;
 		this->maxVx = 0.0f;
 		this->ax = 0.0f;
 		this->ay = 0.002f;
@@ -43,6 +44,11 @@ public:
 		this->untouchable_start = -1;
 		this->isOnPlatform = true;
 		this->coin = 0;
+		holding = false;
+		isJumping = false;
+		isAttacking = false;
+		this->holder = NULL;
+		this->isSitting = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -54,10 +60,10 @@ public:
 
 	int IsCollidable();
 
-	void OnNoCollision(DWORD dt);
-	void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnBlockingOnY(int jetY);
-	void OnBlockingOnX(int jetX);
+	virtual void OnNoCollision(DWORD dt);
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual void OnBlockingOnY(int jetY);
+	virtual void OnBlockingOnX(int jetX);
 
 	void StartUntouchable();
 

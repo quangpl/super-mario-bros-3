@@ -35,10 +35,10 @@ void CTileSet::Draw(int gid, float x, float y)
 	y += tile_size.y / 2;
 
 	RECT r;
-	r.top = ((gid - first_gid) / columns) * tile_size.y;
-	r.left = ((gid - first_gid) % columns) * tile_size.x;
-	r.bottom = r.top + tile_size.y;
-	r.right = r.left + tile_size.x;
+	r.top = (LONG)((gid - first_gid) / columns) * (LONG)tile_size.y;
+	r.left = (LONG)((gid - first_gid) % columns) * (LONG)tile_size.x;
+	r.bottom = (LONG)r.top + (LONG)tile_size.y;
+	r.right = (LONG)r.left + (LONG)tile_size.x;
 	D3DXVECTOR3 pivot = { 0, 0, 0 };
 	Transformation trans;
 	CGame::GetInstance()->Draw(x, y, pivot, texture, r, trans, 1.0f);

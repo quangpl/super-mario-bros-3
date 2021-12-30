@@ -2,6 +2,7 @@
 
 CMarioDamagedEffect::CMarioDamagedEffect(Vec2 pos, int _nx) : CEffect(pos.x, pos.y)
 {
+	startTime = 0;
 	this->nx = _nx;
 }
 
@@ -13,7 +14,7 @@ void CMarioDamagedEffect::Render()
 
 void CMarioDamagedEffect::Update(DWORD dt)
 {
-	if (state == MARIO_DAMAGED_EFFECT_RUNNING && GetTickCount64() - startTime >= STOP_TIMEOUT) {
+	if (state == MARIO_DAMAGED_EFFECT_RUNNING && (DWORD)GetTickCount64() - startTime >= STOP_TIMEOUT) {
 		this->callback();
 	}
 }
@@ -22,6 +23,6 @@ void CMarioDamagedEffect::Update(DWORD dt)
 void CMarioDamagedEffect::Start(function<void()> _callback)
 {
 	state = MARIO_DAMAGED_EFFECT_RUNNING;
-	startTime = GetTickCount64();
+	startTime = (DWORD)GetTickCount64();
 	this->callback = _callback;
 }

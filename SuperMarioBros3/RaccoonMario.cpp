@@ -487,7 +487,6 @@ void RaccoonMario::OnKeyDown(int KeyCode) {
 				mario->isJumping = false;
 				SetState(MARIO_STATE_FLY);
 				mario->vy = -0.432f;
-				mario->startJumpPosition = mario->position.y;
 				if (!flyStopwatch->IsRunning()) {
 					flyStopwatch->Restart();
 				}

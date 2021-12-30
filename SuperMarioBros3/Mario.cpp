@@ -71,6 +71,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 	this->playerState->Update(dt, coObjects);
+	
 }
 
 int CMario::IsCollidable()
@@ -90,15 +91,16 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		e->obj->SetState(PSWITCH_STATE_PRESSED);
 	}
 	this->playerState->OnCollisionWith(e);
+	if (e->ny < 0) {
+		isOnPlatform = true;
+		isJumping = false;
+	}
 }
 
 void CMario::OnBlockingOnY(int jetY)
 {
 
-	if (jetY < 0) {
-		isOnPlatform = true;
-		isJumping = false;
-	}
+	
 }
 
 void CMario::OnBlockingOnX(int jetX)

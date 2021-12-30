@@ -21,6 +21,9 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
+	bool spawned = false;
+	bool active = false;
+
 	Fireball();
 	virtual void SetState(int state);
 	void Shoot(RectBox box, int nx);

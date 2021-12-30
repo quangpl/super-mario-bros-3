@@ -22,6 +22,6 @@ void CGoombaDieEffect::Update(DWORD dt)
 void CGoombaDieEffect::Start(function<void()> _callback)
 {
 	state = GOOMBA_DIE_EFFECT_RUNNING;
-	startTime = GetTickCount64();
+	startTime = (DWORD)GetTickCount64();
 	this->callback = _callback;
 }

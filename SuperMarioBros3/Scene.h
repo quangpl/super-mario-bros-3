@@ -17,7 +17,7 @@ protected:
 	string id;
 	string data_path = "";
 	vector<CGameObject*> objects;
-	Camera* camera;
+	Camera* camera = NULL;
 	CMario* player;
 
 public:

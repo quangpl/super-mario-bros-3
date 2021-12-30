@@ -6,6 +6,8 @@
 
 CGameMap::CGameMap()
 {
+	this->camera = NULL;
+	this->tileSet = NULL;
 	this->width = this->height = this->tile_height = this->tile_width = 0;
 }
 
@@ -40,10 +42,10 @@ void CGameMap::Render()
 				int id = tiles[i][j];
 				if (id < firstGID) continue;
 
-				int x = i * tile_width - camPos.x;
-				int y = j * tile_height - camPos.y;
+				int x = (int)i * tile_width - (int)camPos.x;
+				int y = (int)j * tile_height - (int)camPos.y;
 
-				tileSet->Draw(id, x, y);
+				tileSet->Draw(id, (float)x, (float)y);
 			}
 		}
 	}
@@ -61,14 +63,6 @@ CGameMap* CGameMap::FromTMX(string filePath)
 		root->QueryIntAttribute("height", &gameMap->height);
 		root->QueryIntAttribute("tilewidth", &gameMap->tile_width);
 		root->QueryIntAttribute("tileheight", &gameMap->tile_height);
-
-		if (root->Attribute("backgroundcolor")) {
-			string hexColor = root->Attribute("backgroundcolor");
-			hexColor.replace(0, 1, "");
-			unsigned int hex = stoul(hexColor, nullptr, 16);
-			int a = (hex >> 24) & 255 | 255 & (hexColor.length() <= 6 ? 0xff : 0x00);
-			gameMap->backgroundColor = D3DXCOLOR((hex >> 16) & 255, (hex >> 8) & 255, hex & 255, a);
-		}
 
 		//Load custom properties
 		TiXmlElement* properties = root->FirstChildElement("properties");

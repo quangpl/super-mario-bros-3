@@ -12,9 +12,8 @@
 #include "Utils.h"
 #include "Koopas.h"
 #include "RedMushRoom.h"
-#include "CommandPoint.h"
 #include "RedWingGoomba.h"
-#include "EffectManager.h";
+#include "EffectManager.h"
 #include "ObjectTypeData.h"
 #include "GameMap.h"
 #include "SampleKeyEventHandler.h"

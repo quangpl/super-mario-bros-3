@@ -2,6 +2,7 @@
 
 BrokenBrickEffect::BrokenBrickEffect(Vec2 pos) : CEffect(pos.x, pos.y)
 {
+	this->startTime = 0;
 	for (int i = 0; i < 4; i++)
 	{
 		Debris* debris = new Debris();
@@ -10,20 +11,20 @@ BrokenBrickEffect::BrokenBrickEffect(Vec2 pos) : CEffect(pos.x, pos.y)
 		switch (i)
 		{
 		case 0:
-			debris->vx = 0.3 * 0.5;
-			debris->vy = -1.3 * 0.5;
+			debris->vx = (float)0.3 * 0.5;
+			debris->vy = (float)-1.3 * 0.5;
 			break;
 		case 1:
-			debris->vx = 0.3 * 0.5;
-			debris->vy = -0.5 * 0.5;
+			debris->vx = (float)0.3 * 0.5;
+			debris->vy = (float)-0.5 * 0.5;
 			break;
 		case 2:
-			debris->vx = -0.3 * 0.5;
-			debris->vy = -0.5 * 0.5;
+			debris->vx = (float)-0.3 * 0.5;
+			debris->vy = (float)-0.5 * 0.5;
 			break;
 		case 3:
-			debris->vx = -0.3 * 0.5;
-			debris->vy = -1.3 * 0.5;
+			debris->vx = (float)-0.3 * 0.5;
+			debris->vy = (float)-1.3 * 0.5;
 			break;
 		}
 
@@ -33,14 +34,14 @@ BrokenBrickEffect::BrokenBrickEffect(Vec2 pos) : CEffect(pos.x, pos.y)
 
 void BrokenBrickEffect::Render()
 {
-	for (int i = 0; i < this->debrises.size(); i++) {
+	for (int i = 0; i < (int)this->debrises.size(); i++) {
 		this->debrises[i]->Render();
 	}
 }
 
 void BrokenBrickEffect::Update(DWORD dt)
 {
-	for (int i = 0; i < this->debrises.size(); i++) {
+	for (int i = 0; i < (int)this->debrises.size(); i++) {
 		this->debrises[i]->Update(dt);
 	}
 }
@@ -48,5 +49,5 @@ void BrokenBrickEffect::Update(DWORD dt)
 
 void BrokenBrickEffect::Start(function<void()> _callback)
 {
-	
+
 }

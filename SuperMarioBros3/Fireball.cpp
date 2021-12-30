@@ -5,6 +5,7 @@ Fireball::Fireball() :CGameObject()
 {
 	zIndex = 15;
 	gravity = 0;
+	dt = 0;
 }
 
 void Fireball::Shoot(RectBox box, int nx) {
@@ -20,16 +21,17 @@ void Fireball::Shoot(RectBox box, int nx) {
 	Vec2 distance = this->GetUnitVector(marioPosition - position);
 
 	if (abs(distance.x) > CELL_SIZE * 6 || abs(distance.y) < CELL_SIZE * 2)
-		ray = (distance.x > 0 ? 25 : 155) * (distance.y < 0 ? -1 : 1);
+		ray = (distance.x > 0 ? (float)25 : (float)155) * (distance.y < 0 ? (float)-1 : (float)1);
 	else
-		ray = (distance.x > 0 ? 45 : 135) * (distance.y < 0 ? -1 : 1);
+		ray = (distance.x > 0 ? (float)45 : (float)135) * (distance.y < 0 ? (float)-1 : (float)1);
 
-	ray = ray * PI_CONSTANT / 180.0f; // chuyen tu do qua radian
+	ray = (float)ray * (float)PI_CONSTANT / 180.0f; // chuyen tu do qua radian
 	directionVector = GetUnitVector(Vec2(cos(ray), sin(ray))); // tinh vector don vi
 
 	Vec2 v = directionVector * FIREBALL_SPEED;
 	vx = v.x;
 	vy = v.y;
+	
 
 }
 //Tim vector don vi : https://tintuctuyensinh.vn/don-vi-vector/?fbclid=IwAR2MtoxYo6f3qihItiKc8QMxYkh5rFKp4UvzANZlgpbSoPLZAmRpoiVKzI8
@@ -54,20 +56,29 @@ RectBox Fireball::GetBoundingBox() {
 
 void Fireball::OnNoCollision(DWORD dt)
 {
+	DebugOut(L"x y %f %f \tvx vy %f %f\t%d\n", position.x, position.y, vx, vy, dt);
 	position.x += vx * dt;
 	position.y += vy * dt;
 };
 
 void Fireball::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-
 }
 
 void Fireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!active) return;
+
 	this->dt = dt;
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	RectBox cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+
+	if (!(position.x >= cam.left - 20 && position.y >= cam.top - 20 && position.x <= cam.right + 20 && position.y <= cam.bottom + 20)) {
+		// khong con trong cam
+		active = false;
+	}
 }
 int Fireball::IsCollidable() {
 	return 0;

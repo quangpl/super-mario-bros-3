@@ -153,7 +153,6 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinEffect.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CommandPoint.cpp" />
     <ClCompile Include="DataReader.cpp" />
     <ClCompile Include="BrokenBrickEffect.cpp" />
     <ClCompile Include="Debris.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinEffect.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="CommandPoint.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DataReader.h" />
     <ClInclude Include="BrokenBrickEffect.h" />
