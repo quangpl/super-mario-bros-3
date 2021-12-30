@@ -36,7 +36,7 @@ class CBrick : public CGameObject
 public:
 	Vec2 backupPos;
 	Vec2 size;
-	BrickType brickType;
+	BrickType brickType = BrickType::QuestionBrick;
 	ObjectType reward = ObjectTypeData::QuestionCoin;
 	void OnNoCollision(DWORD dt);
 	CBrick();

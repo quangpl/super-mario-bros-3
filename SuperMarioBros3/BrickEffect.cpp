@@ -3,6 +3,7 @@
 
 CBrickEffect::CBrickEffect(float _x, float _y) : CEffect(_x, _y)
 {
+	this->state = -1;
 	this->start_y = _y;
 }
 

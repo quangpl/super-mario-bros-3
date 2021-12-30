@@ -5,6 +5,7 @@
 #include "GreenKoopas.h"
 
 CCoin::CCoin() {
+	this->backupState = 0;
 	switchStopWatch = new Stopwatch();
 }
 

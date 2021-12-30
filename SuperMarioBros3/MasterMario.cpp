@@ -15,6 +15,7 @@
 #include "Fireball.h"
 #include "Piranha.h"
 #include "Venus.h"
+#include "ScoreEffect.h"
 
 CMasterMario::CMasterMario()
 {
@@ -69,7 +70,7 @@ void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 }
-void CMasterMario::OnKickShell(CGameObject *koopas) {
+void CMasterMario::OnKickShell(CGameObject* koopas) {
 	CEffectManager* effectManager = CEffectManager::GetInstance();
 	CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
 	int effectId = effectManager->Add(marioKickShellEffect);
@@ -135,6 +136,55 @@ void CMasterMario::SetState(int state)
 
 
 void CMasterMario::OnKeyUp(int KeyCode) {
+
+}
+void CMasterMario::OnHitEnermy(CGameObject* obj) {
+	if (GetTickCount64() - mario->lastTimeHit <= 1000) {
+		mario->scoreLevel = mario->scoreLevel + 1;
+	}
+	else {
+		mario->scoreLevel = 0;
+	}
+	mario->lastTimeHit = GetTickCount64();
+	ScoreNum scoreNum = ScoreNum::SCORE100;
+
+	switch (mario->scoreLevel)
+	{
+	case 0:
+		scoreNum = ScoreNum::SCORE100;
+		break;
+	case 1:
+		scoreNum = ScoreNum::SCORE200;
+		break;
+	case 2:
+		scoreNum = ScoreNum::SCORE400;
+		break;
+	case 3:
+		scoreNum = ScoreNum::SCORE800;
+		break;
+	case 4:
+		scoreNum = ScoreNum::SCORE1000;
+		break;
+	case 5:
+		scoreNum = ScoreNum::SCORE2000;
+		break;
+	case 6:
+		scoreNum = ScoreNum::SCORE4000;
+		break;
+	case 7:
+		scoreNum = ScoreNum::SCORE8000;
+		break;
+	default:
+		break;
+	}
+
+	CEffectManager* effectManager = CEffectManager::GetInstance();
+	ScoreEffect* scoreEffect = new ScoreEffect(obj->position.x, obj->position.y - 48 * 2, scoreNum);
+	int effectId = effectManager->Add(scoreEffect);
+
+	scoreEffect->Start([this, effectId]() {
+		CEffectManager::GetInstance()->Delete(effectId);
+		});
 
 }
 void CMasterMario::OnDamaged() {

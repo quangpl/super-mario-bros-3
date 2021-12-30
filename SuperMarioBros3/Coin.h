@@ -17,7 +17,7 @@ class CCoin : public CGameObject
 {
 
 public:
-	int backupState;
+	int backupState = 0;
 	Stopwatch* switchStopWatch;
 	bool isSwitching = false;
 	Vec2 backupPos;

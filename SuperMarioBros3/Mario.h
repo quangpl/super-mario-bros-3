@@ -32,6 +32,11 @@ public:
 	bool isAttacking;
 	LPGAMEOBJECT holder;
 	bool holding;
+
+	// score
+	int scoreLevel;
+	ULONGLONG lastTimeHit;
+
 	CMario() : CGameObject()
 	{
 		this->power = 0;
@@ -49,6 +54,10 @@ public:
 		isAttacking = false;
 		this->holder = NULL;
 		this->isSitting = false;
+
+		this->scoreLevel = 0;
+		this->lastTimeHit = 0;
+
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -84,7 +93,6 @@ public:
 
 	virtual void OnKeyUp(int keyCode);
 	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
-
 
 	virtual void OnKeyDown(int keyCode);
 	virtual RectBox GetBoundingBox();

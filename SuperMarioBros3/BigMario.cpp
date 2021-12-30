@@ -65,6 +65,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			{
 				goomba->SetState(GOOMBA_STATE_DIE);
 				mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
+				this->OnHitEnermy(goomba);
 			}
 		}
 		else // hit by Goomba
@@ -97,10 +98,12 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 					redWingGoomba->SetLevel(RedWingGoombaLevel::Red);
 					redWingGoomba->SetState(GOOMBA_STATE_WALKING);
 					mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
+					this->OnHitEnermy(redWingGoomba);
 				}
 				else {
 					redWingGoomba->SetState(GOOMBA_STATE_DIE);
 					mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
+					this->OnHitEnermy(redWingGoomba);
 				}
 			}
 		}
@@ -167,6 +170,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (e->ny < 0) {
 				mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
 				koopas->SetState(KOOPAS_STATE_DIE_BY_ATTACK);
+				this->OnHitEnermy(koopas);
 			}
 			else {
 				if (mario->untouchable == 0)
@@ -199,6 +203,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (e->ny < 0) {
 				mario->vy = -MARIO_JUMP_DEFLECT_SPEED;
 				koopas->SetState(KOOPAS_STATE_DIE_BY_ATTACK);
+				this->OnHitEnermy(koopas);
 			}
 			else {
 				if (mario->untouchable == 0)

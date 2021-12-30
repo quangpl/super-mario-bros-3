@@ -3,7 +3,10 @@
 #include "Tail.h"
 #include "BrokenBrickEffect.h"
 #include "GreenMushroom.h"
+#include "ScoreEffect.h"
+
 CBrick::CBrick() {
+	this->brickType = BrickType::QuestionBrick;
 }
 
 CBrick::~CBrick()
@@ -120,8 +123,13 @@ void CBrick::SetState(int state)
 		if (reward == ObjectTypeData::QuestionCoin) {
 			CCoindEffect* coinEffect = new CCoindEffect(this->position.x, this->position.y);
 			int coinEffectId = effectManager->Add(coinEffect);
-			coinEffect->Start([this, coinEffectId]() {
+			coinEffect->Start([this, coinEffectId, effectManager]() {
 				CEffectManager::GetInstance()->Delete(coinEffectId);
+				ScoreEffect* scoreEffect = new ScoreEffect(this->position.x, this->position.y - 48, ScoreNum::SCORE100);
+				int effectId = effectManager->Add(scoreEffect);
+				scoreEffect->Start([this, effectId]() {
+					CEffectManager::GetInstance()->Delete(effectId);
+					});
 				});
 		}
 		else if (reward == ObjectTypeData::PSwitch) {

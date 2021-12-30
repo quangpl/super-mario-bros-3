@@ -75,6 +75,7 @@ public:
 
 	virtual void OnKeyDown(int keyCode);
 	virtual void OnDamaged();
+	virtual void OnHitEnermy(CGameObject* obj);
 	void PowerCalculator(DWORD dt);
 	void OnReleaseHolding();
 	void OnKickShell(CGameObject *koopas);
