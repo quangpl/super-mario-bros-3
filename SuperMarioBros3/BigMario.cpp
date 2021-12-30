@@ -9,7 +9,7 @@
 #include "MarioLeaf.h"
 #include "RaccoonMario.h"
 #include "GreenKoopas.h"
-
+#include "GreenMushroom.h"
 BigMario::BigMario() :CMasterMario()
 {
 	mario->SetLevel(MarioLevel::Big);
@@ -130,6 +130,21 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (mushroom->GetEatable()) {
 			SetState(MARIO_STATE_TRANSFORM_SMALL_TO_BIG);
 			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
+		}
+	}
+	else if (dynamic_cast<GreenMushroom*>(e->obj))
+	{
+		GreenMushroom* mushroom = dynamic_cast<GreenMushroom*>(e->obj);
+		// TODO: Improve collision framework to do better
+		if (mushroom->GetEatable()) {
+			CEffectManager* effectManager = CEffectManager::GetInstance();
+			CCoindEffect* coinEffect = new CCoindEffect(mario->position.x, mario->position.y);
+			int coinEffectId = effectManager->Add(coinEffect);
+			coinEffect->Start([this, coinEffectId, mushroom]() {
+				CEffectManager::GetInstance()->Delete(coinEffectId);
+				mushroom->SetState(UP_MUSHROOM_STATE_DIE);
+				});
+
 		}
 	}
 	else if (dynamic_cast<CKoopas*>(e->obj))

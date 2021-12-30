@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "Tail.h"
 #include "BrokenBrickEffect.h"
+#include "GreenMushroom.h"
 CBrick::CBrick() {
 }
 
@@ -23,6 +24,9 @@ CBrick* CBrick::Create(Vec2 pos, MapData& data)
 	}
 	if (rewardItem.compare(ObjectTypeData::QuestionCoin.ToString()) == 0) {
 		birck->reward = ObjectTypeData::QuestionCoin;
+	}
+	if (rewardItem.compare(ObjectTypeData::GreenMushroom.ToString()) == 0) {
+		birck->reward = ObjectTypeData::GreenMushroom;
 	}
 	if (rewardItem.compare(ObjectTypeData::RaccoonLeaf.ToString()) == 0) {
 		birck->reward = ObjectTypeData::RaccoonLeaf;
@@ -123,6 +127,13 @@ void CBrick::SetState(int state)
 		else if (reward == ObjectTypeData::PSwitch) {
 			PSwitch* pSwitch = new PSwitch(position);
 			SceneManager::GetInstance()->GetActiveScene()->AddObject(pSwitch);
+		}
+		else if (reward == ObjectTypeData::GreenMushroom) {
+			GreenMushroom* mushroom = new GreenMushroom();
+			mushroom->SetStartY(this->position.y + BRICK_BBOX_HEIGHT / 2);
+			mushroom->SetPosition(Vec2{ this->position.x + BRICK_BBOX_WIDTH / 2,this->position.y + BRICK_BBOX_HEIGHT / 2 });
+			mushroom->SetState(UP_MUSHROOM_STATE_UP);
+			SceneManager::GetInstance()->GetActiveScene()->AddObject(mushroom);
 		}
 		else if (reward == ObjectTypeData::RaccoonLeaf || reward == ObjectTypeData::RedMushroom) {
 			GenerateRewardByMarioLevel();

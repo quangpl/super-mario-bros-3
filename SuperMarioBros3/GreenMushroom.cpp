@@ -1,17 +1,17 @@
-#include "RedMushroom.h"
+#include "GreenMushroom.h"
 
-CRedMushroom::CRedMushroom() :CGameObject()
+GreenMushroom::GreenMushroom() :CGameObject()
 {
-	this->start_y = 0;
 	this->type = Type::MUSHROOM;
 	this->vy = 0;
 	this->vx = 0;
 	this->gravity = 0;
 	// render before Brick
+	this->start_y = 0;
 	this->zIndex = 0;
 }
 
-RectBox CRedMushroom::GetBoundingBox()
+RectBox GreenMushroom::GetBoundingBox()
 {
 	this->bounding_box.left = position.x - MUSHROOM_BBOX_WIDTH / 2;
 	this->bounding_box.top = position.y - MUSHROOM_BBOX_HEIGHT / 2;
@@ -20,12 +20,12 @@ RectBox CRedMushroom::GetBoundingBox()
 	return this->bounding_box;
 }
 
-void CRedMushroom::OnNoCollision(DWORD dt)
+void GreenMushroom::OnNoCollision(DWORD dt)
 {
 	position.x += vx * dt;
 	position.y += vy * dt;
 };
-bool CRedMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy)
+bool GreenMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float collisionNy)
 {
 	if (dynamic_cast<CGoomba*>(gameObject)) {
 		return true;
@@ -35,7 +35,7 @@ bool CRedMushroom::CanThrough(CGameObject* gameObject, float collisionNx, float 
 	}
 };
 
-void CRedMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+void GreenMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->obj->CanThrough(this, e->nx, e->ny)) return;
 	if (e->nx != 0)
@@ -43,7 +43,7 @@ void CRedMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 }
-void CRedMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void GreenMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == UP_MUSHROOM_STATE_UP && abs(start_y - position.y) >= BRICK_BBOX_HEIGHT) {
 		SetState(UP_MUSHROOM_STATE_RUN);
@@ -57,14 +57,14 @@ void CRedMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
-void CRedMushroom::Render()
+void GreenMushroom::Render()
 {
-	CAnimations::GetInstance()->Get("ani-super-mushroom")->Render(position.x, position.y);
+	CAnimations::GetInstance()->Get("ani-1-up-mushroom")->Render(position.x, position.y);
 	RenderBoundingBox();
 
 }
 
-void CRedMushroom::SetState(int state)
+void GreenMushroom::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

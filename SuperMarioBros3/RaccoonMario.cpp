@@ -9,6 +9,7 @@
 #include "RaccoonMario.h"
 #include "MarioKickShellEffect.h"
 #include "GreenKoopas.h"
+#include "GreenMushroom.h"
 
 RaccoonMario::RaccoonMario() :CMasterMario()
 {
@@ -170,6 +171,21 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 		}
 	}
+	else if (dynamic_cast<GreenMushroom*>(e->obj))
+	{
+		GreenMushroom* mushroom = dynamic_cast<GreenMushroom*>(e->obj);
+		// TODO: Improve collision framework to do better
+		if (mushroom->GetEatable()) {
+			CEffectManager* effectManager = CEffectManager::GetInstance();
+			CCoindEffect* coinEffect = new CCoindEffect(mario->position.x, mario->position.y);
+			int coinEffectId = effectManager->Add(coinEffect);
+			coinEffect->Start([this, coinEffectId, mushroom]() {
+				CEffectManager::GetInstance()->Delete(coinEffectId);
+				mushroom->SetState(UP_MUSHROOM_STATE_DIE);
+				});
+
+		}
+	}
 	else if (dynamic_cast<CKoopas*>(e->obj))
 	{
 		CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
@@ -203,7 +219,7 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<GreenKoopas*>(e->obj))
 	{
-	GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(e->obj);
+		GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(e->obj);
 		switch (koopas->GetState())
 		{
 			// TODO: Improve collision framework to make it easier
@@ -462,9 +478,9 @@ void RaccoonMario::OnKeyUp(int KeyCode) {
 		}
 		this->SetState(MARIO_STATE_RELEASE_RUNNING);
 		break;
-	/*case DIK_Z:
-		this->SetState(MARIO_STATE_RELEASE_HOLDING);
-		break;*/
+		/*case DIK_Z:
+			this->SetState(MARIO_STATE_RELEASE_HOLDING);
+			break;*/
 	case DIK_DOWN:
 		this->SetState(MARIO_STATE_SIT_RELEASE);
 		break;

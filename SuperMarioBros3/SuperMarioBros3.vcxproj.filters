@@ -288,6 +288,9 @@
     <ClCompile Include="GreenKoopas.cpp">
       <Filter>Koopas</Filter>
     </ClCompile>
+    <ClCompile Include="GreenMushroom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -511,6 +514,9 @@
     </ClInclude>
     <ClInclude Include="GreenKoopas.h">
       <Filter>Koopas</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenMushroom.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

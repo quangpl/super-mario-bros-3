@@ -56,7 +56,6 @@ RectBox Fireball::GetBoundingBox() {
 
 void Fireball::OnNoCollision(DWORD dt)
 {
-	DebugOut(L"x y %f %f \tvx vy %f %f\t%d\n", position.x, position.y, vx, vy, dt);
 	position.x += vx * dt;
 	position.y += vy * dt;
 };
