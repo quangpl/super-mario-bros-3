@@ -2,6 +2,8 @@
 #include "Mario.h"
 #include "Tail.h"
 #include "MarioDamagedEffect.h"
+#include "Koopas.h"
+#include "GreenKoopas.h"
 
 Venus::Venus(Vec2 _pos, int type) :CGameObject()
 {
@@ -38,7 +40,7 @@ void Venus::OnNoCollision(DWORD dt)
 
 void Venus::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CTail*>(e->obj)) {
+	if (dynamic_cast<CTail*>(e->obj) || (dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) || (dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE)) {
 		this->SetDeleted(true);
 		// disable fireball
 

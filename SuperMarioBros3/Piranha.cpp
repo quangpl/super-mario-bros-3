@@ -1,8 +1,10 @@
 #include "Piranha.h"
 #include "Mario.h"
-#include "Tail.h"
 #include "EffectManager.h"
+#include "Tail.h"
 #include "MarioDamagedEffect.h"
+#include "Koopas.h"
+#include "GreenKoopas.h"
 
 Piranha::Piranha(Vec2 _pos) :CGameObject()
 {
@@ -31,8 +33,15 @@ void Piranha::OnNoCollision(DWORD dt)
 
 void Piranha::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CTail*>(e->obj)) {
+	if (dynamic_cast<CTail*>(e->obj) || (dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) || (dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE)) {
 		this->SetDeleted(true);
+		// disable fireball
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		CMarioDamagedEffect* damagedEffect = new CMarioDamagedEffect(this->position, this->GetNx());
+		int effectId = effectManager->Add(damagedEffect);
+		damagedEffect->Start([this, effectId]() {
+			CEffectManager::GetInstance()->Delete(effectId);
+			});
 	}
 }
 
