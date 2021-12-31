@@ -18,7 +18,7 @@ protected:
 	string data_path = "";
 	vector<CGameObject*> objects;
 	Camera* camera = NULL;
-	CMario* player;
+	CMario* player = NULL;
 
 public:
 	Vec2 camSize = Vec2(769, 579);
