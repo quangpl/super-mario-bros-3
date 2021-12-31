@@ -78,7 +78,7 @@ class CKoopas : public CGameObject
 protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
-
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	virtual int IsCollidable();
 	virtual void OnNoCollision(DWORD dt);
 

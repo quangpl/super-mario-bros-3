@@ -68,6 +68,14 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
+bool CKoopas::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	if (dynamic_cast<GreenKoopas*>(gameObjToCollide) && gameObjToCollide->GetState() == KOOPAS_STATE_WALKING) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 void CKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
 	if (state == KOOPAS_STATE_DIE_MOVE && e->obj->GetState() != BRICK_STATE_BROKEN) {

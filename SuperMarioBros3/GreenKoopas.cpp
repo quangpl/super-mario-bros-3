@@ -17,6 +17,14 @@ int GreenKoopas::IsCollidable() {
 	}
 	return 1;
 }
+bool GreenKoopas::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
+	if (dynamic_cast<GreenKoopas*>(gameObjToCollide) && gameObjToCollide->GetState() == KOOPAS_STATE_WALKING) {
+		return true;
+	}
+	else {
+		return false;
+	}
+ }
 
 RectBox GreenKoopas::GetBoundingBox() {
 	bounding_box.left = position.x - size.x / 2;

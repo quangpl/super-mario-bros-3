@@ -33,6 +33,7 @@ protected:
 	void OnBlockingOnY(int jetY);
 
 public:
+	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
 	virtual RectBox GetBoundingBox();
 	GreenKoopas();
 	virtual void SetState(int state);
