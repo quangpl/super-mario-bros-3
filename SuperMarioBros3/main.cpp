@@ -146,7 +146,6 @@ int Run()
 {
 	MSG msg;
 	int done = 0;
-	//ULONGLONG frameStart = std::chrono::system_clock::now();
 	std::chrono::steady_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
 
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
@@ -165,26 +164,19 @@ int Run()
 
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
-		//ULONGLONG dt = (ULONGLONG)(now - frameStart);
 		long dt = (long)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - frameStart).count();
-		DebugOut(L"dt %d\n", dt);
-		//dt = 16; // s = v't + 1/2at2 , v'=0
-		if (dt >= tickPerFrame)
+	
+		if (dt >= (long)tickPerFrame)
 		{
 			frameStart = std::chrono::high_resolution_clock::now();
 			CGame::GetInstance()->ProcessKeyboard();
-			//for (int i = 0; i < 2; i++) {
-			//	Update(dt); // 16/2 = 8 -> balance with game render 
-			//}
 			int rate = dt / tickPerFrame;
 			if (rate <= 1) {
-				Update(tickPerFrame); // 16/2 = 8 -> balance with game render 
-				//DebugOut(L"dt %d\n", dt);
+				Update(tickPerFrame);
 			}
 			else {
 				for (int i = 0; i < rate; i++) {
 					Update(tickPerFrame);
-					//DebugOut(L"dt %d\n", tickPerFrame);
 				}
 			}
 		
