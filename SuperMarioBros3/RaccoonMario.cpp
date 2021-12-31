@@ -10,6 +10,7 @@
 #include "MarioKickShellEffect.h"
 #include "GreenKoopas.h"
 #include "GreenMushroom.h"
+#include "ScoreEffect.h"
 
 RaccoonMario::RaccoonMario() :CMasterMario()
 {
@@ -124,6 +125,17 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+	else if (dynamic_cast<MarioLeaf*>(e->obj))
+	{
+		e->obj->SetDeleted(true);
+		CEffectManager* effectManager = CEffectManager::GetInstance();
+		ScoreEffect* scoreEffect = new ScoreEffect(mario->position.x, mario->position.y - 48, ScoreNum::SCORE1000);
+		int effectId = effectManager->Add(scoreEffect);
+		scoreEffect->Start([this, effectId]() {
+			CEffectManager::GetInstance()->Delete(effectId);
+			});
+	}
+
 	else if (dynamic_cast<CRedWingGoomba*>(e->obj))
 	{
 		CRedWingGoomba* redWingGoomba = dynamic_cast<CRedWingGoomba*>(e->obj);
@@ -308,13 +320,14 @@ void RaccoonMario::Render()
 	{
 		ani = "ani-raccoon-mario-crouch";
 	}
+	if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
+		ani = "ani-raccoon-mario-idle-front";
+	}
 	if (mario->isAttacking)
 	{
 		ani = "ani-raccoon-mario-spin";
 	}
-	if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
-		ani = "ani-raccoon-mario-idle-front";
-	}
+	
 
 	if (ani.compare("") == 0) ani = "ani-raccoon-mario-idle";
 
@@ -446,8 +459,7 @@ void RaccoonMario::SetState(int state)
 		mario->vx = 0;
 		mario->vy = 0;
 		break;
-	case MARIO_STATE_WARP_VERTICAL:
-		break;
+	
 	case MARIO_STATE_SIT:
 		if (mario->holding) {
 			return;
@@ -457,6 +469,9 @@ void RaccoonMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			mario->isSitting = true;
 		}
+		break;
+	case MARIO_STATE_WARP_VERTICAL:
+		mario->isSitting = false;
 		break;
 	case MARIO_STATE_SIT_RELEASE:
 		if (mario->isSitting)

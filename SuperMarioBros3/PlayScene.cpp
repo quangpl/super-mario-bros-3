@@ -41,6 +41,9 @@ void CPlayScene::OnKeyDown(int KeyCode)
 	case DIK_Y:
 		player->SetPosition(Vec2{ 6000,700 });
 		break;
+	case DIK_T:
+		player->SetPosition(Vec2{ 6772,400 });
+		break;
 	default:
 		break;
 	}

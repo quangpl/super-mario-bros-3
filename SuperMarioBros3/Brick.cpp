@@ -92,14 +92,10 @@ void CBrick::GenerateRewardByMarioLevel() {
 		SceneManager::GetInstance()->GetActiveScene()->AddObject(leaf);
 		break;
 	}
-	default:
+	case MarioLevel::Raccoon:
 		// For Raccoon temporary
-		CEffectManager* effectManager = CEffectManager::GetInstance();
-		CCoindEffect* coinEffect = new CCoindEffect(this->position.x, this->position.y);
-		int coinEffectId = effectManager->Add(coinEffect);
-		coinEffect->Start([this, coinEffectId]() {
-			CEffectManager::GetInstance()->Delete(coinEffectId);
-			});
+		MarioLeaf* leaf = new MarioLeaf(position + Vec2(2, 0));
+		SceneManager::GetInstance()->GetActiveScene()->AddObject(leaf);
 		break;
 	}
 }
