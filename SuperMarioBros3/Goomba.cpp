@@ -87,7 +87,7 @@ void CGoomba::Render()
 			});
 	}
 	if (state == GOOMBA_STATE_DIE_BY_ATTACK) {
-		ani = "ani-goomba-die";
+		ani = "ani-goomba-idle";
 		transformation = { 1.0f, -1.0f };
 	}
 	CAnimations::GetInstance()->Get(ani)->GetTransform()->Scale = transformation;

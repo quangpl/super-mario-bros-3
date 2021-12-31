@@ -155,7 +155,7 @@ void CRedWingGoomba::Render()
 		ani = "ani-red-goomba-die";
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
-		ani = "ani-red-goomba-die";
+		ani = "ani-red-goomba-idle";
 		transformation = { 1.0f, -1.0f };
 		break;
 	default:
