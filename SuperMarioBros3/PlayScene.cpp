@@ -235,11 +235,11 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
-	/*for (int i = 0; i < objects.size(); i++)
-		delete objects[i];*/
+	for (int i = 0; i < (int)objects.size(); i++)
+		delete objects[i];
 
 	objects.clear();
-	//player = NULL;
+	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }
