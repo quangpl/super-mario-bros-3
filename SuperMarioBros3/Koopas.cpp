@@ -1,5 +1,8 @@
 #include "Koopas.h"
 #include "KoopasRadar.h"
+#include "RedWingGoomba.h"
+#include "GreenKoopas.h"
+
 CKoopas::CKoopas() :CGameObject()
 {
 	type = Type::KOOPAS;
@@ -34,7 +37,7 @@ CKoopas* CKoopas::Create(Vec2 pos) {
 void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->obj->CanThrough(this, e->nx, e->ny)) return;
-	if (e->ny != 0)
+	if (e->ny < 0)
 	{
 		vy = 0;
 		if (state == KOOPAS_STATE_DIE_BY_HIT) {
@@ -43,19 +46,25 @@ void CKoopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0)
 	{
-		nx = -nx;
+		if (!(dynamic_cast<CKoopas*>(e->obj) || dynamic_cast<CMario*>(e->obj) || dynamic_cast<CGoomba*>(e->obj) || dynamic_cast<GreenKoopas*>(e->obj) || dynamic_cast<CRedWingGoomba*>(e->obj))) {
+			nx = -nx;
+		}
 	}
 
 	if (dynamic_cast<CBrick*>(e->obj)) {
 		OnCollisionWithBrick(e);
 	}
-	else if (dynamic_cast<CTail*>(e->obj)) {
+	else if (dynamic_cast<CTail*>(e->obj) && CMario::GetInstance()->isAttacking) {
 		transformation = Vec2{ 1.0f,-1.0f };
 		this->SetState(KOOPAS_STATE_DIE_BY_HIT);
 	}
 	else if (dynamic_cast<CKoopas*>(e->obj) && this->state == KOOPAS_STATE_DIE_MOVE) {
 		transformation = Vec2{ 1.0f,-1.0f };
-		e->obj->SetState(KOOPAS_STATE_DIE_BY_HIT);
+		e->obj->SetState(KOOPAS_STATE_DIE);
+	}
+	else if (dynamic_cast<GreenKoopas*>(e->obj) && this->state == KOOPAS_STATE_DIE_MOVE) {
+		transformation = Vec2{ 1.0f,-1.0f };
+		e->obj->SetState(KOOPAS_STATE_DIE);
 	}
 }
 
@@ -68,6 +77,12 @@ void CKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isDeleted) {
+		return;
+	}
+	if (state == KOOPAS_STATE_DIE && GetTickCount64() - die_start >= 1000) {
+		isDeleted = true;
+	}
 	vx = nx * abs(vx);
 	// Switch case for each owner type
 	if (this->owner != NULL && dynamic_cast<CMario*>(this->owner)) {
@@ -92,6 +107,13 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
+int CKoopas::IsCollidable() {
+	if (state == KOOPAS_STATE_DIE) {
+		return 0;
+	}
+	return 1;
+}
+
 void CKoopas::Render()
 {
 	switch (state)
@@ -112,6 +134,11 @@ void CKoopas::Render()
 	case KOOPAS_STATE_WALKING:
 	case KOOPAS_STATE_WALKING_DOWN:
 		ani = "ani-red-koopa-troopa-move";
+		break;
+	case KOOPAS_STATE_DIE:
+		ani = "ani-red-koopa-troopa-shell-idle";
+		transformation = { 1.0f, -1.0f };
+		break;
 		break;
 	default:
 		break;
@@ -150,6 +177,18 @@ void CKoopas::SetState(int state)
 		position.y = position.y - (KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE) / 2;
 		//nx = CMario::GetInstance()->GetNx();
 		this->SetVelocityX(nx * KOOPAS_SHELL_RUN_SPEED);
+		break;
+	case KOOPAS_STATE_DIE:
+		die_start = GetTickCount64();
+		vy = -KOOPAS_HIT_VY;
+		if (nx > 0)
+		{
+			vx = 0.2f;
+		}
+		else
+		{
+			vx = -0.2f;
+		}
 		break;
 	default:
 		break;

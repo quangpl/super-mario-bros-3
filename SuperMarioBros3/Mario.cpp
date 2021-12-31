@@ -34,6 +34,13 @@ float  CMario::GetPower() { return this->power; }
 
 void CMario::SetPlayerState(CMasterMario* pState) {
 	this->isAttacking = false;
+	if(dynamic_cast<RaccoonMario*>(this->playerState)){
+		RaccoonMario* racoon = dynamic_cast<RaccoonMario*>(this->playerState);
+		if (racoon->tail) {
+			racoon->tail->SetDeleted(true);
+			racoon->tail = NULL;
+		}
+	}
 	if (dynamic_cast<SmallMario*>(this->playerState) && dynamic_cast<BigMario*>(pState) || dynamic_cast<BigMario*>(this->playerState) && dynamic_cast<RaccoonMario*>(pState)) {
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CMarioGrowEffect* marioGrowEffect = new CMarioGrowEffect(position, this->nx);

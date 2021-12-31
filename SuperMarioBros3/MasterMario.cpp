@@ -193,6 +193,7 @@ void CMasterMario::OnDamaged() {
 		return;
 	}
 	else {
+		mario->StartUntouchable();
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CMarioDamagedEffect* marioDamagedEffect = new CMarioDamagedEffect(mario->position, mario->GetNx());
 		int effectId = effectManager->Add(marioDamagedEffect);
@@ -203,11 +204,11 @@ void CMasterMario::OnDamaged() {
 			switch (mario->GetLevel())
 			{
 			case MarioLevel::Big:
-				mario->StartUntouchable();
+				
 				mario->SetPlayerState(new SmallMario());
 				break;
 			case MarioLevel::Raccoon:
-				mario->StartUntouchable();
+				 
 				mario->SetPlayerState(new BigMario());
 				break;
 			default:

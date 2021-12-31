@@ -32,6 +32,7 @@
 #define KOOPAS_STATE_DIE_BY_HIT		1000
 #define KOOPAS_STATE_RESPAWN		500
 
+#define KOOPAS_STATE_DIE		1100
 
 // Green
 #define KOOPAS_ANI_WALKING_LEFT		501
@@ -67,6 +68,7 @@ enum KoopaType
 
 class CKoopas : public CGameObject
 {
+	ULONGLONG die_start = 0;
 	int shell_step = 0;
 	Vec2 transformation = { 1.0f,1.0f };
 	Stopwatch* revivalStopWatch;
@@ -77,7 +79,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable();
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);

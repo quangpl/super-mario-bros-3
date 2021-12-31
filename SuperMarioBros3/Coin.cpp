@@ -83,12 +83,12 @@ void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
 		this->isDeleted = true;
 	}
-	if (state == COIN_STATE_BRICK && this->isDeleted == false && dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
+	if (state == COIN_STATE_BRICK && this->isDeleted == false && dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE && e->nx != 0) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
 		e->obj->SetNx(-e->obj->GetNx());
 		this->isDeleted = true;
 	}
-	if (state == COIN_STATE_BRICK && this->isDeleted == false && dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) {
+	if (state == COIN_STATE_BRICK && this->isDeleted == false && dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE && e->nx != 0) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
 		e->obj->SetNx(-e->obj->GetNx());
 		this->isDeleted = true;
