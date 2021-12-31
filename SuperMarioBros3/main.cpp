@@ -1,16 +1,16 @@
 /* =============================================================
 	INTRODUCTION TO GAME PROGRAMMING SE102
-	
+
 	SAMPLE 05 - SCENE MANAGER
 
 	This sample illustrates how to:
 
-		1/ Read scene (textures, sprites, animations and objects) from files 
+		1/ Read scene (textures, sprites, animations and objects) from files
 		2/ Handle multiple scenes in game
 
 	Key classes/functions:
 		CScene
-		CPlayScene		
+		CPlayScene
 
 
 HOW TO INSTALL Microsoft.DXSDK.D3DX
@@ -20,7 +20,8 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 
 
 ================================================================ */
-
+#include <chrono>
+#include <thread>
 #include <windows.h>
 #include <d3d10.h>
 #include <d3dx10.h>
@@ -70,7 +71,7 @@ void Update(DWORD dt)
 }
 
 /*
-	Render a frame 
+	Render a frame
 */
 void Render()
 {
@@ -128,7 +129,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 			hInstance,
 			NULL);
 
-	if (!hWnd) 
+	if (!hWnd)
 	{
 		OutputDebugString(L"[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();
@@ -145,7 +146,9 @@ int Run()
 {
 	MSG msg;
 	int done = 0;
-	ULONGLONG frameStart = GetTickCount64();
+	//ULONGLONG frameStart = std::chrono::system_clock::now();
+	std::chrono::steady_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
+
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
 
 	while (!done)
@@ -162,19 +165,34 @@ int Run()
 
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
-		DWORD dt = (DWORD)(now - frameStart);
-		dt = 8; // s = v't + 1/2at2 , v'=0
+		//ULONGLONG dt = (ULONGLONG)(now - frameStart);
+		long dt = (long)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - frameStart).count();
+		DebugOut(L"dt %d\n", dt);
+		//dt = 16; // s = v't + 1/2at2 , v'=0
 		if (dt >= tickPerFrame)
 		{
-			frameStart = now;
+			frameStart = std::chrono::high_resolution_clock::now();
 			CGame::GetInstance()->ProcessKeyboard();
-			for (int i = 0; i < 2; i++) {
-				Update(dt); // 16/2 = 8 -> balance with game render 
+			//for (int i = 0; i < 2; i++) {
+			//	Update(dt); // 16/2 = 8 -> balance with game render 
+			//}
+			int rate = dt / tickPerFrame;
+			if (rate <= 1) {
+				Update(tickPerFrame); // 16/2 = 8 -> balance with game render 
+				//DebugOut(L"dt %d\n", dt);
 			}
+			else {
+				for (int i = 0; i < rate; i++) {
+					Update(tickPerFrame);
+					//DebugOut(L"dt %d\n", tickPerFrame);
+				}
+			}
+		
 			Render();
 		}
-		else
-			Sleep(tickPerFrame - dt);	
+		else {
+			std::this_thread::sleep_for(std::chrono::milliseconds((tickPerFrame - dt)));
+		}
 	}
 
 	return 1;
@@ -196,7 +214,7 @@ int WINAPI WinMain(
 
 
 	//IMPORTANT: this is the only place where a hardcoded file name is allowed ! 
-	game->LoadResources();  
+	game->LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
