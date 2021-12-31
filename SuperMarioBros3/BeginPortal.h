@@ -7,6 +7,7 @@
 #define PORTAL_STATE_TRANSPORT 2
 #define PORTAL_STATE_DROP 3
 #define MARIO_TRANSPORT_PACE 1.1f
+#define PIPE_POSITION_ADJUST 15
 class BeginPortal :
     public CGameObject
 {

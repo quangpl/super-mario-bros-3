@@ -63,19 +63,20 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 			RectBox bbox = mario->GetBoundingBox();
 			float marioWidth = bbox.right - bbox.left;
-			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
+			mario->position.x = this->position.x + (marioWidth - size.x) / 2 - mario->GetNx() * PIPE_POSITION_ADJUST;
 			isMoving = true;
 		}
 		if (direction == Direction::Bottom && game->IsKeyDown(DIK_UP)) {
 			mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 			RectBox bbox = mario->GetBoundingBox();
 			float marioWidth = bbox.right - bbox.left;
-			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
+			mario->position.x = this->position.x + (marioWidth - size.x) / 2 - mario->GetNx() * PIPE_POSITION_ADJUST;
 			isMoving = true;
 		}
 	}
 	else {
 		if (direction == Direction::Top || direction == Direction::Bottom) {
+			mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 			CGame::GetInstance()->DisableKeyboard();
 			mario->vx = 0;
 			mario->vy = 0;
