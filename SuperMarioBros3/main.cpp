@@ -170,20 +170,11 @@ int Run()
 		{
 			frameStart = std::chrono::high_resolution_clock::now();
 			CGame::GetInstance()->ProcessKeyboard();
-			int rate = dt / tickPerFrame;
-			if (rate <= 1) {
-				Update(tickPerFrame);
-			}
-			else {
-				for (int i = 0; i < rate; i++) {
-					Update(tickPerFrame);
-				}
-			}
-		
+			Update(dt);
 			Render();
 		}
 		else {
-			std::this_thread::sleep_for(std::chrono::milliseconds((tickPerFrame - dt)));
+			std::this_thread::sleep_for(std::chrono::milliseconds(max((tickPerFrame - dt),0)));
 		}
 	}
 

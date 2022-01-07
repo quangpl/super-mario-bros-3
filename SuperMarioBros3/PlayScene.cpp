@@ -206,6 +206,9 @@ void CPlayScene::Render()
 		effect->Render();
 	}
 	for (int i = 0; i < (int)objects.size(); i++) {
+		if (!this->camera->IsInCamera(objects[i])) {
+			continue;
+		}
 		if (objects[i]->IsDeleted()) {
 			continue;
 		}
