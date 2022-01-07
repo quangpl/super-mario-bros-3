@@ -186,7 +186,7 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 	{
 		LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDests->at(i));
 
-		if (e->WasCollided() == 1 && !e->obj->IsDeleted())
+		if (e->WasCollided() == 1 && e->obj->isActive)
 			temp.push_back(e);
 		else 
 			delete e;
@@ -197,7 +197,7 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 	for (LPCOLLISIONEVENT coll : temp)
 	{
 		for (LPCOLLISIONEVENT result : coEvents) {
-			if (result->obj->CanThrough(objSrc, result->nx, result->ny) == true || result->obj->IsDeleted() || objSrc->IsDeleted()) {
+			if (result->obj->CanThrough(objSrc, result->nx, result->ny) == true || !result->obj->isActive || !objSrc->isActive) {
 				continue;
 			}
 			float t, nx, ny, tl;
@@ -271,7 +271,7 @@ Vec2 CCollision::GetClampDistance(DWORD dt, LPGAMEOBJECT objSrc, vector<LPCOLLIS
 
 	for (LPCOLLISIONEVENT c : coEvents)
 	{
-		if (c->obj->CanThrough(objSrc, c->nx, c->ny) || c->obj->IsDeleted() || objSrc->IsDeleted()) continue;
+		if (c->obj->CanThrough(objSrc, c->nx, c->ny) || !c->obj->isActive || !objSrc->isActive) continue;
 
 		if (c->t < min_tx && c->nx != 0 && c->nx * mdx < 0.0f) {
 			min_tx = c->t;

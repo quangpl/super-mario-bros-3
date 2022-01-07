@@ -71,7 +71,8 @@ void CRedWingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += (this->gravity * dt);
 	if ((state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_BY_ATTACK) && GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT)
 	{
-		isDeleted = true;
+		isActive = false;
+		this->isDeleted = true;
 		return;
 	}
 	CGameObject::Update(dt, coObjects);
@@ -189,7 +190,7 @@ void CRedWingGoomba::SetState(int state)
 	case GOOMBA_STATE_JUMP_HIGH:
 		is_on_ground = false;
 		vx = nx * GOOMBA_WALKING_SPEED;
-		vy = -GOOMBA_JUMP_HIGH_SPEED;
+		vy = -REDWING_GOOMBA_JUMP_HIGH_SPEED;
 		break;
 	case GOOMBA_STATE_DIE_BY_ATTACK:
 		die_start = GetTickCount64();

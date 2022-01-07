@@ -4,7 +4,7 @@
 
 GreenKoopas::GreenKoopas() :CGameObject()
 {
-	type = Type::KOOPAS;
+	//type = Type::KOOPAS;
 	this->revivalStopWatch = new Stopwatch();
 	koopas_type = KoopaType::RedTroopa;
 	SetState(KOOPAS_STATE_WALKING);
@@ -97,11 +97,12 @@ void GreenKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 
 void GreenKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (isDeleted) {
+	if (!isActive) {
 		return;
 	}
 	if (state == KOOPAS_STATE_DIE && GetTickCount64() - die_start >= 1000) {
-		isDeleted = true;
+		isActive = false;
+		this->isDeleted = true;
 	}
 	if (isOnPlatForm && canJump && state == KOOPAS_STATE_WALKING) {
 		vy = -GREEN_KOOPAS_JUMP_SPEED;

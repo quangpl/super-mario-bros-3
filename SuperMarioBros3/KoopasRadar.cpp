@@ -18,7 +18,7 @@ RectBox CKoopasRadar::GetBoundingBox() {
 void CKoopasRadar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (this->owner->GetState() != KOOPAS_STATE_WALKING) {
-		this->SetDeleted(true);
+		this->SetActive(false);
 		return;
 	}
 	int ownerNx = this->owner->vx > 0 ? 1 : -1;

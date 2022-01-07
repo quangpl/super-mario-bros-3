@@ -85,7 +85,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			mario->position.x = this->position.x + (marioWidth - size.x) / 2;
 
 			if (direction == Direction::Top) {
-				mario->position.y = mario->position.y + MARIO_TRANSPORT_PACE;
+				mario->position.y = mario->position.y + MARIO_TRANSPORT_PACE_START;
 
 				RectBox bbox = this->GetBoundingBox();
 				RectBox marioBBox = mario->GetBoundingBox();
@@ -102,7 +102,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 				}
 			}
 			else {
-				mario->position.y = mario->position.y - MARIO_TRANSPORT_PACE;
+				mario->position.y = mario->position.y - MARIO_TRANSPORT_PACE_START;
 				RectBox bbox = this->GetBoundingBox();
 				RectBox marioBBox = mario->GetBoundingBox();
 				if (marioBBox.bottom + 10 > bbox.top) {
@@ -112,7 +112,7 @@ void BeginPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 						passenger->SetPosition(destination);
 						SceneManager::GetInstance()->GetActiveScene()->AddObject(passenger);
 					}
-
+					CGame::GetInstance()->EnableKeyboard();
 					SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ActiveRegion(cameraRegionId);
 				}
 			}

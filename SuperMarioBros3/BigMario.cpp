@@ -82,7 +82,8 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<MarioLeaf*>(e->obj))
 	{
 		mario->SetPlayerState(new RaccoonMario());
-		e->obj->SetDeleted(true);
+		e->obj->SetActive(false);
+		e->obj->isDeleted = true;
 	}
 	else if (dynamic_cast<CRedWingGoomba*>(e->obj))
 	{
@@ -140,12 +141,13 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		GreenMushroom* mushroom = dynamic_cast<GreenMushroom*>(e->obj);
 		// TODO: Improve collision framework to do better
 		if (mushroom->GetEatable()) {
+			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 			CEffectManager* effectManager = CEffectManager::GetInstance();
 			CCoindEffect* coinEffect = new CCoindEffect(mario->position.x, mario->position.y);
 			int coinEffectId = effectManager->Add(coinEffect);
 			coinEffect->Start([this, coinEffectId, mushroom]() {
 				CEffectManager::GetInstance()->Delete(coinEffectId);
-				mushroom->SetState(UP_MUSHROOM_STATE_DIE);
+			
 				});
 
 		}
@@ -155,7 +157,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 		switch (koopas->GetState())
 		{
- 		case KOOPAS_STATE_RESPAWN:
+		case KOOPAS_STATE_RESPAWN:
 		case KOOPAS_STATE_DIE_BY_ATTACK:
 		case KOOPAS_STATE_DIE_BY_HIT:
 			if (mario->holding) {
@@ -184,7 +186,7 @@ void BigMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	else if (dynamic_cast<GreenKoopas*>(e->obj))
 	{
-	GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(e->obj);
+		GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(e->obj);
 		switch (koopas->GetState())
 		{
 			// TODO: Improve collision framework to make it easier
@@ -251,7 +253,10 @@ void BigMario::Render()
 	}
 	if (mario->isSitting)
 	{
-		ani = "ani-big-mario-crouch";
+		if (!CGame::GetInstance()->IsKeyDown(DIK_LEFT) && !CGame::GetInstance()->IsKeyDown(DIK_RIGHT)) {
+			ani = "ani-big-mario-crouch";
+		}
+
 	}
 	if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
 		ani = "ani-big-mario-idle-front";
@@ -279,13 +284,21 @@ void BigMario::SetState(int state)
 		mario->ax = mario->GetNx() * MARIO_ACCEL_RUN_X;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
-		if (mario->isSitting) break;
+		//if (mario->isSitting) break;
+		if (mario->isSitting) {
+			mario->SetPosition(Vec2{ mario->position.x, mario->position.y - abs(MARIO_BIG_CROUCH_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) * 3 });
+			mario->isSitting = false;
+		}
 		mario->maxVx = MARIO_WALKING_SPEED;
 		mario->ax = MARIO_ACCEL_WALK_X;
 		mario->SetNx(1);
 		break;
 	case MARIO_STATE_WALKING_LEFT:
-		if (mario->isSitting) break;
+		if (mario->isSitting) {
+			mario->SetPosition(Vec2{ mario->position.x, mario->position.y - abs(MARIO_BIG_CROUCH_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) * 3 });
+			mario->isSitting = false;
+		}
+		//if (mario->isSitting) break;
 		mario->maxVx = -MARIO_WALKING_SPEED;
 		mario->ax = -MARIO_ACCEL_WALK_X;
 		mario->SetNx(-1);
@@ -348,6 +361,9 @@ void BigMario::SetState(int state)
 		if (mario->holding) {
 			return;
 		}
+		if (CGame::GetInstance()->IsKeyDown(DIK_LEFT) || CGame::GetInstance()->IsKeyDown(DIK_RIGHT)) {
+			return;
+		}
 		if (mario->isOnPlatform)
 		{
 			state = MARIO_STATE_IDLE;
@@ -370,7 +386,7 @@ void BigMario::SetState(int state)
 }
 
 void BigMario::OnKeyUp(int KeyCode) {
-	DebugOut(L"On key up %d", KeyCode);
+	//DebugOut(L"On key up %d", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_S:
@@ -382,9 +398,9 @@ void BigMario::OnKeyUp(int KeyCode) {
 		}
 		this->SetState(MARIO_STATE_RELEASE_RUNNING);
 		break;
-	/*case DIK_Z:
-		this->SetState(MARIO_STATE_RELEASE_HOLDING);
-		break;*/
+		/*case DIK_Z:
+			this->SetState(MARIO_STATE_RELEASE_HOLDING);
+			break;*/
 	case DIK_DOWN:
 		this->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
@@ -392,11 +408,11 @@ void BigMario::OnKeyUp(int KeyCode) {
 }
 
 void BigMario::OnKeyDown(int KeyCode) {
-	DebugOut(L"On key down %d", KeyCode);
+	//DebugOut(L"On key down %d", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
-		this->SetState(MARIO_STATE_SIT);
+		//this->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
 		this->SetState(MARIO_STATE_JUMP);

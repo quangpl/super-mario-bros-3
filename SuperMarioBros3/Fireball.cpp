@@ -63,11 +63,9 @@ void Fireball::OnNoCollision(DWORD dt)
 void Fireball::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 }
-
 void Fireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!active) return;
-
+	if (!isActive) return;
 	this->dt = dt;
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -76,7 +74,7 @@ void Fireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (!(position.x >= cam.left - 20 && position.y >= cam.top - 20 && position.x <= cam.right + 20 && position.y <= cam.bottom + 20)) {
 		// khong con trong cam
-		active = false;
+		isActive = false;
 	}
 }
 int Fireball::IsCollidable() {
@@ -85,6 +83,8 @@ int Fireball::IsCollidable() {
 
 void Fireball::Render()
 {
+	if (!isActive) return;
+
 	CAnimations::GetInstance()->Get("ani-fire-ball")->Render(position.x, position.y);
 	RenderBoundingBox();
 }

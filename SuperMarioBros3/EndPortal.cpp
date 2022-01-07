@@ -50,7 +50,7 @@ void EndPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	bool hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
 
 	if (!hasMario) return;
-	
+
 	if (direction == Direction::Top || direction == Direction::Bottom) {
 		CGame::GetInstance()->DisableKeyboard();
 		mario->vx = 0;
@@ -60,17 +60,30 @@ void EndPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		mario->position.x = this->bounding_box.left + (marioWidth - size.x) / 2;
 		mario->GetPlayerState()->SetState(MARIO_STATE_WARP_VERTICAL);
 		if (direction == Direction::Top) {
-			mario->position.y = mario->position.y + MARIO_TRANSPORT_PACE;
+			mario->position.y = mario->position.y + MARIO_TRANSPORT_PACE_END;
 		}
 		else {
-			mario->position.y = mario->position.y - MARIO_TRANSPORT_PACE;
+			mario->position.y = mario->position.y - MARIO_TRANSPORT_PACE_END;
 		}
 	}
-	
-	hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
+	RectBox marioBbox = mario->GetBoundingBox();
+	RectBox portalBbox = this->GetBoundingBox();
+	if (direction == Direction::Top) {
+		if (marioBbox.top >= portalBbox.bottom - 30) {
+			CGame::GetInstance()->EnableKeyboard();
+			mario->SetState(MARIO_STATE_IDLE);
+		}
+	}
+	else {
+		if (marioBbox.bottom >= portalBbox.top - 30) {
+			CGame::GetInstance()->EnableKeyboard();
+			mario->SetState(MARIO_STATE_IDLE);
+		}
+	}
+	/*hasMario = CCollision::GetInstance()->CheckAABB(this->GetBoundingBox(), mario->GetBoundingBox());
 	if (!hasMario){
 		CGame::GetInstance()->EnableKeyboard();
 		mario->SetState(MARIO_STATE_IDLE);
-	}
+	}*/
 }
 

@@ -77,7 +77,7 @@ void CGoomba::Render()
 	ani = "ani-goomba-walk";
 
 	if (state == GOOMBA_STATE_DIE) {
-		this->SetDeleted(true);
+		this->SetActive(false);
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CGoombaDieEffect* goombaDieEffect = new CGoombaDieEffect(this->position, this->GetNx());
 		int effectId = effectManager->Add(goombaDieEffect);

@@ -75,26 +75,30 @@ int CCoin::IsCollidable() {
 
 void CCoin::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (this->isDeleted == false && dynamic_cast<CTail*>(e->obj)) {
+	if (this->isActive == true && dynamic_cast<CTail*>(e->obj)) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		this->isActive = false;
 		this->isDeleted = true;
 	}
-	if (this->isDeleted == false && dynamic_cast<CMario*>(e->obj) && e->ny < 0 && state == COIN_STATE_BRICK) {
+	if (this->isActive == true && dynamic_cast<CMario*>(e->obj) && e->ny < 0 && state == COIN_STATE_BRICK) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		this->isActive = false;
 		this->isDeleted = true;
 	}
-	if (state == COIN_STATE_BRICK && this->isDeleted == false && dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE && e->nx != 0) {
-		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
-		e->obj->SetNx(-e->obj->GetNx());
-		this->isDeleted = true;
-	}
-	if (state == COIN_STATE_BRICK && this->isDeleted == false && dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE && e->nx != 0) {
+	if (state == COIN_STATE_BRICK && this->isActive == true && dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE && e->nx != 0) {
 		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
 		e->obj->SetNx(-e->obj->GetNx());
+		this->isActive = false;
 		this->isDeleted = true;
 	}
-	if (state == COIN_STATE_NORMAL_COIN && this->isDeleted == false && dynamic_cast<CMario*>(e->obj)) {
+	if (state == COIN_STATE_BRICK && this->isActive == true && dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE && e->nx != 0) {
+		CEffectManager::GetInstance()->Add(new BrokenBrickEffect(position));
+		e->obj->SetNx(-e->obj->GetNx());
+		this->isActive = false;
 		this->isDeleted = true;
+	}
+	if (state == COIN_STATE_NORMAL_COIN && this->isActive == true && dynamic_cast<CMario*>(e->obj)) {
+		this->isActive = false;
 	}
 }
 bool CCoin::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {

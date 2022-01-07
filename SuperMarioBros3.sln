@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperMarioBros3", "SuperMarioBros3\SuperMarioBros3.vcxproj", "{B6461EDF-B496-4E7B-805F-2B1311F2E13F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "00-Intro", "00-Intro\00-Intro.vcxproj", "{6849F7B7-30B7-4886-93C4-BE428757A111}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,14 +21,6 @@ Global
 		{B6461EDF-B496-4E7B-805F-2B1311F2E13F}.Release|x64.Build.0 = Release|x64
 		{B6461EDF-B496-4E7B-805F-2B1311F2E13F}.Release|x86.ActiveCfg = Release|Win32
 		{B6461EDF-B496-4E7B-805F-2B1311F2E13F}.Release|x86.Build.0 = Release|Win32
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Debug|x64.ActiveCfg = Debug|x64
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Debug|x64.Build.0 = Debug|x64
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Debug|x86.ActiveCfg = Debug|Win32
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Debug|x86.Build.0 = Debug|Win32
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Release|x64.ActiveCfg = Release|x64
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Release|x64.Build.0 = Release|x64
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Release|x86.ActiveCfg = Release|Win32
-		{6849F7B7-30B7-4886-93C4-BE428757A111}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

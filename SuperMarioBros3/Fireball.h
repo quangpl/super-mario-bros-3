@@ -22,7 +22,7 @@ protected:
 
 public:
 	bool spawned = false;
-	bool active = false;
+	//bool active = false;
 
 	Fireball();
 	virtual void SetState(int state);

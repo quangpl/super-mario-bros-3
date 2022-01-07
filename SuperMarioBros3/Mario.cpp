@@ -37,7 +37,7 @@ void CMario::SetPlayerState(CMasterMario* pState) {
 	if(dynamic_cast<RaccoonMario*>(this->playerState)){
 		RaccoonMario* racoon = dynamic_cast<RaccoonMario*>(this->playerState);
 		if (racoon->tail) {
-			racoon->tail->SetDeleted(true);
+			racoon->tail->SetActive(false);
 			racoon->tail = NULL;
 		}
 	}
@@ -45,9 +45,9 @@ void CMario::SetPlayerState(CMasterMario* pState) {
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CMarioGrowEffect* marioGrowEffect = new CMarioGrowEffect(position, this->nx);
 		int effectId = effectManager->Add(marioGrowEffect);
-		isDeleted = true;
+		isActive = false;
 		marioGrowEffect->Start([this, effectId]() {
-			isDeleted = false;
+			isActive = true;
 			CEffectManager::GetInstance()->Delete(effectId);
 			});
 		this->position.y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) * 3 / 2;
@@ -74,7 +74,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		position.x = moveLimitaion.right - stateWidth / 2;
 	}
 
-	if (isDeleted) {
+	if (!isActive) {
 		return;
 	}
 	this->playerState->Update(dt, coObjects);
@@ -126,15 +126,21 @@ void CMario::SetState(int state)
 }
 
 bool CMario::CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy) {
-	return false;
+	return untouchable == 1 ? true : false;
 }
 void CMario::OnKeyUp(int KeyCode) {
+	if (!CGame::GetInstance()->IsEnableKeyBoard()) {
+		return;
+	}
 	if (this->playerState != NULL) {
 		this->playerState->OnKeyUp(KeyCode);
 	}
 }
 
 void CMario::OnKeyDown(int KeyCode) {
+	if (!CGame::GetInstance()->IsEnableKeyBoard()) {
+		return;
+	}
 	DebugOut(L"On key down %d", KeyCode);
 	if (this->playerState != NULL) {
 		this->playerState->OnKeyDown(KeyCode);

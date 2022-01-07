@@ -11,12 +11,14 @@ class CGameObject
 
 protected:
 
-	DWORD id;
+	//DWORD id;
 	float gravity;
 	int nx;
 	int state;
-	bool isDeleted;
 public:
+	bool isActive;
+	bool isDeleted;
+
 	int zIndex = 1; // It will stand for render priority
 	RectBox bounding_box;
 	string ani;
@@ -24,7 +26,7 @@ public:
 	float vy;
 	Vec2 position;
 	bool is_in_camera = false;
-	int type;
+	//int type;
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void SetVelocityX(float _vx) { this->vx = _vx; }
 	void SetVelocityY(float _vy) { this->vy = _vy; }
@@ -44,10 +46,8 @@ public:
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }
-	virtual void Delete() { isDeleted = true; }
-	bool IsDeleted() { return isDeleted; }
-	void SetDeleted(bool del) {
-		isDeleted = del;
+	void SetActive(bool a) {
+		isActive = a;
 	}
 
 	void RenderBoundingBox();
@@ -80,9 +80,7 @@ public:
 
 	~CGameObject();
 	virtual bool CanThrough(CGameObject* gameObjToCollide, float coEventNx, float coEventNy);
-	static bool IsDeleted(const LPGAMEOBJECT& o) { return o->isDeleted; }
-
-	DWORD GetID() {
+	/*DWORD GetID() {
 		return id;
-	}
+	}*/
 };

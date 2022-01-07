@@ -5,7 +5,6 @@
 
 CKoopas::CKoopas() :CGameObject()
 {
-	type = Type::KOOPAS;
 	this->revivalStopWatch = new Stopwatch();
 	koopas_type = KoopaType::RedTroopa;
 	SetState(KOOPAS_STATE_WALKING);
@@ -85,11 +84,12 @@ void CKoopas::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (isDeleted) {
+	if (!isActive) {
 		return;
 	}
 	if (state == KOOPAS_STATE_DIE && GetTickCount64() - die_start >= 1000) {
-		isDeleted = true;
+		isActive = false;
+		this->isDeleted = true;
 	}
 	vx = nx * abs(vx);
 	// Switch case for each owner type

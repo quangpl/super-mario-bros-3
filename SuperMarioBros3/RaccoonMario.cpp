@@ -24,6 +24,12 @@ RaccoonMario::RaccoonMario() :CMasterMario()
 
 void RaccoonMario::KeyboardHandler() {
 	CGame* game = CGame::GetInstance();
+	if (!game->IsEnableKeyBoard()) {
+		return;
+	}
+	if (game->IsKeyDown(DIK_DOWN)) {
+		this->SetState(MARIO_STATE_SIT);
+	}
 	if (game->IsKeyDown(DIK_A)) {
 		mario->SetHolding(true);
 	}
@@ -76,7 +82,7 @@ void RaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->untouchable = 0;
 	}
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
-	DebugOut(L"Power: %f", mario->GetPower());
+	//DebugOut(L"Power: %f", mario->GetPower());
 }
 
 void RaccoonMario::OnNoCollision(DWORD dt)
@@ -127,7 +133,7 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<MarioLeaf*>(e->obj))
 	{
-		e->obj->SetDeleted(true);
+		e->obj->SetActive(false);
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		ScoreEffect* scoreEffect = new ScoreEffect(mario->position.x, mario->position.y - 48, ScoreNum::SCORE1000);
 		int effectId = effectManager->Add(scoreEffect);
@@ -192,12 +198,13 @@ void RaccoonMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		GreenMushroom* mushroom = dynamic_cast<GreenMushroom*>(e->obj);
 		// TODO: Improve collision framework to do better
 		if (mushroom->GetEatable()) {
+			mushroom->SetState(UP_MUSHROOM_STATE_DIE);
 			CEffectManager* effectManager = CEffectManager::GetInstance();
 			CCoindEffect* coinEffect = new CCoindEffect(mario->position.x, mario->position.y);
 			int coinEffectId = effectManager->Add(coinEffect);
 			coinEffect->Start([this, coinEffectId, mushroom]() {
 				CEffectManager::GetInstance()->Delete(coinEffectId);
-				mushroom->SetState(UP_MUSHROOM_STATE_DIE);
+				
 				});
 
 		}
@@ -318,7 +325,9 @@ void RaccoonMario::Render()
 	}
 	if (mario->isSitting)
 	{
-		ani = "ani-raccoon-mario-crouch";
+		if (!CGame::GetInstance()->IsKeyDown(DIK_LEFT) && !CGame::GetInstance()->IsKeyDown(DIK_RIGHT)) {
+			ani = "ani-raccoon-mario-crouch";
+		}
 	}
 	if (mario->GetState() == MARIO_STATE_WARP_VERTICAL) {
 		ani = "ani-raccoon-mario-idle-front";
@@ -327,7 +336,7 @@ void RaccoonMario::Render()
 	{
 		ani = "ani-raccoon-mario-spin";
 	}
-	
+
 
 	if (ani.compare("") == 0) ani = "ani-raccoon-mario-idle";
 
@@ -372,13 +381,21 @@ void RaccoonMario::SetState(int state)
 		mario->ax = mario->GetNx() * MARIO_ACCEL_RUN_X;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
-		if (mario->isSitting) break;
+		if (mario->isSitting) {
+			mario->SetPosition(Vec2{ mario->position.x, mario->position.y - abs(MARIO_BIG_CROUCH_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) * 3 });
+			mario->isSitting = false;
+		}
+		//if (mario->isSitting) break;
 		mario->maxVx = MARIO_WALKING_SPEED;
 		mario->ax = MARIO_ACCEL_WALK_X;
 		mario->SetNx(1);
 		break;
 	case MARIO_STATE_WALKING_LEFT:
-		if (mario->isSitting) break;
+		if (mario->isSitting) {
+			mario->SetPosition(Vec2{ mario->position.x, mario->position.y - abs(MARIO_BIG_CROUCH_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) * 3 });
+			mario->isSitting = false;
+		}
+		//if (mario->isSitting) break;
 		mario->maxVx = -MARIO_WALKING_SPEED;
 		mario->ax = -MARIO_ACCEL_WALK_X;
 		mario->SetNx(-1);
@@ -446,7 +463,7 @@ void RaccoonMario::SetState(int state)
 		if (!mario->isAttacking) {
 			stopwatch->Restart();
 			mario->isAttacking = true;
-			tail->SetDeleted(false);
+			tail->SetActive(true);
 			SceneManager::GetInstance()->GetActiveScene()->AddObject(tail);
 			tail->Attack();
 		}
@@ -459,9 +476,12 @@ void RaccoonMario::SetState(int state)
 		mario->vx = 0;
 		mario->vy = 0;
 		break;
-	
+
 	case MARIO_STATE_SIT:
 		if (mario->holding) {
+			return;
+		}
+		if (CGame::GetInstance()->IsKeyDown(DIK_LEFT) || CGame::GetInstance()->IsKeyDown(DIK_RIGHT)) {
 			return;
 		}
 		if (mario->isOnPlatform)
@@ -487,7 +507,10 @@ void RaccoonMario::SetState(int state)
 }
 
 void RaccoonMario::OnKeyUp(int KeyCode) {
-	DebugOut(L"On key up %d", KeyCode);
+	if (!CGame::GetInstance()->IsEnableKeyBoard()) {
+		return;
+	}
+	//DebugOut(L"On key up %d", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_S:
@@ -509,11 +532,14 @@ void RaccoonMario::OnKeyUp(int KeyCode) {
 }
 
 void RaccoonMario::OnKeyDown(int KeyCode) {
-	DebugOut(L"On key down %d", KeyCode);
+	//DebugOut(L"On key down %d", KeyCode);
+	if (!CGame::GetInstance()->IsEnableKeyBoard()) {
+		return;
+	}
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
-		this->SetState(MARIO_STATE_SIT);
+		//this->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
 		if (mario->isOnPlatform) {

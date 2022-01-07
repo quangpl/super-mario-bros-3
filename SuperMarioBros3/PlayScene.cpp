@@ -41,8 +41,10 @@ void CPlayScene::OnKeyDown(int KeyCode)
 	case DIK_Y:
 		player->SetPosition(Vec2{ 6000,700 });
 		break;
-	case DIK_T:
-		player->SetPosition(Vec2{ 6772,400 });
+	case DIK_U:
+		//player->SetPosition(Vec2{ 6000,700 });
+		this->camera->SetLimitEdge(Direction::Top, 0.0f);
+		player->SetPosition(Vec2{ 6783,400 });
 		break;
 	default:
 		break;
@@ -178,6 +180,9 @@ void CPlayScene::Update(DWORD dt)
 	coObjects.push_back(player);
 	for (size_t i = 0; i < objects.size(); i++)
 	{
+		if (!objects[i]->isActive) {
+			continue;
+		}
 		objects[i]->Update(dt, &coObjects);
 	}
 	for (auto x : CEffectManager::GetInstance()->GetAll())
@@ -197,7 +202,7 @@ void CPlayScene::Render()
 		});
 
 	gameMap->Render();
-	if (!player->IsDeleted()) {
+	if (player->isActive) {
 		player->Render();
 	}
 	for (auto x : CEffectManager::GetInstance()->GetAll())
@@ -209,7 +214,7 @@ void CPlayScene::Render()
 		if (!this->camera->IsInCamera(objects[i])) {
 			continue;
 		}
-		if (objects[i]->IsDeleted()) {
+		if (!objects[i]->isActive) {
 			continue;
 		}
 		objects[i]->Render();
@@ -223,10 +228,10 @@ void CPlayScene::Render()
 void CPlayScene::Clear()
 {
 	vector<LPGAMEOBJECT>::iterator it;
-	/*for (it = objects.begin(); it != objects.end(); it++)
+	for (it = objects.begin(); it != objects.end(); it++)
 	{
 		delete (*it);
-	}*/
+	}
 	objects.clear();
 }
 
@@ -247,24 +252,28 @@ void CPlayScene::Unload()
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }
 
-bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
+bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) {
+	return o == NULL;
+}
 
 void CPlayScene::PurgeDeletedObjects()
 {
-	//vector<LPGAMEOBJECT>::iterator it;
-	//for (it = objects.begin(); it != objects.end(); it++)
-	//{
-	//	LPGAMEOBJECT o = *it;
-	//	if (o->IsDeleted())
-	//	{
-	//		delete o;
-	//		*it = NULL;
-	//	}
-	//}
+	vector<LPGAMEOBJECT>::iterator it;
+	for (it = objects.begin(); it != objects.end(); it++)
+	{
+		if (*it != NULL) {
+			LPGAMEOBJECT o = *it;
+			if (o->isDeleted)
+			{
+				delete o;
+				*it = NULL;
+			}
+		}
+	}
 
-	//// NOTE: remove_if will swap all deleted items to the end of the vector
-	//// then simply trim the vector, this is much more efficient than deleting individual items
-	//objects.erase(
-	//	std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
-	//	objects.end());
+	// NOTE: remove_if will swap all deleted items to the end of the vector
+	// then simply trim the vector, this is much more efficient than deleting individual items
+	objects.erase(
+		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
+		objects.end());
 }

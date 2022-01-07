@@ -34,9 +34,10 @@ void Piranha::OnNoCollision(DWORD dt)
 void Piranha::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CTail*>(e->obj) || (dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) || (dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE)) {
-		this->SetDeleted(true);
+		this->SetActive(false);
 		// disable fireball
 		CEffectManager* effectManager = CEffectManager::GetInstance();
+		Vec2 effectPosition = { this->position.x + PIRANHA_SIZE_X / 2,this->position.y + PIRANHA_SIZE_Y / 2 };
 		CMarioDamagedEffect* damagedEffect = new CMarioDamagedEffect(this->position, this->GetNx());
 		int effectId = effectManager->Add(damagedEffect);
 		damagedEffect->Start([this, effectId]() {

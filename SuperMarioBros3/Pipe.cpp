@@ -2,7 +2,7 @@
 #include "Utils.h"
 CPipe::CPipe()
 {
-	this->type = Type::PIPE;
+	//this->type = Type::PIPE;
 	zIndex = 10;
 	this->body = NULL;
 	this->head = NULL;

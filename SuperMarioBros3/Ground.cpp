@@ -10,7 +10,7 @@ CGround* CGround::Create(Vec2 position, Vec2 size, bool fullBlock) {
 }
 CGround::CGround()
 {
-	type = Type::GROUND;
+	//type = Type::GROUND;
 
 }
 

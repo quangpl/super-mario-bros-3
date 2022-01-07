@@ -107,12 +107,12 @@ void CBrick::SetState(int state)
 		// need implement
 	case BRICK_STATE_HIT:
 	{
-		isDeleted = true;
+		isActive = false;
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CBrickEffect* hitBrickEffect = new CBrickEffect(position.x, position.y);
 		int effectId = effectManager->Add(hitBrickEffect);
 		hitBrickEffect->Start([this, effectId]() {
-			isDeleted = false;
+			isActive = true;
 			CEffectManager::GetInstance()->Delete(effectId);
 			});
 

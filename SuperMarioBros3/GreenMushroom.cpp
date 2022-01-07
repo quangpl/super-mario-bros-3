@@ -2,7 +2,7 @@
 
 GreenMushroom::GreenMushroom() :CGameObject()
 {
-	this->type = Type::MUSHROOM;
+	//this->type = Type::MUSHROOM;
 	this->vy = 0;
 	this->vx = 0;
 	this->gravity = 0;
@@ -90,7 +90,8 @@ void GreenMushroom::SetState(int state)
 	case UP_MUSHROOM_STATE_DIE:
 		vx = 0;
 		vy = 0;
-		isDeleted = true;
+		isActive = false;
+		this->isDeleted = true;
 		break;
 	default:
 		break;

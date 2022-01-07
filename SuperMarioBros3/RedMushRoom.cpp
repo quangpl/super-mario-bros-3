@@ -3,7 +3,6 @@
 CRedMushroom::CRedMushroom() :CGameObject()
 {
 	this->start_y = 0;
-	this->type = Type::MUSHROOM;
 	this->vy = 0;
 	this->vx = 0;
 	this->gravity = 0;
@@ -90,7 +89,8 @@ void CRedMushroom::SetState(int state)
 	case UP_MUSHROOM_STATE_DIE:
 		vx = 0;
 		vy = 0;
-		isDeleted = true;
+		isActive = false;
+		this->isDeleted = true;
 		break;
 	default:
 		break;

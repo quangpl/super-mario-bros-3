@@ -16,6 +16,8 @@ CGameObject::CGameObject()
 	vx = vy = 0;
 	nx = 1;
 	state = -1;
+	this->gravity = 0.0f;
+	isActive = true;
 	isDeleted = false;
 }
 

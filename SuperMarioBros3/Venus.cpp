@@ -18,7 +18,7 @@ Venus::Venus(Vec2 _pos, int type) :CGameObject()
 	SetState(VENUS_STATE_DISPLAY);
 	for (int i = 0; i < 2; i++) { // num of fireball
 		Fireball* ball = new Fireball();
-		ball->SetDeleted(true);
+		ball->SetActive(false);
 		fireballs.push_back(ball);
 	}
 }
@@ -41,17 +41,20 @@ void Venus::OnNoCollision(DWORD dt)
 void Venus::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CTail*>(e->obj) || (dynamic_cast<CKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE) || (dynamic_cast<GreenKoopas*>(e->obj) && e->obj->GetState() == KOOPAS_STATE_DIE_MOVE)) {
-		this->SetDeleted(true);
+		this->SetActive(false);
+		this->isDeleted = true;
 		// disable fireball
 
 		for (Fireball* fireball : fireballs)
 		{
-			fireball->active = false;
-			fireball->SetDeleted(true);
+			//fireball->active = false;
+			fireball->SetActive(false);
+			fireball->isDeleted = true;
 		}
 
 		CEffectManager* effectManager = CEffectManager::GetInstance();
-		CMarioDamagedEffect* damagedEffect = new CMarioDamagedEffect(this->position, this->GetNx());
+		Vec2 effectPosition = { this->position.x + VENUS_SIZE_X / 2,this->position.y + VENUS_SIZE_Y / 2 };
+		CMarioDamagedEffect * damagedEffect = new CMarioDamagedEffect(effectPosition, this->GetNx());
 		int effectId = effectManager->Add(damagedEffect);
 		damagedEffect->Start([this, effectId]() {
 			CEffectManager::GetInstance()->Delete(effectId);
@@ -131,11 +134,11 @@ void Venus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		for (Fireball* fireball : fireballs)
 		{
-			if (!fireball->active) {
+			if (!fireball->isActive) {
 				if (fireball->spawned) {
-					fireball->active = true;
+					//fireball->active = true;
+					fireball->SetActive(true);
 				}
-				fireball->SetDeleted(false);
 				fireball->Shoot(GetBoundingBox(), nx);
 				Vec2 fireballPosition = fireball->GetPosition();
 
@@ -145,7 +148,8 @@ void Venus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (!fireball->spawned) {
 						SceneManager::GetInstance()->GetActiveScene()->AddObject(fireball);
 						fireball->spawned = true;
-						fireball->active = true;
+						//fireball->active = true;
+						fireball->isActive = true;
 					}
 					break;
 				}
@@ -163,7 +167,7 @@ int Venus::IsCollidable() {
 void Venus::OnGoingToCamera() {
 	for (Fireball* fireball : fireballs)
 	{
-		if (fireball->IsDeleted()) {
+		if (!fireball->isActive) {
 			this->shootStopwatch->Restart();
 			this->movingStopwatch->Restart();
 			collidable = true;

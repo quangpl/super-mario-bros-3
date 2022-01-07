@@ -61,6 +61,7 @@ class CMario;
 #define MARIO_UNTOUCHABLE_TIME 2500
 class CMasterMario
 {
+
 public:
 	string ani;
 	CMario* mario;

@@ -7,6 +7,9 @@ CTail::CTail(CMario* _owner) {
 	this->owner = _owner;
 	this->stopwatch = new Stopwatch();
 	this->vy = 0;
+	dt = 0;
+	hitTime = 0;
+	this->attackNx = _owner->GetNx();
 }
 
 CTail::~CTail()
@@ -39,7 +42,7 @@ void CTail::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 {
 	vx = vx * attackNx;
 	if (stopwatch->Elapsed() >= hitTime) {
-		this->isDeleted = true;
+		this->isActive = false;
 		return;
 	}
 	this->dt = dt;

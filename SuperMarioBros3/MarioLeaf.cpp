@@ -39,8 +39,8 @@ void MarioLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* objects)
 			fallingStep = 1;
 		}
 		else {
-			if (this->isDeleted && position.y + 10.0f <= startingPos.y) {
-				this->isDeleted = false;
+			if (!this->isActive && position.y + 10.0f <= startingPos.y) {
+				this->isActive = true;
 			}
 			vy -= LEAF_GROWUP_SPEED * dt;
 		}

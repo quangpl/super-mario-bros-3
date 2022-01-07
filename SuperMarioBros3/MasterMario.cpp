@@ -34,7 +34,13 @@ void CMasterMario::OnNoCollision(DWORD dt)
 
 }
 void CMasterMario::KeyboardHandler() {
+	if (!CGame::GetInstance()->IsEnableKeyBoard()) {
+		return;
+	}
 	LPGAME game = CGame::GetInstance();
+	if (game->IsKeyDown(DIK_DOWN)) {
+		this->SetState(MARIO_STATE_SIT);
+	}
 	if (game->IsKeyDown(DIK_A)) {
 		mario->SetHolding(true);
 	}
@@ -63,9 +69,9 @@ void CMasterMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<Fireball*>(e->obj)) {
 		this->OnDamaged();
-		e->obj->SetDeleted(true);
+		e->obj->SetActive(false);
 	}
-	if (dynamic_cast<Piranha*>(e->obj) || dynamic_cast<Venus*>(e->obj)) {
+	if ((dynamic_cast<Piranha*>(e->obj) && e->obj->GetState() == PIRANHA_STATE_DISPLAY) || (dynamic_cast<Venus*>(e->obj) && e->obj->GetState() == PIRANHA_STATE_DISPLAY)) {
 		this->OnDamaged();
 	}
 
@@ -74,9 +80,9 @@ void CMasterMario::OnKickShell(CGameObject* koopas) {
 	CEffectManager* effectManager = CEffectManager::GetInstance();
 	CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
 	int effectId = effectManager->Add(marioKickShellEffect);
-	mario->SetDeleted(true);
+	mario->SetActive(false);
 	marioKickShellEffect->Start([this, effectId, koopas]() {
-		mario->SetDeleted(false);
+		mario->SetActive(true);
 		CEffectManager::GetInstance()->Delete(effectId);
 		koopas->SetNx(mario->GetNx());
 		koopas->SetState(KOOPAS_STATE_DIE_MOVE);
@@ -89,9 +95,9 @@ void CMasterMario::OnReleaseHolding() {
 			CEffectManager* effectManager = CEffectManager::GetInstance();
 			CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
 			int effectId = effectManager->Add(marioKickShellEffect);
-			mario->SetDeleted(true);
+			mario->SetActive(false);
 			marioKickShellEffect->Start([this, effectId]() {
-				mario->SetDeleted(false);
+				mario->SetActive(true);
 				CEffectManager::GetInstance()->Delete(effectId);
 				CKoopas* koopas = dynamic_cast<CKoopas*>(mario->holder);
 				koopas->SetOwner(NULL);
@@ -104,9 +110,9 @@ void CMasterMario::OnReleaseHolding() {
 			CEffectManager* effectManager = CEffectManager::GetInstance();
 			CMarioKickShellEffect* marioKickShellEffect = new CMarioKickShellEffect(mario->position, mario->GetNx());
 			int effectId = effectManager->Add(marioKickShellEffect);
-			mario->SetDeleted(true);
+			mario->SetActive(false);
 			marioKickShellEffect->Start([this, effectId]() {
-				mario->SetDeleted(false);
+				mario->SetActive(true);
 				CEffectManager::GetInstance()->Delete(effectId);
 				GreenKoopas* koopas = dynamic_cast<GreenKoopas*>(mario->holder);
 				koopas->SetOwner(NULL);
@@ -188,6 +194,9 @@ void CMasterMario::OnHitEnermy(CGameObject* obj) {
 
 }
 void CMasterMario::OnDamaged() {
+	if (mario->untouchable) {
+		return;
+	}
 	if (mario->GetLevel() == MarioLevel::Small) {
 		this->SetState(MARIO_STATE_DIE);
 		return;
@@ -197,18 +206,18 @@ void CMasterMario::OnDamaged() {
 		CEffectManager* effectManager = CEffectManager::GetInstance();
 		CMarioDamagedEffect* marioDamagedEffect = new CMarioDamagedEffect(mario->position, mario->GetNx());
 		int effectId = effectManager->Add(marioDamagedEffect);
-		mario->SetDeleted(true);
+		mario->SetActive(false);
 		marioDamagedEffect->Start([this, effectId]() {
-			mario->SetDeleted(false);
+			mario->SetActive(true);
 			CEffectManager::GetInstance()->Delete(effectId);
 			switch (mario->GetLevel())
 			{
 			case MarioLevel::Big:
-				
+
 				mario->SetPlayerState(new SmallMario());
 				break;
 			case MarioLevel::Raccoon:
-				 
+
 				mario->SetPlayerState(new BigMario());
 				break;
 			default:

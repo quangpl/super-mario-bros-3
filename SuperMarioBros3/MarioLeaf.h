@@ -11,7 +11,7 @@
 #define  LEAF_GROWUP_SPEED  0.0012f
 #define LEAF_GRAVITY  0.00035f
 #define LEAF_REVEAL_DISTANCE 72
-#define LEAF_REVEAL_FORCE 0.02f
+#define LEAF_REVEAL_FORCE 0.01f
 #define  LEAF_FALLING_VEL 0.05f
 
 class MarioLeaf : public CGameObject

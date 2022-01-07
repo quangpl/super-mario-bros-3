@@ -5,7 +5,7 @@
 #include "SmallMario.h"
 
 #define MARIO_DAMAGED_EFFECT_RUNNING 1
-#define STOP_TIMEOUT 1000
+#define STOP_TIMEOUT 300
 class CMarioDamagedEffect : public CEffect {
 	function<void()> callback;
 public:
